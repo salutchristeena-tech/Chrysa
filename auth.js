@@ -177,12 +177,6 @@
         <h2 class="marc-auth-title">${gate ? "Create your <em>Chrysa</em> access" : "Get early access to <em>Chrysa</em>"}</h2>
         <p class="marc-auth-sub">The AI command center for modern marketing. Tell us a little about your brand and step straight into the live workspace.</p>
 
-        <div class="marc-socials">
-          <button class="marc-google" type="button" data-oauth="google">${GOOGLE}<span>Continue with Google</span></button>
-          <button class="marc-google" type="button" data-oauth="linkedin_oidc">${LINKEDIN}<span>Continue with LinkedIn</span></button>
-        </div>
-        <div class="marc-or">or</div>
-
         <form class="marc-form" novalidate>
           <div class="marc-field"><label>Full name</label><input name="name" type="text" placeholder="Your name"><span class="err">Please add your name</span></div>
           <div class="marc-field"><label>Company / group</label><input name="company" type="text" placeholder="Your brand or company"></div>
@@ -210,10 +204,6 @@
     const x = scrim.querySelector(".marc-auth-x");
     if (x) x.addEventListener("click", close);
     if (!gate) scrim.addEventListener("mousedown", (e) => { if (e.target === scrim) close(); });
-
-    scrim.querySelectorAll("[data-oauth]").forEach((btn) => {
-      btn.addEventListener("click", () => signInWithOAuth(btn.getAttribute("data-oauth")));
-    });
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -249,7 +239,10 @@
     card.querySelector(".enter").addEventListener("click", () => {
       if (typeof onEnter === "function") { onEnter(); return; }
       if (gate) { close(); location.reload(); }
-      else { location.href = "marc/index.html"; }
+      else {
+        const dash = document.querySelector('a[href$="ashboard.html"]');
+        location.href = dash ? dash.getAttribute("href") : "dashboard.html";
+      }
     });
   }
 
@@ -268,6 +261,12 @@
   document.addEventListener("click", (e) => {
     const t = e.target.closest("[data-signup]");
     if (t) { e.preventDefault(); open({}); }
+  });
+
+  // ▸ dashboard is invite-only: links to it require a session
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href$="ashboard.html"]');
+    if (a && !hasSession()) { e.preventDefault(); open({}); }
   });
 
   window.MarcAuth = { open, close, hasSession, exportCSV };
