@@ -1,6 +1,10 @@
 /* ============================================================
    MarC AI — Auth / sign-up module (shared: landing + dashboard gate)
    ============================================================ */
+/* ── hard gate: on [data-require-auth] pages, nothing renders until unlocked ── */
+body[data-require-auth]{background:#0F1411;}
+body[data-require-auth]:not(.marc-unlocked) > *:not(.marc-auth-scrim){visibility:hidden !important;}
+
 .marc-auth-scrim{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
   padding:24px;background:rgba(10,10,14,0.66);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
   opacity:1;font-family:"Jost","Hanken Grotesk",system-ui,sans-serif;}

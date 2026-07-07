@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="marc/chrysa-emblem.png">
+  <title>Chrysa — Command Centre · Beta</title>
+  <meta name="description" content="The Chrysa command centre: every campaign, calendar and connected tool under one roof. Factual, cited, accountable.">
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="marc/dashboard.css">
+  <link rel="stylesheet" href="marc/connect.css">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body data-require-auth>
+  <div class="dbg" aria-hidden="true"></div>
+
+  <div class="dshell">
+    <!-- ============ TOP BAR ============ -->
+    <header class="dtop glassP" data-screen-label="Top bar">
+      <a class="dbrand" href="index.html">
+        <img src="marc/chrysa-emblem.png" alt="Chrysa emblem">
+        <b>Chrysa</b>
+        <span class="beta">Beta</span>
+      </a>
+      <div class="dws" id="ws-chip" role="button" tabindex="0" title="Rename workspace"><b id="ws-name">Your brand</b><span class="wsp">✎</span></div>
+      <form class="dask" id="ask-form">
+        <span class="sp">✦</span>
+        <input id="ask-input" type="text" placeholder="Ask Chrysa anything — every answer cited to its source" aria-label="Ask Chrysa">
+        <button type="submit" aria-label="Ask">→</button>
+      </form>
+      <div class="dsync"><span class="dot sample"></span>Sample data — connect your stack in Sources</div>
+      <div class="davatar" id="avatar" role="button" tabindex="0" title="Set your name">C</div>
+    </header>
+
+    <!-- ============ RAIL ============ -->
+    <aside class="drail glassP" data-screen-label="Navigation rail">
+      <span class="rlabel">Command centre</span>
+      <button class="rbtn active" type="button" data-view="today"><span class="ic">◉</span>Today<small>Now</small></button>
+      <button class="rbtn" type="button" data-view="memory"><span class="ic">❋</span>Memory<small>Past</small></button>
+      <button class="rbtn" type="button" data-view="calendar"><span class="ic">▤</span>Calendar<small>Next</small></button>
+      <button class="rbtn" type="button" data-view="sources"><span class="ic">⬡</span>Sources<small>All</small></button>
+      <div class="rfoot">
+        <b>Autopilot · roadmap</b>
+        <p>Chrysa reads your stack today. Soon it runs it — end to end, under your rules.</p>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="dmain">
+
+      <!-- ======== TODAY ======== -->
+      <section class="dview active" id="view-today" data-screen-label="Today view">
+        <div class="vhead">
+          <h1>Good morning. <em>Three things need you.</em></h1>
+          <span class="vmeta">Wed 2 Jul 2026 · all sources live</span>
+        </div>
+        <div class="kpis">
+          <div class="kpi glassP"><div class="k">Reach <span class="src">GA4 · Meta</span></div><div class="v">3.8M</div><div class="t up">▲ 12% wk</div></div>
+          <div class="kpi glassP"><div class="k">Spend <span class="src">Meta · Google</span></div><div class="v">$42.3K</div><div class="t">on pace</div></div>
+          <div class="kpi glassP"><div class="k">Pipeline <span class="src">HubSpot</span></div><div class="v">$612K</div><div class="t up">▲ 8% wk</div></div>
+          <div class="kpi glassP"><div class="k">Blended ROAS <span class="src">Chrysa</span></div><div class="v">2.7×</div><div class="t down">▼ 0.2 wk</div></div>
+        </div>
+        <div class="tgrid">
+          <div class="dcard glassP">
+            <div class="chead"><h2>Live campaigns</h2><a href="#" onclick="return false">All projects ↗</a></div>
+            <div class="camp">
+              <div class="cn">Summer Drop — Creator Wave 2<small>Modash · Meta Ads · TikTok</small></div>
+              <span class="st live">Live</span>
+              <div class="hp"><i style="width:86%;background:var(--gold)"></i></div>
+            </div>
+            <div class="camp">
+              <div class="cn">Lifecycle Email Flow<small>Klaviyo · GA4</small></div>
+              <span class="st live">Live</span>
+              <div class="hp"><i style="width:72%;background:var(--celadon)"></i></div>
+            </div>
+            <div class="camp">
+              <div class="cn">Always-on Paid Search<small>Google Ads · SEMrush</small></div>
+              <span class="st watch">Watch</span>
+              <div class="hp"><i style="width:44%;background:var(--sage)"></i></div>
+            </div>
+            <div class="camp">
+              <div class="cn">Founder Story — Press Round 2<small>Muck Rack</small></div>
+              <span class="st paused">Queued</span>
+              <div class="hp"><i style="width:15%;background:rgba(247,245,239,0.3)"></i></div>
+            </div>
+          </div>
+          <div class="dcard glassP">
+            <div class="chead"><h2>Chrysa noticed</h2></div>
+            <div class="insight">
+              <p>Carousel set B is dragging blended ROAS — CPA up <b>38%</b> in 5 days while creator CPA holds flat.</p>
+              <div class="irow"><span class="cite">Meta Ads</span><span class="cite">GA4</span>
+                <span class="iact"><button type="button" class="pri">Pause set B</button></span></div>
+            </div>
+            <div class="insight">
+              <p>Branded search demand is up <b>3.1×</b> since the press feature — but you have no branded campaign catching it.</p>
+              <div class="irow"><span class="cite">SEMrush</span><span class="cite">Muck Rack</span>
+                <span class="iact"><button type="button" class="pri">Draft campaign</button></span></div>
+            </div>
+            <div class="insight">
+              <p>Your top competitor's traffic dipped <b>14%</b> this month — their paid pullback is your opening on TikTok.</p>
+              <div class="irow"><span class="cite">SimilarWeb</span><span class="cite">TikTok Ads</span>
+                <span class="iact"><button type="button" class="pri">See the gap</button></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== MEMORY ======== -->
+      <section class="dview" id="view-memory" data-screen-label="Memory view">
+        <div class="vhead">
+          <h1>Campaign memory. <em>Nothing gets forgotten.</em></h1>
+          <span class="vmeta">5 campaigns · 2025–26 · learnings extracted</span>
+        </div>
+        <div class="dcard glassP">
+          <div class="chead"><h2>Historical campaigns</h2></div>
+          <div class="mem">
+            <div class="memrow">
+              <div class="mn2">Spring Launch<small>Mar–Apr 26 · $38K</small></div>
+              <span class="sp2">Creators · Paid · Email</span>
+              <span class="roas">3.2×</span>
+              <p class="learn">Creators outperformed paid 2.4× on CAC. Chrysa now weights creator-first mixes for launches.</p>
+            </div>
+            <div class="memrow">
+              <div class="mn2">Holiday Gift Sets<small>Nov–Dec 25 · $54K</small></div>
+              <span class="sp2">Paid · Email · PR</span>
+              <span class="roas">2.8×</span>
+              <p class="learn">Bundles lifted AOV 31%. Gift-guide PR placements converted 2× site average.</p>
+            </div>
+            <div class="memrow">
+              <div class="mn2">Lifecycle Email Series<small>Jan–Feb 26 · $21K</small></div>
+              <span class="sp2">Email · Creators</span>
+              <span class="roas">2.1×</span>
+              <p class="learn">Email drove 41% of repeat purchases — send timing beat discount depth.</p>
+            </div>
+            <div class="memrow">
+              <div class="mn2">Autumn Awareness Push<small>Sep–Oct 25 · $17K</small></div>
+              <span class="sp2">Paid only</span>
+              <span class="roas">1.6×</span>
+              <p class="learn">Paid-only mix underperformed every blended campaign. Flagged as an anti-pattern.</p>
+            </div>
+            <div class="memrow">
+              <div class="mn2">Founder Story PR<small>Jun 25 · $6K</small></div>
+              <span class="sp2">PR · Organic</span>
+              <span class="roas">—</span>
+              <p class="learn">Coverage spiked branded search 3× for six weeks. Chrysa now pairs press pushes with branded capture.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== CALENDAR ======== -->
+      <section class="dview" id="view-calendar" data-screen-label="Calendar view">
+        <div class="vhead">
+          <h1>The next six weeks, <em>already mapped.</em></h1>
+          <span class="vmeta">Q3 · synced with Notion &amp; Klaviyo</span>
+        </div>
+        <div class="dcard glassP">
+          <div class="chead"><h2>Forward calendar</h2><a href="#" onclick="return false">Month view ↗</a></div>
+          <div class="calgrid">
+            <div class="calcol"><span class="wk">Jul 6</span>
+              <div class="evt email"><small>Email</small>Lifecycle flow — segment refresh</div>
+              <div class="evt paid"><small>Paid</small>Search terms expansion (SEMrush picks)</div>
+            </div>
+            <div class="calcol"><span class="wk">Jul 13</span>
+              <div class="evt launch"><small>Launch</small>Summer Drop — creator wave two goes live</div>
+              <div class="evt pr"><small>PR</small>Press kit out via Muck Rack list</div>
+            </div>
+            <div class="calcol"><span class="wk">Jul 20</span>
+              <div class="evt creator"><small>Creator</small>Modash shortlist — 8 mid-tier briefs</div>
+              <div class="evt gap"><small>Open slot</small>+ Chrysa suggests: UGC test here</div>
+            </div>
+            <div class="calcol"><span class="wk">Jul 27</span>
+              <div class="evt email"><small>Email</small>Mid-summer VIP early access</div>
+            </div>
+            <div class="calcol"><span class="wk">Aug 3</span>
+              <div class="evt paid"><small>Paid</small>Seasonal angle — creative refresh</div>
+              <div class="evt creator"><small>Creator</small>Wave two retros → memory</div>
+            </div>
+            <div class="calcol"><span class="wk">Aug 10</span>
+              <div class="evt pr"><small>PR</small>Founder feature — long-lead pitch</div>
+              <div class="evt gap"><small>Open slot</small>+ Chrysa suggests: fill this gap</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== SOURCES ======== -->
+      <section class="dview" id="view-sources" data-screen-label="Sources view">
+        <div class="vhead">
+          <h1>Your stack, <em>reading as one.</em></h1>
+          <span class="vmeta">Connect anything your team runs</span>
+        </div>
+        <div class="srcgrid">
+          <div class="src glassP" data-app="ga4"><div class="sname"><b>GA4</b><span class="sdot"></span></div><span class="srole">Web analytics</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="hubspot"><div class="sname"><b>HubSpot</b><span class="sdot"></span></div><span class="srole">CRM &amp; pipeline</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="semrush"><div class="sname"><b>SEMrush</b><span class="sdot"></span></div><span class="srole">Search &amp; keywords</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="similarweb"><div class="sname"><b>SimilarWeb</b><span class="sdot"></span></div><span class="srole">Competitive traffic</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="meta"><div class="sname"><b>Meta Ads</b><span class="sdot"></span></div><span class="srole">Paid social</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="googleads"><div class="sname"><b>Google Ads</b><span class="sdot"></span></div><span class="srole">Paid search</span><span class="sstat">Needs developer app</span><button type="button" data-connect>Set up</button></div>
+          <div class="src glassP" data-app="tiktok"><div class="sname"><b>TikTok Ads</b><span class="sdot"></span></div><span class="srole">Paid video</span><span class="sstat">Needs developer app</span><button type="button" data-connect>Set up</button></div>
+          <div class="src glassP" data-app="klaviyo"><div class="sname"><b>Klaviyo</b><span class="sdot"></span></div><span class="srole">Email &amp; SMS</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="modash"><div class="sname"><b>Modash</b><span class="sdot"></span></div><span class="srole">Creator discovery</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="muckrack"><div class="sname"><b>Muck Rack</b><span class="sdot"></span></div><span class="srole">PR &amp; press</span><span class="sstat">Enterprise API</span><button type="button" data-connect>Set up</button></div>
+          <div class="src glassP" data-app="slack"><div class="sname"><b>Slack</b><span class="sdot"></span></div><span class="srole">Alerts &amp; digests</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP" data-app="notion"><div class="sname"><b>Notion</b><span class="sdot"></span></div><span class="srole">Projects &amp; docs</span><span class="sstat">Sample data</span><button type="button" data-connect>Connect</button></div>
+          <div class="src glassP req"><div class="sname"><b>+ Anything else</b></div><span class="srole">Request a source</span><span class="sstat">If your team runs it, Chrysa connects it</span></div>
+        </div>
+        <div class="autonote glassP">
+          <b>Where this is heading</b>
+          <p>Every source Chrysa reads today is a system it will operate tomorrow. The roadmap: Chrysa drafts, schedules and rebalances campaigns across this stack autonomously — every action logged, cited and reversible, under rules you set.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============ ASK ANSWER ============ -->
+  <div class="answer glassP" id="answer" role="dialog" aria-label="Chrysa answer">
+    <div class="ahead">
+      <b>Chrysa · cited answer</b>
+      <button type="button" id="answer-close" aria-label="Close">✕</button>
+    </div>
+    <p class="abody">Creator content is your most efficient channel right now — blended CAC of $18 vs $42 on paid social.</p>
+    <p class="adetail">Over the last 30 days, two of your three best-converting audiences came from Modash-sourced creators. Shifting 15% of paid budget to creator amplification would raise projected blended ROAS from 2.7× to ~3.0×.</p>
+    <div class="irow">
+      <span class="cite">GA4</span><span class="cite">Meta Ads</span><span class="cite">Modash</span>
+      <span class="iact"><button type="button" class="pri">Draft the budget shift</button></span>
+    </div>
+  </div>
+
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100" height="100" fill="#1D2521"></rect>
+      <path d="M50 26 C40 46 40 66 50 82 C60 66 60 46 50 26 Z" fill="#93A18E"></path>
+      <circle cx="50" cy="70" r="7" fill="#D4B98A"></circle>
+      <path d="M50 14 Q52 21 59 23 Q52 25 50 32 Q48 25 41 23 Q48 21 50 14 Z" fill="#D4B98A"></path>
+    </svg>
+  </template>
+
+  <script src="marc/dashboard.js"></script>
+  <script src="marc/connect.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
