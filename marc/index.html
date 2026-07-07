@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chrysa · Command</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=14">
+  <link rel="stylesheet" href="../auth.css">
+</head>
+<body data-require-auth>
+  <div class="app-shell">
+    <!-- ─────────────────────────  Sidebar  ───────────────────────── -->
+    <aside class="sidebar" aria-label="Chrysa navigation">
+      <div class="brand-lockup">
+        <div class="brand-mark" aria-hidden="true"><img src="chrysa-emblem.png" alt="Chrysa" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+        <div>
+          <h1>Chrysa</h1>
+          <p>Intelligent Transformation</p>
+        </div>
+      </div>
+
+      <p class="nav-eyebrow">Workspace</p>
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="command"><span class="nav-index">01</span>Launch Command</button>
+        <button class="nav-item" data-view="campaigns"><span class="nav-index">02</span>Guests &amp; Positioning</button>
+        <button class="nav-item" data-view="creative"><span class="nav-index">03</span>Channels &amp; Campaigns</button>
+        <button class="nav-item" data-view="pipeline"><span class="nav-index">04</span>Bookings &amp; Revenue</button>
+        <button class="nav-item" data-view="agency"><span class="nav-index">05</span>Assets &amp; Partners</button>
+        <button class="nav-item" data-view="reports"><span class="nav-index">06</span>Reporting</button>
+        <button class="nav-item" data-view="integrations"><span class="nav-index">07</span>Marketing Stack</button>
+        <button class="nav-item" data-view="competitive"><span class="nav-index">08</span>Competitive Set</button>
+      </nav>
+
+      <div class="assistant-card">
+        <p class="small-label"><span class="status-dot"></span>Chrysa</p>
+        <strong>Your morning brief is ready</strong>
+        <p>Five flags across readiness, creators, PR, bookings, and opening week.</p>
+      </div>
+
+      <div class="rail-foot">
+        <span class="rail-foot-dot" aria-hidden="true"></span>
+        Strategy &middot; Clarity &middot; Impact
+      </div>
+    </aside>
+
+    <!-- ─────────────────────────  Workspace  ───────────────────────── -->
+    <main class="workspace">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Friday · 12 June 2026 · T–12 to opening night</p>
+          <h2 id="view-title">Launch Command</h2>
+        </div>
+        <div class="topbar-actions">
+          <label class="search-box">
+            <span aria-hidden="true">/</span>
+            <input id="global-search" type="search" placeholder="Ask Chrysa">
+          </label>
+          <button class="icon-button" id="refresh-insights" title="Refresh insights" aria-label="Refresh insights">↻</button>
+          <button class="ghost-button" id="copilot-toggle">Copilot</button>
+          <button class="primary-button" id="generate-report">Generate report</button>
+        </div>
+      </header>
+
+      <!-- 01 · Launch Command -->
+      <section class="view active" id="command" data-screen-label="Launch Command">
+        <div class="summary-grid">
+          <article class="metric-card identity">
+            <p>Casa Limón · Marina</p>
+            <span class="figure serif">One opening,<br><em>every channel in view.</em></span>
+            <span class="trend good">Position · Enable · Announce · Convert</span>
+          </article>
+          <article class="metric-card">
+            <p>Days to opening</p>
+            <span class="figure">12</span>
+            <span class="trend warn">Readiness 86% · 3 blockers</span>
+          </article>
+          <article class="metric-card">
+            <p>Reservations on the books</p>
+            <span class="figure">3,860</span>
+            <span class="trend warn">41% of opening-month target</span>
+          </article>
+          <article class="metric-card">
+            <p>Revenue on the books</p>
+            <span class="figure">$612K</span>
+            <span class="trend good">$76 avg spend · 88% show rate</span>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel large">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">AI priorities</p>
+                <h3>What needs attention today</h3>
+              </div>
+              <button class="ghost-button" id="explain-priorities">Explain</button>
+            </div>
+            <div class="priority-list" id="priority-list"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Bookings by channel</p>
+                <h3>Where reservations come from</h3>
+              </div>
+            </div>
+            <div class="bars" id="channel-bars"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">In motion</p>
+                <h3>Live right now</h3>
+              </div>
+            </div>
+            <div id="campaign-pulse" class="compact-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- 02 · Positioning & ICP -->
+      <section class="view" id="campaigns" data-screen-label="Guests and Positioning">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Guests &amp; Positioning</p>
+            <h3>Who fills the room, and the words that win them</h3>
+          </div>
+          <button class="primary-button" id="new-idea">New segment</button>
+        </div>
+        <div class="two-column">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Segments &amp; messaging</p>
+                <h3>The guest map</h3>
+              </div>
+            </div>
+            <div id="idea-list" class="idea-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Launch lifecycle</p>
+                <h3>Position to measurement</h3>
+              </div>
+            </div>
+            <ol class="timeline" id="campaign-timeline"></ol>
+          </section>
+        </div>
+      </section>
+
+      <!-- 03 · Channels & Campaigns -->
+      <section class="view" id="creative" data-screen-label="Channels and Campaigns">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Channels &amp; Campaigns</p>
+            <h3>Every channel, its cost, and its verdict</h3>
+          </div>
+          <button class="primary-button" id="new-creative">New campaign brief</button>
+        </div>
+        <div class="dashboard-grid">
+          <section class="panel large">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">By channel</p>
+                <h3>Volume, conversion &amp; spend</h3>
+              </div>
+            </div>
+            <div class="ad-grid" id="creative-portfolio"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Testing now</p>
+                <h3>Message &amp; channel tests</h3>
+              </div>
+            </div>
+            <div id="creative-testing" class="compact-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Research</p>
+                <h3>What guests are telling us</h3>
+              </div>
+            </div>
+            <div id="creative-research" class="compact-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- 04 · Pipeline & Revenue -->
+      <section class="view" id="pipeline" data-screen-label="Bookings and Revenue">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Bookings &amp; Revenue</p>
+            <h3>From local reach to seated covers</h3>
+          </div>
+          <button class="primary-button" id="sync-sales">Sync reservations</button>
+        </div>
+        <div class="dashboard-grid">
+          <section class="panel large">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Booking funnel</p>
+                <h3>This month, all channels</h3>
+              </div>
+            </div>
+            <div class="funnel" id="funnel"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Launch readiness</p>
+                <h3>On the calendar</h3>
+              </div>
+            </div>
+            <div id="sla-list" class="sla-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Source quality</p>
+                <h3>Beyond volume</h3>
+              </div>
+            </div>
+            <table class="data-table source-table">
+              <thead>
+                <tr><th>Source</th><th>Bookings</th><th>Show rate</th><th>Repeat</th></tr>
+              </thead>
+              <tbody id="source-table"></tbody>
+            </table>
+          </section>
+        </div>
+      </section>
+
+      <!-- 05 · Enablement & Partners -->
+      <section class="view" id="agency" data-screen-label="Assets and Partners">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Assets &amp; Partners</p>
+            <h3>Arm the opening, multiply through partners</h3>
+          </div>
+          <div class="button-row">
+            <button class="ghost-button" id="draft-pitch">Draft launch asset</button>
+            <button class="primary-button" id="add-agency">Add partner</button>
+          </div>
+        </div>
+
+        <div class="summary-grid" id="agency-summary"></div>
+
+        <section class="panel roster-panel">
+          <div class="panel-header">
+            <div>
+              <p class="small-label">Launch library</p>
+              <h3>Assets in play</h3>
+            </div>
+            <button class="ghost-button" id="log-deliverable">Log update</button>
+          </div>
+          <table class="data-table agency-table">
+            <thead>
+              <tr><th>Asset</th><th>Purpose</th><th>Audience</th><th>Version</th><th>Format</th><th>Usage</th><th>Status</th></tr>
+            </thead>
+            <tbody id="agency-roster"></tbody>
+          </table>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="panel large">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Partner ecosystem</p>
+                <h3>Co-sell &amp; integrations</h3>
+              </div>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr><th>Partner</th><th>Type</th><th>Region</th><th>Status</th><th>Current motion</th></tr>
+              </thead>
+              <tbody id="bench-table"></tbody>
+            </table>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Partner pipeline</p>
+                <h3>Stage by stage</h3>
+              </div>
+            </div>
+            <div id="creator-pipeline" class="pipeline"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Launch asset</p>
+                <h3>Generated draft</h3>
+              </div>
+            </div>
+            <div class="pitch-box" id="pitch-box">
+              <span class="empty">Draft a launch asset — a creator brief, concierge one-pager, or press angle — ready to send.</span>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- 06 · PR & News -->
+      <section class="view" id="reports" data-screen-label="Reporting">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Reporting</p>
+            <h3>Readouts, owner briefs, and guest feedback</h3>
+          </div>
+          <div class="segmented" role="tablist" aria-label="Report type">
+            <button class="active" data-report="monthly">Opening readout</button>
+            <button data-report="campaign">Owner brief</button>
+            <button data-report="board">Guests &amp; reviews</button>
+          </div>
+        </div>
+        <div class="report-layout">
+          <section class="panel report-builder">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Builder</p>
+                <h3>Report desk</h3>
+              </div>
+            </div>
+            <label>Period
+              <select id="report-period">
+                <option>Opening window (T–12 → T+30)</option><option>This month</option><option>Soft-launch week</option>
+              </select>
+            </label>
+            <label>Audience
+              <select id="report-audience">
+                <option>Owner &amp; GM</option><option>Investors</option><option>Front-of-house team</option><option>Whole team</option>
+              </select>
+            </label>
+            <label>Focus
+              <select id="report-focus">
+                <option>Full marketing performance</option><option>Opening readiness</option><option>Bookings &amp; revenue</option><option>Channel efficiency</option><option>Guest feedback &amp; reviews</option>
+              </select>
+            </label>
+            <button class="primary-button full-width" id="build-report">Generate report</button>
+          </section>
+          <section class="panel report-preview">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Generated report</p>
+                <h3 id="report-heading">Casa Limón Marina — Opening Readout (T-12)</h3>
+              </div>
+              <div class="button-row">
+                <button class="ghost-button" id="copy-report">Copy</button>
+                <button class="ghost-button" id="download-report">Download</button>
+              </div>
+            </div>
+            <div id="report-output"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- 07 · GTM Stack -->
+      <section class="view" id="integrations" data-screen-label="Marketing Stack">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Marketing Stack</p>
+            <h3>Every signal source, connected</h3>
+          </div>
+          <button class="primary-button" id="connect-source">Connect source</button>
+        </div>
+        <section class="panel demo-kit">
+          <div class="panel-header">
+            <div>
+              <p class="small-label">Launch week</p>
+              <h3>The announcement sequence</h3>
+            </div>
+            <div class="button-row">
+              <button class="ghost-button" id="reset-demo">Reset sample data</button>
+              <button class="primary-button" id="export-snapshot">Export snapshot</button>
+            </div>
+          </div>
+          <div class="launch-steps">
+            <article><span class="step-no serif">1</span><strong>Press dinner</strong><p>Food editors and key media taste the menu two nights early — coverage lands with opening.</p></article>
+            <article><span class="step-no serif">2</span><strong>Creator wave</strong><p>Eight tasting creators post in sequence over 48 hours — not all at once.</p></article>
+            <article><span class="step-no serif">3</span><strong>Booking drop</strong><p>The waitlist email opens public reservations while the feed is still warm.</p></article>
+            <article><span class="step-no serif">4</span><strong>Convert window</strong><p>Paid local and Maps capture the search spike for 48 hours after the noise.</p></article>
+          </div>
+        </section>
+        <div class="integration-grid" id="integration-grid"></div>
+      </section>
+
+      <!-- 08 · Competitive Set -->
+      <section class="view" id="competitive" data-screen-label="Competitive Set">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Competitive Set · public signals</p>
+            <h3 id="comp-headline">Where you stand against the set</h3>
+          </div>
+          <div class="cat-toggle" role="tablist" aria-label="Category">
+            <button class="cat-btn active" data-cat="beauty">Beauty</button>
+            <button class="cat-btn" data-cat="hospitality">Hospitality</button>
+            <button class="cat-btn" data-cat="dtc">DTC &amp; Tech</button>
+          </div>
+        </div>
+
+        <div class="summary-grid comp-headline-grid" id="comp-headline-grid"></div>
+
+        <div class="comp-move" id="comp-move">
+          <div class="comp-move-glow" aria-hidden="true"></div>
+          <div class="comp-move-body">
+            <p class="small-label"><span class="status-dot"></span>Chrysa · Move of the week</p>
+            <p class="comp-move-text serif" id="comp-move-text"></p>
+          </div>
+          <button class="ghost-button" id="comp-move-refresh">Regenerate</button>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel large">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">The set</p>
+                <h3 id="comp-set-title">Rivals, ranked by momentum</h3>
+              </div>
+            </div>
+            <div class="comp-rivals" id="comp-rivals"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">What changed</p>
+                <h3>This week</h3>
+              </div>
+            </div>
+            <div id="comp-signals" class="compact-list"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="small-label">Share of voice</p>
+                <h3>You vs the set</h3>
+              </div>
+            </div>
+            <div class="bars" id="comp-sov"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- ─────────────────  Chrysa Copilot (persistent)  ───────────────── -->
+    <aside class="copilot" id="copilot" aria-label="Chrysa copilot">
+      <div class="copilot-head">
+        <div>
+          <p class="small-label"><span class="status-dot"></span>Chrysa</p>
+          <h3 class="serif">Copilot</h3>
+        </div>
+        <button class="icon-button" id="copilot-collapse" aria-label="Collapse copilot">&rsaquo;</button>
+      </div>
+      <div class="copilot-thread" id="copilot-thread"></div>
+      <div class="copilot-suggest" id="copilot-suggest"></div>
+      <form class="copilot-input" id="copilot-form">
+        <input id="copilot-q" type="text" placeholder="Ask Chrysa…" autocomplete="off">
+        <button class="send" type="submit" aria-label="Send">→</button>
+      </form>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100" height="100" fill="#EEEAF2"></rect>
+      <rect x="31" y="31" width="38" height="38" rx="10" fill="#EE5A2A"></rect>
+      <text x="50" y="57" font-family="Georgia, serif" font-style="italic" font-size="24" fill="#ffffff" text-anchor="middle">M</text>
+    </svg>
+  </template>
+
+  <!-- data + app -->
+  <script src="../auth.js"></script>
+  <script src="data.js?v=13"></script>
+  <script src="app.js?v=13"></script>
+
+  <!-- Tweaks (independent React island) -->
+  <div id="tweaks-root"></div>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="tweaks-app.jsx"></script>
+</body>
+</html>

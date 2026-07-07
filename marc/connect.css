@@ -1,0 +1,44 @@
+/* Chrysa — Connections UI (modal, toast, source states) */
+.cx-scrim{position:fixed;inset:0;z-index:600;background:rgba(15,20,17,0.55);backdrop-filter:blur(6px);
+  display:grid;place-items:center;padding:20px;}
+.cx-card{width:min(540px,94vw);max-height:86vh;overflow:auto;border-radius:20px;padding:26px 28px;
+  background:rgba(29,37,33,0.94);border:1px solid rgba(255,255,255,0.14);color:#F7F5EF;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,0.6);}
+.cx-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px;}
+.cx-head b{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:24px;letter-spacing:-0.01em;}
+.cx-x{background:none;border:0;color:rgba(247,245,239,0.6);font-size:16px;cursor:pointer;padding:6px;}
+.cx-x:hover{color:#F7F5EF;}
+.cx-blurb{margin:0 0 14px;font-size:14px;line-height:1.6;color:rgba(247,245,239,0.75);}
+.cx-steps{margin:0 0 18px;padding-left:20px;display:flex;flex-direction:column;gap:7px;
+  font-size:13.5px;line-height:1.55;color:rgba(247,245,239,0.62);}
+.cx-label{display:block;font-family:"Spline Sans Mono",monospace;font-size:10px;letter-spacing:0.14em;
+  text-transform:uppercase;color:rgba(247,245,239,0.55);margin-bottom:8px;}
+.cx-input{width:100%;box-sizing:border-box;height:46px;border-radius:12px;padding:0 14px;
+  background:rgba(15,20,17,0.55);border:1px solid rgba(255,255,255,0.16);color:#F7F5EF;
+  font:14px/1 "Spline Sans Mono",monospace;outline:none;}
+.cx-input:focus{border-color:#D4B98A;}
+.cx-fine{margin:10px 0 0;font-size:12px;line-height:1.5;color:rgba(247,245,239,0.45);}
+.cx-actions{display:flex;gap:12px;align-items:center;margin-top:18px;}
+.cx-go{height:44px;padding:0 22px;border-radius:999px;border:0;cursor:pointer;
+  background:#D4B98A;color:#1D2521;font-weight:600;font-size:14px;}
+.cx-go:hover{background:#E2CBA0;}
+.cx-go:disabled{opacity:0.6;cursor:default;}
+.cx-drop{height:44px;padding:0 18px;border-radius:999px;cursor:pointer;font-size:13.5px;
+  background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(247,245,239,0.7);}
+.cx-drop:hover{border-color:rgba(255,120,100,0.5);color:#F0A090;}
+.cx-list{display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow:auto;}
+.cx-item{text-align:left;padding:13px 16px;border-radius:12px;cursor:pointer;font-size:14px;
+  background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:#F7F5EF;}
+.cx-item:hover{border-color:#D4B98A;background:rgba(212,185,138,0.12);}
+.cx-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,16px);z-index:700;
+  max-width:min(480px,90vw);padding:13px 20px;border-radius:12px;font-size:13.5px;line-height:1.45;
+  background:#F7F5EF;color:#1D2521;box-shadow:0 18px 44px rgba(0,0,0,0.45);
+  opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;}
+.cx-toast.show{opacity:1;transform:translate(-50%,0);}
+.cx-toast.err{background:#3A2622;color:#F7D9CF;border:1px solid rgba(240,160,144,0.4);}
+
+/* source card states (driven by connect.js) */
+.src .sdot{background:rgba(247,245,239,0.25);}
+.src.on .sdot{background:#5FD08A;box-shadow:0 0 0 4px rgba(95,208,138,0.15);}
+.src.stale .sdot{background:#D4B98A;box-shadow:0 0 0 4px rgba(212,185,138,0.15);}
+.dsync .dot.sample{background:rgba(247,245,239,0.35);box-shadow:none;}
