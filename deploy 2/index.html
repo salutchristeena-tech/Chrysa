@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="marc/chrysa-emblem.png">
+  <title>Chrysa AI — One Marketing Brain for Every Tool, Campaign & Calendar</title>
+  <meta name="description" content="Chrysa connects SEMrush, SimilarWeb, GA4, HubSpot, Modash and your whole marketing stack into one factual brain — historical campaigns, live projects and future calendars under one roof.">
+  <meta name="keywords" content="marketing intelligence platform, marketing command center, unified marketing dashboard, connect GA4 HubSpot SEMrush, campaign management AI, marketing calendar software, marketing analytics brain">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://chrysa.ai/">
+  <meta name="theme-color" content="#272E29">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Chrysa AI">
+  <meta property="og:title" content="Chrysa — AI Marketing & Communications. One brain.">
+  <meta property="og:description" content="The marketing intelligence layer that connects your whole stack and runs every campaign under one roof. Factual, cited, accountable.">
+  <meta property="og:url" content="https://chrysa.ai/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Chrysa — Every tool. Every campaign. One brain.">
+  <meta name="twitter:description" content="Connect SEMrush, GA4, HubSpot, Modash and more. Past campaigns, live projects and future calendars — one factual command centre.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Chrysa AI",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "url": "https://chrysa.ai/",
+    "description": "Marketing intelligence platform that connects SEMrush, SimilarWeb, GA4, HubSpot, Klaviyo, Modash and more into one factual command centre for historical campaigns, live projects and future calendars.",
+    "offers": { "@type": "Offer", "price": "29", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What is Chrysa?", "acceptedAnswer": { "@type": "Answer", "text": "Chrysa is an AI marketing command centre. It connects the tools you already run — GA4, HubSpot, SEMrush, Klaviyo, Modash and more — and reads them as one system, so every past campaign, live project and future calendar lives under one roof." } },
+      { "@type": "Question", "name": "Does Chrysa replace my existing tools?", "acceptedAnswer": { "@type": "Answer", "text": "No. Chrysa sits above your stack, not instead of it. Your dashboards keep doing what they do — Chrysa reads them together, so the fragments become one answer instead of ten tabs." } },
+      { "@type": "Question", "name": "How is this different from asking ChatGPT?", "acceptedAnswer": { "@type": "Answer", "text": "A general chatbot guesses from whatever you paste into it. Chrysa answers from your connected, live stack — and cites the source of every number, so you can defend the answer in a budget meeting." } },
+      { "@type": "Question", "name": "How is Chrysa different from enterprise suites like Sprinklr?", "acceptedAnswer": { "@type": "Answer", "text": "Enterprise platforms are built for hundred-person marketing organisations, with contracts and onboarding to match. Chrysa is built for the person who is the marketing department — connected in minutes, from $29 a month." } },
+      { "@type": "Question", "name": "Where does my data go?", "acceptedAnswer": { "@type": "Answer", "text": "Chrysa connects to your tools read-only and your workspace stays yours. Disconnect any source at any time." } },
+      { "@type": "Question", "name": "What does early access include?", "acceptedAnswer": { "@type": "Answer", "text": "The beta dashboard today, a founding-member rate locked for as long as you stay subscribed, and a real say in what ships next. Monthly billing, cancel anytime." } }
+    ]
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="marc/landing2.css">
+  <link rel="stylesheet" href="marc/story.css">
+  <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="marc/landing3.css">
+</head>
+<body>
+  <div class="blob-field" aria-hidden="true"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span><span class="blob blob-4"></span><span class="blob blob-5"></span></div>
+  <canvas id="bg-canvas" class="bg-canvas" aria-hidden="true"></canvas>
+  <div class="bg-grain" aria-hidden="true"></div>
+  <div class="bg-vignette" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <div class="nav-pill glass glass-hi">
+      <a class="brand" href="#top">
+        <span class="brand-chip"><img src="marc/chrysa-emblem.png" alt="Chrysa" class="brand-emblem"></span>
+        <span>Chrysa</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#modules">What it does</a>
+        <a href="#stack">Integrations</a>
+        <a href="#audience">Who it's for</a>
+        <a href="#pricing">Pricing</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+      <div class="nav-right">
+        <a class="btn btn-ghost" href="marc/index.html" data-signup>Log in</a>
+        <a class="btn btn-solid" href="marc/index.html" data-signup>Request early access</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top" data-screen-label="Hero">
+    <div class="hero-copy">
+      <span class="hero-badge glass glass-hi"><span class="dot"></span>Private beta · <b>The AI marketing command centre</b></span>
+      <h1>Every tool.<br>Every campaign.<br><span class="grad">One brain.</span></h1>
+      <p class="hero-sub">Chrysa connects your whole marketing stack — GA4, HubSpot, SEMrush, Modash and more — and holds every past campaign, live project and future calendar in one factual command centre. Not another dashboard. The brain above them.</p>
+      <form class="email-pill glass glass-hi" novalidate>
+        <input type="email" placeholder="you@yourbrand.com" aria-label="Work email">
+        <button class="go" type="submit" aria-label="Request early access">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </form>
+      <p class="hero-note">
+        <span><span class="tick">✓</span> Request early access</span>
+        <span><a href="dashboard.html" style="color:var(--cream-soft);">Explore the live dashboard →</a></span>
+      </p>
+    </div>
+
+    <div class="hero-stage">
+      <div class="hero-arch" aria-hidden="true"><img src="marc/img/leaf-arch.png" alt=""></div>
+      <div class="pcard glass glass-hi">
+        <div class="pcard-head">
+          <div class="pcard-id">
+            <span class="pcard-mono"><img src="marc/chrysa-emblem.png" alt="Chrysa" class="brand-emblem"></span>
+            <span class="pcard-id-text"><b>Your brand</b><small>Workspace · Live</small></span>
+          </div>
+          <span class="pcard-flag"><span class="dot"></span>T-12</span>
+        </div>
+        <div class="pcard-stats">
+          <div class="pstat"><div class="k">Reach</div><div class="v">3.8M</div></div>
+          <div class="pstat"><div class="k">Pipeline</div><div class="v"><em>$612K</em></div></div>
+          <div class="pstat"><div class="k">Readiness</div><div class="v">86%</div></div>
+        </div>
+        <div class="pcard-chart">
+          <div class="ct"><span>Demand by channel</span><span>this week</span></div>
+          <div class="pbars">
+            <div class="pbar"><i>Creators</i><div class="track"><div class="fill" data-w="88" style="background:#B0883A"></div></div></div>
+            <div class="pbar"><i>Paid</i><div class="track"><div class="fill" data-w="64" style="background:#8A6526"></div></div></div>
+            <div class="pbar"><i>Email</i><div class="track"><div class="fill" data-w="47" style="background:#D2B069"></div></div></div>
+            <div class="pbar"><i>PR</i><div class="track"><div class="fill" data-w="33" style="background:#A89B7E"></div></div></div>
+          </div>
+        </div>
+        <div class="pcard-ask">
+          <span class="sp">✦</span><span>What's working, and what isn't?</span>
+          <span class="send">→</span>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+
+  <!-- ============ PAIN ============ -->
+  <section class="sec" id="pain" data-screen-label="Pain">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The real problem</span>
+      <h2>Every platform tells you something. <em>None of them tells you enough.</em></h2>
+    </div>
+    <div class="pain-wrap">
+      <div class="narrative reveal">
+        <span>Your analytics tells one story.</span>
+        <span>Your paid media report tells another.</span>
+        <span>The content calendar keeps moving.</span>
+        <span>PR coverage sits somewhere else.</span>
+        <span>Influencer results arrive in a spreadsheet.</span>
+        <span class="turn">And still, you are expected to make one confident decision.</span>
+      </div>
+      <div class="pain-card glass glass-hi reveal" data-delay="120">
+        <p>Chrysa brings the signals together — so you can stop chasing fragments and <em>start seeing the whole picture.</em></p>
+      </div>
+    </div>
+    <div class="marquee" style="margin-top:clamp(50px,7vw,90px);" data-screen-label="Tools">
+      <p class="marquee-cap"><span class="eyebrow">The dashboards you check every morning</span></p>
+      <div class="marquee-row apps" aria-hidden="true">
+        <span>SEMrush</span><span><em>✦</em></span><span>SimilarWeb</span><span><em>✦</em></span><span>GA4</span><span><em>✦</em></span><span>HubSpot</span><span><em>✦</em></span><span>Klaviyo</span><span><em>✦</em></span><span>Meta Ads</span><span><em>✦</em></span><span>Google Ads</span><span><em>✦</em></span><span>TikTok Ads</span><span><em>✦</em></span><span>Modash</span><span><em>✦</em></span><span>Muck Rack</span><span><em>✦</em></span><span>Slack</span><span><em>✦</em></span><span>Notion</span><span><em>✦</em></span>
+        <span>SEMrush</span><span><em>✦</em></span><span>SimilarWeb</span><span><em>✦</em></span><span>GA4</span><span><em>✦</em></span><span>HubSpot</span><span><em>✦</em></span><span>Klaviyo</span><span><em>✦</em></span><span>Meta Ads</span><span><em>✦</em></span><span>Google Ads</span><span><em>✦</em></span><span>TikTok Ads</span><span><em>✦</em></span><span>Modash</span><span><em>✦</em></span><span>Muck Rack</span><span><em>✦</em></span><span>Slack</span><span><em>✦</em></span><span>Notion</span><span><em>✦</em></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCT PROMISE ============ -->
+  <section class="sec" id="promise" data-screen-label="Promise">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The promise</span>
+      <h2>One command centre for the marketing decisions <em>that matter.</em></h2>
+      <p>Chrysa helps you diagnose performance, shape strategy, sharpen creative direction, forecast outcomes and build clearer reports across your marketing.</p>
+    </div>
+    <div class="refrain reveal" data-delay="100">
+      <span class="muted">Not just what happened.</span>
+      <span>What it means.</span>
+      <span>Why it matters.</span>
+      <span class="now">What to do next.</span>
+    </div>
+  </section>
+
+  <!-- ============ CONNECTED STACK ============ -->
+  <section class="sec" id="stack" data-screen-label="Integrations">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Connect the stack</span>
+      <h2>Every dashboard in. <em>One decision out.</em></h2>
+      <p>Chrysa plugs into the tools you already run and reads them as one system — every number traceable back to its source.</p>
+    </div>
+    <div class="stackgrid reveal" data-delay="100">
+      <div class="srcchip glass glass-hi"><b>SEMrush</b><span>Search &amp; keywords</span></div>
+      <div class="srcchip glass glass-hi"><b>SimilarWeb</b><span>Competitive traffic</span></div>
+      <div class="srcchip glass glass-hi"><b>GA4</b><span>Web analytics</span></div>
+      <div class="srcchip glass glass-hi"><b>HubSpot</b><span>CRM &amp; pipeline</span></div>
+      <div class="srcchip glass glass-hi"><b>Klaviyo</b><span>Email &amp; SMS</span></div>
+      <div class="srcchip glass glass-hi"><b>Meta Ads</b><span>Paid social</span></div>
+      <div class="srcchip glass glass-hi"><b>Google Ads</b><span>Paid search</span></div>
+      <div class="srcchip glass glass-hi"><b>TikTok Ads</b><span>Paid video</span></div>
+      <div class="srcchip glass glass-hi"><b>Modash</b><span>Creator discovery</span></div>
+      <div class="srcchip glass glass-hi"><b>Muck Rack</b><span>PR &amp; press</span></div>
+      <div class="srcchip glass glass-hi"><b>Slack</b><span>Alerts &amp; digests</span></div>
+      <div class="srcchip glass glass-hi"><b>Notion</b><span>Projects &amp; docs</span></div>
+      <div class="srcchip srcmore"><b>+ Yours</b><span>If your team runs it, Chrysa connects it</span></div>
+    </div>
+    <p class="stack-road reveal" data-delay="150">Today, Chrysa reads your stack and tells you the truth about it. Next, it acts on it — running campaigns end to end, under your rules. <a href="dashboard.html">See the beta dashboard →</a></p>
+  </section>
+
+  <!-- ============ HUMAN / EDITORIAL ============ -->
+  <section class="sec human" id="human" data-screen-label="Human editorial">
+    <div class="humangrid">
+      <figure class="hphoto reveal">
+        <img class="hphoto-img" src="marc/img/photo-b.png" alt="A marketer planning the week in her notebook beside her tablet">
+        <figcaption>Monday, 8:40am — one marketer, every tool</figcaption>
+      </figure>
+      <div class="hquote reveal" data-delay="140">
+        <span class="eyebrow">The human element</span>
+        <blockquote>“Marketing was never short of dashboards. It was short of someone who reads them all <em>and tells you the truth.</em>”</blockquote>
+        <p>Chrysa doesn't replace the marketer. It carries the weight of your whole stack so one person can think like a whole department — and go home on time.</p>
+        <a class="hlink" href="dashboard.html">Meet your command centre →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRODUCT STORY (scroll sequence) ============ -->
+  <section class="story" id="story" data-screen-label="Product story">
+    <div class="story-track">
+      <div class="story-stage">
+        <div class="story-glow" aria-hidden="true"></div>
+        <div class="story-progress"><span class="cur">01</span><span class="sep">/</span><span class="total">04</span></div>
+
+        <div class="story-bigtext" aria-hidden="true">
+          <p class="sbt active" data-i="0">Every campaign you've ever run</p>
+          <p class="sbt" data-i="1">Everything live, under one roof</p>
+          <p class="sbt" data-i="2">The next quarter, already mapped</p>
+          <p class="sbt" data-i="3">One brain across your whole stack</p>
+        </div>
+
+        <div class="story-window">
+          <div class="win-chrome">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="win-url">chrysa.ai/workspace</span>
+          </div>
+          <div class="win-body">
+            <div class="win-panel active" data-i="0">
+              <div class="wtitle">Campaign memory <span>2025–26</span></div>
+              <div class="wchips">
+                <div class="wchip"><span class="wn">3.2×</span>Spring launch — creators beat paid 2.4×</div>
+                <div class="wchip"><span class="wn">2.8×</span>Holiday gift sets — bundles lifted AOV 31%</div>
+                <div class="wchip"><span class="wn">2.1×</span>Email series — drove 41% of repeat sales</div>
+              </div>
+            </div>
+            <div class="win-panel" data-i="1">
+              <div class="wtitle">Live now <span>4 channels · synced 2m ago</span></div>
+              <div class="wbars">
+                <div class="wbar"><i>Creators</i><div class="wtrack"><div class="wfill" style="width:88%;background:var(--gold)"></div></div></div>
+                <div class="wbar"><i>Paid</i><div class="wtrack"><div class="wfill" style="width:64%;background:var(--sage)"></div></div></div>
+                <div class="wbar"><i>Email</i><div class="wtrack"><div class="wfill" style="width:47%;background:var(--celadon)"></div></div></div>
+                <div class="wbar"><i>PR</i><div class="wtrack"><div class="wfill" style="width:33%;background:rgba(247,245,239,.35)"></div></div></div>
+              </div>
+            </div>
+            <div class="win-panel" data-i="2">
+              <div class="wtitle">Next six weeks <span>calendar</span></div>
+              <div class="wchips">
+                <div class="wchip"><span class="wn">Jul 14</span>Summer drop — creator wave two</div>
+                <div class="wchip"><span class="wn">Jul 21</span>Klaviyo flow — repeat-purchase nudge</div>
+                <div class="wchip"><span class="wn">Aug 04</span>Seasonal angle — paid refresh</div>
+              </div>
+            </div>
+            <div class="win-panel" data-i="3">
+              <div class="wtitle">Ask Chrysa <span>every answer cited</span></div>
+              <p class="wanswer">Creator content is your cheapest growth right now — blended CAC of $18 vs $42 on paid social.</p>
+              <div class="wcites"><span>GA4</span><span>Meta Ads</span><span>Modash</span></div>
+              <div class="wexport">Draft the budget shift →</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-caption">
+          <div class="cap active" data-i="0">
+            <span class="mn">01 · The past</span>
+            <h3>Every campaign, remembered</h3>
+            <p>Your full history — spend, outcomes, learnings — kept as working memory, not buried archives.</p>
+          </div>
+          <div class="cap" data-i="1">
+            <span class="mn">02 · The present</span>
+            <h3>Every live project, one roof</h3>
+            <p>Current campaigns and channels tracked in real time across your connected stack.</p>
+          </div>
+          <div class="cap" data-i="2">
+            <span class="mn">03 · The future</span>
+            <h3>A calendar that thinks ahead</h3>
+            <p>Launches, content and budget mapped forward — gaps flagged before they cost you.</p>
+          </div>
+          <div class="cap" data-i="3">
+            <span class="mn">04 · The brain</span>
+            <h3>Factual. Cited. Accountable.</h3>
+            <p>Every answer traced to its source — GA4, HubSpot, SEMrush — never a guess.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MODULES ============ -->
+  <section class="sec" id="modules" data-screen-label="Modules">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Five ways to think clearly</span>
+      <h2>From scattered signals to <em>sharper decisions.</em></h2>
+    </div>
+    <div class="modgrid">
+      <article class="mod lead glass glass-hi reveal">
+        <span class="mico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 19V11M12 19V5M18 19v-6"></path></svg></span>
+        <span class="mn">01 · Diagnose</span>
+        <h3>See what is really happening</h3>
+        <p>See what is performing, what is under pressure, and where your attention is needed — across every channel, in one view.</p>
+      </article>
+      <article class="mod lead glass glass-hi reveal" data-delay="100">
+        <span class="mico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4l1.8 6.2L20 12l-6.2 1.8L12 20l-1.8-6.2L4 12l6.2-1.8Z"></path></svg></span>
+        <span class="mn">02 · Strategise</span>
+        <h3>Turn signals into next steps</h3>
+        <p>Turn campaign signals into sharper recommendations, clear priorities and a defensible plan for where to go next.</p>
+      </article>
+      <article class="mod glass glass-hi reveal">
+        <span class="mico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 5C11 5 6 10 6 19c9 0 13-5 13-14Z"></path><path d="M7 18C10 14 14 9 18 6"></path></svg></span>
+        <span class="mn">03 · Create</span>
+        <h3>Sharper creative</h3>
+        <p>Generate angles, briefs, messaging territories and campaign ideas rooted in what your audience is actually responding to.</p>
+      </article>
+      <article class="mod glass glass-hi reveal" data-delay="100">
+        <span class="mico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17a7 7 0 0 1 14 0"></path><path d="M3 17h18"></path></svg></span>
+        <span class="mn">04 · Forecast</span>
+        <h3>See it coming</h3>
+        <p>Understand risks, opportunities and likely outcomes before you commit more budget.</p>
+      </article>
+      <article class="mod glass glass-hi reveal" data-delay="200">
+        <span class="mico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h12M6 11h12M6 16h7"></path></svg></span>
+        <span class="mn">05 · Report</span>
+        <h3>Board-ready in minutes</h3>
+        <p>Turn scattered updates into a clear, confident marketing narrative leadership can act on.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ RELATABLE WEEK ============ -->
+  <section class="sec" id="week" data-screen-label="The week">
+    <div class="weekwrap">
+      <div class="reveal">
+        <span class="eyebrow" style="display:block;margin-bottom:18px;">Built around the real marketing week</span>
+        <ul class="weeklist">
+          <li>The Monday report.</li>
+          <li>The last-minute campaign change.</li>
+          <li>The founder asking, “but is it working?”</li>
+          <li>The agency update that needs decoding.</li>
+          <li>The performance dip nobody saw coming.</li>
+          <li>The content plan that needs a better angle.</li>
+          <li>The budget conversation that needs evidence.</li>
+        </ul>
+      </div>
+      <div class="week-close reveal" data-delay="150">Chrysa is built for <em>that reality.</em></div>
+    </div>
+  </section>
+
+  <!-- ============ BEFORE / AFTER ============ -->
+  <section class="sec" id="beforeafter" data-screen-label="Before and after">
+    <div class="sec-head reveal">
+      <span class="eyebrow">The shift</span>
+      <h2>From reporting chaos to <em>sharper decisions.</em></h2>
+    </div>
+    <div class="bawrap">
+      <div class="bacol before reveal">
+        <h4>Before Chrysa</h4>
+        <div class="balist">
+          <span>Scattered dashboards.</span>
+          <span>Manual reports.</span>
+          <span>Late insights.</span>
+          <span>Campaign guesswork.</span>
+          <span>Too many tabs.</span>
+          <span>No clear next move.</span>
+        </div>
+      </div>
+      <div class="bacol after glass glass-hi reveal" data-delay="120">
+        <h4>With Chrysa</h4>
+        <div class="balist">
+          <span>One clearer view.</span>
+          <span>Live diagnosis.</span>
+          <span>Sharper priorities.</span>
+          <span>Creative direction.</span>
+          <span>Board-ready reporting.</span>
+          <span>Decisions you can defend.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ AUDIENCE ============ -->
+  <section class="sec" id="audience" data-screen-label="Audience">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Who it is for</span>
+      <h2>Built for the people carrying <em>the marketing function.</em></h2>
+    </div>
+    <figure class="aud-photo reveal">
+      <img src="marc/img/photo-c.png" alt="Two marketers working through a campaign plan together">
+    </figure>
+    <div class="audgrid">
+      <article class="aud glass glass-hi reveal">
+        <span class="role">Founders</span>
+        <span class="det">Who need marketing clarity before hiring a full team.</span>
+      </article>
+      <article class="aud glass glass-hi reveal" data-delay="80">
+        <span class="role">Marketing managers</span>
+        <span class="det">Juggling performance, content, agencies and leadership expectations.</span>
+      </article>
+      <article class="aud glass glass-hi reveal">
+        <span class="role">Consultants</span>
+        <span class="det">Who need faster audits, sharper recommendations and better client narratives.</span>
+      </article>
+      <article class="aud glass glass-hi reveal" data-delay="80">
+        <span class="role">Lean teams</span>
+        <span class="det">Who cannot afford to waste time, budget or attention.</span>
+      </article>
+    </div>
+    <p class="aud-strong reveal">For the founder doing the job of strategist, content lead, performance marketer, analyst and brand director — <em>usually before lunch.</em></p>
+  </section>
+
+  <!-- ============ PRICING ============ -->
+  <section class="sec" id="pricing" data-screen-label="Pricing">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Plans</span>
+      <h2>Founding pricing, <em>while it lasts.</em></h2>
+      <p>Founding members lock today's rates for life. A simple monthly plan, plus light usage on agentic runs — you only pay more as Chrysa does more.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier glass glass-hi reveal">
+        <div class="tname">Solo</div>
+        <div class="tprice"><b>$29</b> &nbsp;/ month</div>
+        <ul><li>One workspace</li><li>Ask Chrysa copilot</li><li>Diagnose &amp; competitor view</li><li>Email support</li></ul>
+        <a class="pick" href="checkout.html?plan=solo">Get started</a>
+      </div>
+      <div class="tier glass glass-hi feat reveal" data-delay="120">
+        <span class="badge">Most popular</span>
+        <div class="tname">Growth</div>
+        <div class="tprice"><b>$129</b> &nbsp;/ month</div>
+        <ul><li>Everything in Solo</li><li>All five modules</li><li>Forecasting &amp; board-ready reports</li><li>Up to 10 seats</li><li>Concierge onboarding</li></ul>
+        <a class="pick" href="checkout.html?plan=growth">Get started</a>
+      </div>
+      <div class="tier glass glass-hi reveal" data-delay="240">
+        <div class="tname">Enterprise</div>
+        <div class="tprice"><b>Custom</b></div>
+        <ul><li>Everything in Growth</li><li>Unlimited workspaces &amp; seats</li><li>Custom integrations &amp; data</li><li>Dedicated partner</li></ul>
+        <button class="pick" type="button" data-signup>Talk to us</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="sec" id="faq" data-screen-label="FAQ">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Questions</span>
+      <h2>Fair questions, <em>straight answers.</em></h2>
+    </div>
+    <div class="faq reveal" data-delay="100">
+      <details>
+        <summary>What is Chrysa?</summary>
+        <p class="fa">Chrysa is an AI marketing command centre. It connects the tools you already run — GA4, HubSpot, SEMrush, Klaviyo, Modash and more — and reads them as one system, so every past campaign, live project and future calendar lives under one roof.</p>
+      </details>
+      <details>
+        <summary>Does Chrysa replace my existing tools?</summary>
+        <p class="fa">No. Chrysa sits <b>above</b> your stack, not instead of it. Your dashboards keep doing what they do — Chrysa reads them together, so the fragments become one answer instead of ten tabs.</p>
+      </details>
+      <details>
+        <summary>How is this different from asking ChatGPT?</summary>
+        <p class="fa">A general chatbot guesses from whatever you paste into it. Chrysa answers from your <b>connected, live stack</b> — and cites the source of every number, so you can defend the answer in a budget meeting.</p>
+      </details>
+      <details>
+        <summary>How is Chrysa different from enterprise suites like Sprinklr?</summary>
+        <p class="fa">Enterprise platforms are built for hundred-person marketing organisations, with contracts and onboarding to match. Chrysa is built for the person who <b>is</b> the marketing department — connected in minutes, from $29 a month.</p>
+      </details>
+      <details>
+        <summary>Where does my data go?</summary>
+        <p class="fa">Chrysa connects to your tools read-only and your workspace stays yours. Disconnect any source at any time.</p>
+      </details>
+      <details>
+        <summary>What does early access include?</summary>
+        <p class="fa">The beta dashboard today, a founding-member rate locked for as long as you stay subscribed, and a real say in what ships next. Monthly billing, cancel anytime.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="cta" data-screen-label="CTA">
+    <div class="cta-inner glass glass-hi reveal"><img class="cta-emblem" src="marc/chrysa-emblem.png" alt="Chrysa emblem">
+      <span class="cta-sub">AI Marketing &amp; Communications</span>
+      <h2>Less reporting theatre.<br><em>More marketing intelligence.</em></h2>
+      <p>Chrysa gives marketers the clarity to move faster, defend decisions, brief better and turn performance into progress.</p>
+      <div class="cta-actions">
+        <a class="btn btn-solid btn-lg" href="marc/index.html" data-signup>Request early access</a>
+        <a class="btn btn-ghost btn-lg" href="dashboard.html">Open the beta dashboard</a>
+      </div>
+      <p class="cta-audit">Start with a <b>Chrysa Marketing Audit</b> — a clear read on what is working, what is leaking and what to do next.</p>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER LINE ============ -->
+  <p class="foot-line reveal">Less noise. <em>A clearer mind.</em></p>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="foot">
+    <div class="foot-inner">
+      <a class="brand" href="#top">
+        <span class="brand-chip"><img src="marc/chrysa-emblem.png" alt="Chrysa" class="brand-emblem"></span>
+        <span>Chrysa</span>
+      </a>
+      <nav>
+        <a href="#modules">What it does</a>
+        <a href="#stack">Integrations</a>
+        <a href="#pricing">Pricing</a>
+        <a href="marc/index.html" data-signup>Log in</a>
+      </nav>
+      <p class="copy">© 2026 Chrysa AI · <b>chrysa.ai</b></p>
+    </div>
+  </footer>
+
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <rect width="100" height="100" fill="#F7F5EF"></rect>
+      <path d="M50 26 C40 46 40 66 50 82 C60 66 60 46 50 26 Z" fill="#B8C7B0"></path>
+      <path d="M50 82 C38 72 35 56 42 45 C49 55 50 70 50 82 Z" fill="#93A18E" opacity="0.85"></path>
+      <path d="M50 82 C62 72 65 56 58 45 C51 55 50 70 50 82 Z" fill="#93A18E" opacity="0.85"></path>
+      <circle cx="50" cy="70" r="7" fill="#D4B98A"></circle>
+      <path d="M50 14 Q52 21 59 23 Q52 25 50 32 Q48 25 41 23 Q48 21 50 14 Z" fill="#D4B98A"></path>
+    </svg>
+  </template>
+
+  <script src="marc/image-slot.js"></script>
+  <script src="marc/landing2.js"></script>
+  <script src="marc/story.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>
