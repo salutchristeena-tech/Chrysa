@@ -69,3 +69,23 @@ body[data-require-auth]:not(.marc-unlocked) > *:not(.marc-auth-scrim){visibility
   .marc-form{grid-template-columns:1fr;}
   .marc-auth-title{font-size:28px;}
 }
+
+/* ── chrysa brand (2026-11-18): cream, oxblood, cerulean, thin serif + Inter ── */
+.marc-auth-scrim{font-family:Inter,system-ui,sans-serif;background:rgba(35,24,21,0.42);}
+.marc-auth-card{background:#FCF9F4;color:#231815;border:1px solid #EFE6DA;border-radius:28px;box-shadow:0 40px 90px -40px rgba(35,24,21,0.55);}
+.marc-auth-chip{width:46px;height:46px;border-radius:50%;background:#E6EDF5;padding:6px;}
+.marc-auth-eyebrow{font-family:Inter,system-ui,sans-serif;font-size:13px;font-weight:500;letter-spacing:0;text-transform:none;color:#7D6B63;}
+.marc-auth-title{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;font-size:38px;color:#4D0E12;}
+.marc-auth-title em{color:#4A6688;}
+.marc-auth-sub,.marc-field label,.marc-thanks p{color:#5A4740;}
+.marc-google{border-color:#E8DED2;border-radius:24px;background:#FFFFFF;color:#231815;}
+.marc-google:hover{background:#FCF9F4;border-color:#231815;}
+.marc-or{color:#A8968C;}.marc-or::before,.marc-or::after{background:#EFE6DA;}
+.marc-field input,.marc-field select,.marc-field textarea{border-color:#E8DED2;border-radius:14px;background:#FFFFFF;color:#231815;}
+.marc-field input:focus,.marc-field select:focus,.marc-field textarea:focus{border-color:#4D0E12;}
+.marc-field .err{color:#8C2B22;}.marc-field.invalid input{border-color:#8C2B22;}
+.marc-submit,.marc-thanks .enter{border-radius:26px;background:#4D0E12;color:#FFFFFF;font-weight:600;}
+.marc-submit:hover,.marc-thanks .enter:hover{background:#6A1A1F;}
+.marc-fine{color:#A8968C;}.marc-note{color:#4A6688;}
+.marc-thanks .tick{background:#A5BCD6;color:#231815;}
+.marc-thanks h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:300;color:#4D0E12;}

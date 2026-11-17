@@ -46,7 +46,7 @@
     if (!res.ok) throw new Error("Supabase insert failed: " + res.status);
   }
 
-  const EMBLEM_SRC = /\/marc\//.test(location.pathname) ? "chrysa-emblem.png" : "marc/chrysa-emblem.png";
+  const EMBLEM_SRC = "/brand/chrysa-120.png";
   const MONO = '<img src="' + EMBLEM_SRC + '" alt="Chrysa" style="width:100%;height:100%;object-fit:contain;display:block;">';
 
   const read = (k, fb) => { try { return JSON.parse(localStorage.getItem(k)) ?? fb; } catch { return fb; } };
@@ -174,8 +174,8 @@
           ${gate ? "" : '<button class="marc-auth-x" aria-label="Close">&times;</button>'}
         </div>
         <p class="marc-auth-eyebrow">${gate ? "Invite-only access" : "Request early access"}</p>
-        <h2 class="marc-auth-title">${gate ? "Create your <em>Chrysa</em> access" : "Get early access to <em>Chrysa</em>"}</h2>
-        <p class="marc-auth-sub">The AI command center for modern marketing. Tell us a little about your brand and step straight into the live workspace.</p>
+        <h2 class="marc-auth-title">${gate ? "Create your <em>chrysa</em> access" : "Get early access to <em>chrysa</em>"}</h2>
+        <p class="marc-auth-sub">A marketing mind you can keep. Tell us a little about your brand, and we'll be in touch as Chrysa opens to founding members.</p>
 
         <form class="marc-form" novalidate>
           <div class="marc-field"><label>Full name</label><input name="name" type="text" placeholder="Your name"><span class="err">Please add your name</span></div>
@@ -188,7 +188,7 @@
           <div class="marc-field full"><label>Channels / markets</label><input name="regions" type="text" placeholder="e.g. paid social, creators &amp; PR across 3 markets"></div>
           <div class="marc-field full"><label>Biggest marketing challenge</label><textarea name="challenge" placeholder="What's hardest about your marketing today?"></textarea></div>
           <div class="marc-note"></div>
-          <button class="marc-submit" type="submit">Create access &rarr;</button>
+          <button class="marc-submit" type="submit">Request early access &rarr;</button>
           <p class="marc-fine">Stored privately for your early-access onboarding. No spam, ever.</p>
         </form>
       </div>`;

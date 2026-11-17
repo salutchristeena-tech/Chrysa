@@ -2,23 +2,23 @@
 # Builds the PUBLIC website into site-dist/ and zips it for a Netlify drag-and-drop deploy.
 # Only the files the website needs are included. Setup notes, schema files, edge-function
 # source, duplicates and build leftovers stay out of the live site.
-# Changes nothing online: upload the zip yourself in Netlify (Deploys -> drag and drop).
+# Netlify runs this on every push to main and publishes only site-dist/ (see netlify.toml).
 set -eu
 cd "$(dirname "$0")/.."
 rm -rf site-dist
 mkdir -p site-dist
-for f in index.html checkout.html auth.js auth.css landing2.css \
+for f in index.html checkout.html auth.js auth.css site.css \
          privacy.html terms.html data-deletion.html netlify.toml _redirects; do
   cp "$f" site-dist/
 done
-# Only the assets the public pages use. The demo dashboard (dashboard.html, marc/dashboard.*,
-# marc/connect.*) and the old demo app (marc/index.html, app.js, data.js, styles.css, *.jsx)
-# are hidden until the real app opens at app.chrysa.ai.
-mkdir -p site-dist/marc
-for f in chrysa-emblem.png landing2.css landing2.js landing3.css story.css story.js image-slot.js; do
-  cp "marc/$f" site-dist/marc/
-done
-cp -R marc/img site-dist/marc/img
+# Brand images (the chrysa mascot). The old marc/ demo files and emblem are no longer used.
+cp -R brand site-dist/brand
+# On Netlify (NETLIFY=true) the build stops here and Netlify publishes site-dist/.
+# Locally it also makes a zip, handy for a manual upload.
+if [ "${NETLIFY:-}" = "true" ]; then
+  echo "Built site-dist/ ($(find site-dist -type f | wc -l | tr -d ' ') files) for Netlify"
+  exit 0
+fi
 zip_path="${1:-$HOME/Desktop/chrysa-site-$(date +%Y-%m-%d).zip}"
 rm -f "$zip_path"
 (cd site-dist && zip -qr "$zip_path" .)

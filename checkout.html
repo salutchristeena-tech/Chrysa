@@ -3,24 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/png" href="marc/chrysa-emblem.png">
+  <link rel="icon" type="image/png" href="brand/chrysa-120.png">
   <title>Chrysa — Checkout</title>
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --ivory:#F7F5EF; --ink:#272E29; --ink-soft:rgba(39,46,41,0.66); --ink-faint:rgba(39,46,41,0.44);
-      --gold:#D4B98A; --gold-deep:#B8923F; --sage:#93A18E; --celadon:#B8C7B0; --meadow:#DCE5D2;
-      --serif:"Cormorant Garamond",Georgia,serif; --sans:"Jost",system-ui,sans-serif; --mono:"Spline Sans Mono",ui-monospace,monospace;
-      --line:rgba(39,46,41,0.12);
+      --ivory:#F6F0E9; --ink:#231815; --ink-soft:#5A4740; --ink-faint:#7D6B63;
+      --gold:#A5BCD6; --gold-deep:#4D0E12; --sage:#A5BCD6; --celadon:#E6EDF5; --meadow:#F5EFC6;
+      --serif:"Cormorant Garamond",Georgia,serif; --sans:Inter,system-ui,sans-serif; --mono:Inter,system-ui,sans-serif;
+      --line:#E8DED2;
     }
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:var(--sans);background:var(--ivory);color:var(--ink);min-height:100svh;
       -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center;
-      background-image:radial-gradient(700px 500px at 85% -10%, rgba(220,229,210,0.55), transparent 60%),
-        radial-gradient(600px 460px at -8% 90%, rgba(212,185,138,0.18), transparent 55%);}
+      background-image:radial-gradient(700px 500px at 85% -10%, rgba(165,188,214,0.35), transparent 60%),
+        radial-gradient(600px 460px at -8% 90%, rgba(245,239,198,0.55), transparent 55%);}
     .chead{width:100%;max-width:1040px;display:flex;align-items:center;justify-content:space-between;
       padding:26px clamp(20px,4vw,40px) 6px;}
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);}
@@ -78,6 +78,17 @@
     .back{grid-column:1/-1;font-size:13.5px;}
     .back a{color:var(--ink-soft);}
     @media (max-width:820px){main{grid-template-columns:1fr;}.summary{position:static;}}
+    /* chrysa brand overrides */
+    .brand img{width:38px;height:36px}
+    .brand b{font-weight:300;font-size:30px;color:#4D0E12}
+    h1{font-weight:300;color:#4D0E12}h1 em{color:#4A6688}
+    .plan,.summary{background:#FCF9F4;border-color:#EFE6DA}
+    .plan.sel{border-color:#4D0E12;background:#FFFFFF}
+    .plan.sel .rad::after{background:#4D0E12}
+    .plan .pp,.srow.total b{font-weight:300}
+    .summary h2,.field label,.secure{letter-spacing:0.02em;text-transform:none;font-size:13px}
+    .paybtn{background:#4D0E12;color:#FFFFFF}.paybtn:hover{background:#6A1A1F}
+    .setup{background:#F8F2D9;border-color:#EDE3BE}
   </style>
 </head>
 <body>
@@ -94,8 +105,8 @@
 
   <header class="chead">
     <a class="brand" href="index.html">
-      <img src="marc/chrysa-emblem.png" alt="Chrysa emblem">
-      <b>Chrysa</b>
+      <img src="brand/chrysa-120.png" alt="">
+      <b>chrysa</b>
     </a>
     <span class="secure">🔒 Secured by Stripe</span>
   </header>
@@ -104,17 +115,17 @@
     <h1>Join the founding members. <em>Lock your rate for life.</em></h1>
 
     <div class="plans" role="radiogroup" aria-label="Choose a plan">
-      <button class="plan" type="button" data-plan="solo" data-price="29">
+      <button class="plan" type="button" data-plan="solo" data-price="99">
         <span class="rad"></span>
-        <span class="pn">Solo</span>
-        <span class="pp">$29<small> /mo</small></span>
-        <span class="pd">One workspace · Ask Chrysa copilot · Diagnose &amp; competitor view</span>
+        <span class="pn">Starter</span>
+        <span class="pp">$99<small> /mo</small></span>
+        <span class="pd">One brand · Ask Chrysa · AI answers, SEO &amp; Reddit listening</span>
       </button>
-      <button class="plan sel" type="button" data-plan="growth" data-price="129">
+      <button class="plan sel" type="button" data-plan="growth" data-price="249">
         <span class="rad"></span>
-        <span class="pn">Growth — most popular</span>
-        <span class="pp">$129<small> /mo</small></span>
-        <span class="pd">All five modules · forecasting · board-ready reports · 10 seats</span>
+        <span class="pn">Pro — most popular</span>
+        <span class="pp">$249<small> /mo</small></span>
+        <span class="pd">Creators · competitor &amp; paid search · campaign reporting · 10 seats</span>
       </button>
       <button class="plan" type="button" data-plan="enterprise" data-price="">
         <span class="rad"></span>
@@ -126,9 +137,10 @@
 
     <aside class="summary">
       <h2>Order summary</h2>
-      <div class="srow"><span id="sum-plan">Growth plan</span><b id="sum-price">$129 / month</b></div>
+      <div class="srow"><span id="sum-plan">Pro plan</span><b id="sum-price">$249 / month</b></div>
       <div class="srow"><span>Founding rate</span><b>Locked for life</b></div>
-      <div class="srow total"><span>Due today</span><b id="sum-total">$129</b></div>
+      <div class="srow"><span>Free trial</span><b>7 days</b></div>
+      <div class="srow total"><span>Due today</span><b id="sum-total">$0</b></div>
       <div class="field">
         <label for="email">Work email</label>
         <input id="email" type="email" placeholder="you@yourbrand.com" autocomplete="email">
@@ -165,7 +177,7 @@
       var current = "growth";
 
       function labelFor(p) {
-        return p === "solo" ? "Solo plan" : p === "growth" ? "Growth plan" : "Enterprise plan";
+        return p === "solo" ? "Starter plan" : p === "growth" ? "Pro plan" : "Enterprise plan";
       }
       function select(name) {
         current = name;
@@ -179,7 +191,7 @@
           payLabel.textContent = "Talk to us";
         } else {
           sumPrice.textContent = "$" + price + " / month";
-          sumTotal.textContent = "$" + price;
+          sumTotal.textContent = "$0";
           payLabel.textContent = "Continue to secure payment";
         }
         setupNote.classList.remove("show");
