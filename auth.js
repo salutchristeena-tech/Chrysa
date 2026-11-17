@@ -233,16 +233,13 @@
       <div class="marc-thanks">
         <div class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>
         <h3>You're in, ${first}.</h3>
-        <p>Your Chrysa workspace is ready. We'll reach out at <strong>${data.email}</strong> to get you fully set up.</p>
-        <button class="enter" type="button">Enter Chrysa &rarr;</button>
+        <p>Thank you. You're on the early-access list, and we'll reach out at <strong>${data.email}</strong> when your workspace is ready.</p>
+        <button class="enter" type="button">Done</button>
       </div>`;
     card.querySelector(".enter").addEventListener("click", () => {
       if (typeof onEnter === "function") { onEnter(); return; }
       if (gate) { close(); location.reload(); }
-      else {
-        const dash = document.querySelector('a[href$="ashboard.html"]');
-        location.href = dash ? dash.getAttribute("href") : "dashboard.html";
-      }
+      else { close(); }
     });
   }
 
