@@ -266,5 +266,5 @@
     if (a && !hasSession()) { e.preventDefault(); open({}); }
   });
 
-  window.MarcAuth = { open, close, hasSession, exportCSV };
+  window.MarcAuth = { open, close, hasSession, exportCSV, save: persist };
 })();
