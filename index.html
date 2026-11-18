@@ -86,7 +86,7 @@
             <li class="m" style="font-size: 15.5px; color: #231815; display: flex; gap: 10px"><span style="color: #4A6688">✓</span>Your Google and Tripadvisor ratings, and where listings get you wrong</li>
             <li class="m" style="font-size: 15.5px; color: #231815; display: flex; gap: 10px"><span style="color: #4A6688">✓</span>Your first fix, already written</li>
           </ul>
-          <p class="m">Free, no card. One reading per brand. In your inbox within 2 working days.</p>
+          <p class="m">Free, no card. One reading per brand. Ready in a few minutes, on your own private page.</p>
         </div>
         <div>
           <form id="reading-form" class="card" style="display: flex; flex-direction: column; gap: 12px; padding: 28px; background: #FFFFFF" novalidate>
@@ -102,12 +102,12 @@
             <label class="m" style="display: flex; gap: 10px; align-items: flex-start; color: #5A4740"><input type="checkbox" name="pulse" style="margin-top: 3px"> Tell me when Chrysa's weekly Pulse launches: one short email on what AI says about my category.</label>
             <p id="rf-error" class="m" role="alert" style="color: #8C2B22; display: none"></p>
             <button class="btn btn-main" type="submit" style="width: 100%; margin-top: 4px">Read my brand</button>
-            <p class="m" style="font-size: 12px">We use these details only to prepare your reading and send it to you. <a href="privacy.html">Privacy policy</a></p>
+            <p class="m" style="font-size: 12px">We use these details only to prepare your reading. <a href="privacy.html">Privacy policy</a></p>
           </form>
           <div id="reading-done" class="card" role="status" style="display: none; flex-direction: column; gap: 14px; padding: 28px; background: #FFFFFF; text-align: center; align-items: center">
             <img src="brand/chrysa-480.png" width="120" height="115" alt="">
             <p class="h-m" style="font-size: 32px">Chrysa is on it.</p>
-            <p class="m" style="font-size: 15px; color: #5A4740" id="rf-done-text">Your reading arrives within 2 working days.</p>
+            <p class="m" style="font-size: 15px; color: #5A4740" id="rf-done-text">Taking you to your private reading…</p>
             <div style="width: 100%; border-top: 1px solid #EFE6DA; padding-top: 14px; display: flex; flex-direction: column; gap: 10px">
               <p class="m">Know a founder who should see theirs?</p>
               <button type="button" class="btn btn-soft" id="rf-share">Copy the link to share</button>
@@ -250,6 +250,7 @@
 </script>
 <script>
 (function(){
+  var READING_API='https://app.chrysa.ai/api/reading';
   var form=document.getElementById('reading-form'); if(!form) return;
   var err=document.getElementById('rf-error');
   function fail(m){ err.textContent=m; err.style.display='block'; }
@@ -266,9 +267,22 @@
     var data={ at:new Date().toISOString(), name:name, email:email, company:url, role:'', teamSize:'', regions:'',
                challenge:'Free first reading'+(rival?' | loses to: '+rival:'')+(pulse?' | Pulse: yes':' | Pulse: no'), method:'free_reading' };
     try{ if(window.MarcAuth&&window.MarcAuth.save) window.MarcAuth.save(data); }catch(x){}
-    form.style.display='none';
-    var done=document.getElementById('reading-done'); done.style.display='flex';
-    document.getElementById('rf-done-text').textContent='Your reading of '+url.replace(/^https?:\/\//,'')+' arrives at '+email+' within 2 working days.';
+    var btn=form.querySelector('button[type=submit]'); btn.disabled=true; btn.textContent='Starting your reading…';
+    function saved(){ // the reading service could not be reached: the request is still in the sign-up list
+      form.style.display='none';
+      var done=document.getElementById('reading-done'); done.style.display='flex';
+      document.getElementById('rf-done-text').textContent='We have your request for '+url.replace(/^https?:\/\//,'')+'. We will be in touch at '+email+' shortly.';
+    }
+    fetch(READING_API,{ method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ site:url, name:name, email:email, rival:rival }) })
+      .then(function(r){ return r.json().then(function(j){ return { status:r.status, body:j }; }); })
+      .then(function(res){
+        if(res.status===201 && res.body && res.body.link){ window.location.href=res.body.link; return; }
+        btn.disabled=false; btn.textContent='Read my brand';
+        if(res.status>=500){ saved(); return; }
+        fail((res.body && res.body.message) || 'Something went wrong. Please try again.');
+      })
+      .catch(function(){ saved(); });
   });
   var share=document.getElementById('rf-share');
   if(share) share.addEventListener('click',function(){ var link=location.origin+'/reading'; (navigator.clipboard?navigator.clipboard.writeText(link):Promise.reject()).then(function(){ share.textContent='Link copied'; },function(){ share.textContent=link; }); });
