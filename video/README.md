@@ -1,6 +1,6 @@
 # Chrysa launch film
 
-A 23-second launch film for Chrysa with the mascot. The animation is code, so the copy, colours and timing can be changed and the film rendered again.
+A 19-second launch film for Chrysa with the mascot. The animation is code, so the copy, colours and timing can be changed and the film rendered again.
 
 | File | What it is |
 | --- | --- |
@@ -14,7 +14,7 @@ A 23-second launch film for Chrysa with the mascot. The animation is code, so th
 ## Rebuild
 
 ```bash
-node render.js frames 30 2 0 23.06          # 690 frames at 3840x2160
+node render.js frames 30 2 0 19.0           # 570 frames at 3840x2160
 python3 soundtrack.py soundtrack.wav
 ffmpeg -framerate 30 -i frames/f%04d.png -i soundtrack.wav \
   -c:v libx264 -crf 16 -preset slow -pix_fmt yuv420p -c:a aac -b:a 192k \
@@ -30,8 +30,11 @@ ffmpeg -framerate 30 -i frames/f%04d.png -i soundtrack.wav \
 | 3.1 | "worth ✓ your voice." |
 | 3.9 | Dark panel: "Written in your voice." |
 | 4.7 | Scrolling cards of real signals: "Heard. Sorted. Drafted." |
-| 6.6 | Gold panel: "Sent with 1 tap." The panel shrinks into a phone. |
-| 8.0 | Chat with Chrysa, with the steps listed beside it: Listen, Brief, Draft, Approve, Measure. Confetti plays on "Done". |
-| 16.0 | Blue panel: "ask Chrysa" about reviews, AI search, creators, your rivals, then "anything." |
-| 18.4 | "A marketing mind, yours to keep." The panel shrinks to a card next to "always on." |
-| 20.7 | The Chrysa wordmark types itself in, with chrysa.ai underneath |
+| 6.6 | Gold panel: "Sent with 1 tap." |
+| 7.8 | Listen, Brief, Draft, Approve, Measure appear large and centred, one after another |
+| 10.2 | A counter climbs to "4 of 6", above "AI answers now name you.", with confetti |
+| 12.0 | Blue panel: "ask Chrysa" about reviews, AI search, creators, your rivals, then "anything." |
+| 14.35 | "A marketing mind, yours to keep." The panel shrinks to a card next to "always on." |
+| 16.65 | The Chrysa wordmark types itself in, with chrysa.ai underneath |
+
+The phone and chat scene from the first cut is still in `launch.html` but switched off (`phVis=false`).

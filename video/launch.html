@@ -96,6 +96,16 @@
   #steps{left:560px;top:0;width:420px;height:1080px}
   #steps div{position:absolute;left:0;font-size:58px;line-height:70px}
 
+  /* outcome scene (replaces the phone) */
+  #steps2{left:0;right:0;top:0;height:1080px}
+  #steps2 div{position:absolute;left:0;right:0;text-align:center;font-size:104px;line-height:118px;letter-spacing:-0.03em}
+  #stat{left:0;right:0;top:0;height:1080px;text-align:center}
+  #statN{position:absolute;left:0;right:0;top:330px;font-size:260px;line-height:1;letter-spacing:-0.05em;font-variant-numeric:tabular-nums}
+  #statN .of{color:var(--muted)}
+  #statC{position:absolute;left:0;right:0;top:640px;font-size:54px}
+  #statC b{font-weight:500;color:var(--blue)}
+  #conf2{position:absolute;left:0;top:0;pointer-events:none}
+
   /* blue panel */
   #blue{background:var(--blue);color:#fff}
   #askL{position:absolute;top:497px;font-size:72px}
@@ -167,6 +177,11 @@
     </div>
   </div>
   <div id="morph" class="abs will"></div>
+
+  <!-- 6b outcome -->
+  <div id="steps2" class="abs"></div>
+  <div id="stat" class="abs will"><div id="statN"><span id="nn">0</span><span class="of"> of 6</span></div><div id="statC">AI answers now <b>name you.</b></div></div>
+  <canvas id="conf2" width="1920" height="1080"></canvas>
 
   <!-- 7 blue -->
   <div id="blue" class="panel will"><div id="askL">ask Chrysa</div><div id="askWin"><div id="askList"></div></div></div>
@@ -255,6 +270,10 @@ function measure(){msgEls.forEach(e=>e.style.display='none');readEl.style.displa
 const steps=['Listen','Brief','Draft','Approve','Measure'];
 const stepT=[9.9,11.6,12.7,13.7,14.7];
 steps.forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;d.id='st'+i;$('steps').appendChild(d);});
+steps.forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;d.id='sb'+i;$('steps2').appendChild(d);});
+const stepB=[7.85,8.3,8.75,9.2,9.65];
+const conf2=[];{let s=11;const R=()=>{s=(s*16807)%2147483647;return s/2147483647};const cols=['#C98F34','#41628F','#7A3B2B','#93A18E','#E8C77E','#A5BCD6','#E2603A'];for(let i=0;i<220;i++)conf2.push({x:R()*1920,y:-30-R()*500,vx:(R()-.5)*260,vy:380+R()*480,r:R()*6.28,vr:(R()-.5)*10,w:10+R()*10,h:16+R()*14,c:cols[i%cols.length]});}
+function drawConf2(t){const c=$('conf2'),g=c.getContext('2d');g.clearRect(0,0,1920,1080);const dt=t-10.8;if(dt<0||dt>1.6)return;const fade=1-seg(dt,1.1,1.6);conf2.forEach(p=>{const x=p.x+p.vx*dt,y=p.y+p.vy*dt+140*dt*dt;g.save();g.globalAlpha=fade;g.translate(x,y);g.rotate(p.r+p.vr*dt);g.fillStyle=p.c;g.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.r+dt*6)));g.restore();});}
 
 /* confetti */
 const conf=[];{let s=7;const R=()=>{s=(s*16807)%2147483647;return s/2147483647};
@@ -310,19 +329,37 @@ function render(t){
 
   // ---- 5 gold panel (6.6 - 8.2) then morph to phone
   const gIn=eio(seg(t,6.6,6.95));
-  const gx=(1-gIn)*1920;
-  const goldVis=t>6.6&&t<7.65;
+  const gx=(1-gIn)*1920 - eio(seg(t,7.55,7.9))*1920;
+  const goldVis=t>6.6&&t<7.95;
   css($('gold'),{transform:`translateX(${gx}px)`,visibility:goldVis?'visible':'hidden'});
   const gtp=seg(t,6.85,7.15);fadeBlur($('goldT'),eout(gtp)*(1-seg(t,7.45,7.6)),20);
   // morph rect from full screen to phone screen rect
   const ph={x:740+14,y:90+14,w:440-28,h:900-28,r:58};
   const mp=eio(seg(t,7.6,8.25));
-  const morphVis=t>=7.6&&t<8.45;
+  const morphVis=false;
   css($('morph'),{left:lerp(0,ph.x,mp)+'px',top:lerp(0,ph.y,mp)+'px',width:lerp(1920,ph.w,mp)+'px',height:lerp(1080,ph.h,mp)+'px',
     borderRadius:lerp(0,ph.r,mp)+'px',background:'#C98F34',opacity:1-seg(t,8.15,8.45),visibility:morphVis?'visible':'hidden'});
 
-  // ---- 6 phone + steps (8.1 - 16.3)
-  const phVis=t>8.05&&t<16.45;
+  // ---- 6 outcome: steps then the number (7.6 - 12.0)
+  let sbi=-1;stepB.forEach((s,i)=>{if(t>=s)sbi=i;});
+  let shiftB=0;for(let i=1;i<5;i++)shiftB+=eio(seg(t,stepB[i],stepB[i]+0.35))*59;
+  const sOut=eio(seg(t,10.05,10.4));
+  steps.forEach((s,i)=>{const el=$('sb'+i);const p=eout(seg(t,stepB[i],stepB[i]+0.35));
+    el.style.top=(481+i*118-shiftB-sOut*80)+'px';el.style.opacity=p*(1-sOut);
+    el.style.filter=`blur(${(1-p)*12+sOut*14}px)`;el.style.transform=`translateY(${(1-p)*30}px)`;
+    el.style.color=(i===sbi)?'#231815':'#CFC5BB';});
+  show($('steps2'),t>7.8&&t<10.45);
+  const stIn=eout(seg(t,10.2,10.55));
+  css($('stat'),{opacity:stIn,filter:`blur(${(1-stIn)*14}px)`,transform:`translateY(${(1-stIn)*40}px) scale(${lerp(0.96,1,stIn)})`,visibility:(t>10.15&&t<12.5)?'visible':'hidden'});
+  $('nn').textContent=Math.round(lerp(0,4,eout(seg(t,10.25,10.8))));
+  const cp=seg(t,10.8,11.0);$('nn').style.color=`rgb(${lerp(35,65,cp)},${lerp(24,98,cp)},${lerp(21,143,cp)})`;
+  css($('statC'),{opacity:eout(seg(t,10.45,10.8))});
+  drawConf2(t);
+  // everything after this point keeps its original timing, shifted 4.05s earlier
+  t=t+4.05;
+
+  // ---- 6 phone + steps (retired)
+  const phVis=false;
   const phIn=eout(seg(t,8.05,8.35));
   const shift=eio(seg(t,9.3,9.9))*180;
   css($('phone'),{visibility:phVis?'visible':'hidden',opacity:phIn,transform:`translateX(${shift}px) scale(${lerp(0.985,1,phIn)})`});
@@ -351,7 +388,7 @@ function render(t){
     el.style.top=(505+i*70-listShift)+'px';el.style.opacity=p*(1-seg(t,16.0,16.3));
     el.style.filter=`blur(${(1-p)*10}px)`;el.style.transform=`translateY(${(1-p)*24}px)`;
     const act=(i===si)?1:0;el.style.color=act?'#231815':'#BDB1A6';});
-  show($('steps'),t>9.5&&t<16.45);
+  show($('steps'),false);
 
   // ---- 7 blue (16.1 - 18.6)
   const bIn=eio(seg(t,16.05,16.45)), bOut=t>18.45;
@@ -400,7 +437,7 @@ function render(t){
 window.__ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>i.onload=r)))).then(()=>{measure();render(0);});
 window.render=render;
 // live preview when opened directly in a browser
-if(!navigator.webdriver){const t0=performance.now();(function loop(){window.__ready.then(()=>render(((performance.now()-t0)/1000)%23.5));requestAnimationFrame(loop);})();}
+if(!navigator.webdriver){const t0=performance.now();(function loop(){window.__ready.then(()=>render(((performance.now()-t0)/1000)%19.5));requestAnimationFrame(loop);})();}
 </script>
 </body>
 </html>
