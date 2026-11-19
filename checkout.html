@@ -150,6 +150,10 @@
       <div class="srow"><span>Founding rate</span><b>Locked for life</b></div>
       <div class="srow total"><span>Due today</span><b id="sum-total">$249</b></div>
       <div class="field">
+        <label for="site">Your website</label>
+        <input id="site" type="text" inputmode="url" placeholder="yourbrand.com" autocomplete="url">
+      </div>
+      <div class="field">
         <label for="email">Email you'll sign in with</label>
         <input id="email" type="email" placeholder="you@yourbrand.com" autocomplete="email">
         <p class="paynote" style="margin:6px 0 0">Use the same email (or Google account) you'll use to sign in to Chrysa. Your plan opens as soon as you sign in with it.</p>
@@ -259,11 +263,20 @@
           try { localStorage.setItem("chrysa-checkout-email", email.value); } catch (e) {}
         }
         var links = window.CHRYSA_PAYMENT_LINKS || {};
-        var url = links[bill === "year" ? current + "_year" : current];
+        var key = bill === "year" ? current + "_year" : current;
+        var url = links[key];
+        var siteEl = document.getElementById("site");
         if (url) {
-          // prefill email on Stripe's hosted page
-          var sep = url.indexOf("?") === -1 ? "?" : "&";
-          location.href = url + (email && email.value ? sep + "prefilled_email=" + encodeURIComponent(email.value) : "");
+          // Through the app: it remembers the website (so the first reading starts by itself after
+          // sign-in), then forwards to Stripe with the email filled in.
+          var f = document.createElement("form");
+          f.method = "POST";
+          f.action = "https://app.chrysa.ai/start";
+          [["plan", key], ["email", email && email.value ? email.value : ""], ["site", siteEl && siteEl.value ? siteEl.value : ""]].forEach(function (kv) {
+            var i = document.createElement("input"); i.type = "hidden"; i.name = kv[0]; i.value = kv[1]; f.appendChild(i);
+          });
+          document.body.appendChild(f);
+          f.submit();
         } else {
           setupNote.classList.add("show");
         }
