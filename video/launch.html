@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chrysa launch film</title>
+<style>
+  :root{
+    --bg:#F4EFE8; --ink:#231815; --muted:#BDB1A6; --soft:#D9D0C6;
+    --blue:#41628F; --gold:#C98F34; --dark:#1B1411; --sage:#93A18E; --wine:#7A3B2B;
+    --bubble:#ECE6DF; --mine:#41628F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg)}
+  body{font-family:"Inter Display","Inter",system-ui,sans-serif;color:var(--ink);font-weight:500;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased}
+  #stage{position:absolute;inset:0;overflow:hidden;background:var(--bg)}
+  .abs{position:absolute}
+  .center{left:0;right:0;text-align:center}
+  .will{will-change:transform,opacity}
+  img{display:block}
+
+  /* scene 1 */
+  #intro{top:120px;font-size:54px}
+  #intro b{font-weight:500;color:var(--blue)}
+  #hero{left:50%;top:50%;width:420px;margin-left:-210px;margin-top:-170px}
+  #hero img{width:100%}
+
+  /* word cycler */
+  #cyc{left:0;right:0;top:0;height:1080px}
+  #cycHead{position:absolute;left:0;right:0;top:470px;text-align:center;font-size:58px;display:flex;justify-content:center;align-items:center;gap:16px}
+  .mini{width:56px;height:54px;object-fit:contain}
+  #cycWin{position:absolute;left:0;right:0;top:540px;height:220px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(#000 0,#000 30%,rgba(0,0,0,.35) 62%,transparent 100%)}
+  #cycList{position:absolute;left:0;right:0;top:0;text-align:center;font-size:58px;line-height:70px}
+
+  #tail{top:500px;font-size:58px;display:flex;justify-content:center;align-items:center;gap:18px}
+  .tick{width:52px;height:52px;border-radius:13px;background:var(--ink);display:inline-flex;align-items:center;justify-content:center}
+
+  /* dark panel */
+  .panel{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden}
+  #dark1{background:var(--dark);color:#F7F1EA}
+  #dark1 .t{position:absolute;left:0;right:0;top:500px;font-size:66px;display:flex;justify-content:center;align-items:center;gap:20px}
+  #dark1 .t span.dim{color:#8F837A}
+  .bubbleIcon{width:66px;height:66px;border-radius:18px;background:var(--gold);display:inline-flex;align-items:center;justify-content:center}
+
+  /* marquee */
+  #marq{left:0;top:0;width:1920px;height:1080px}
+  .row{position:absolute;left:0;height:120px;display:flex;gap:22px;white-space:nowrap}
+  .card{flex:0 0 auto;width:430px;height:112px;border-radius:24px;background:#FFFDFA;box-shadow:0 2px 0 rgba(35,24,21,.04),0 10px 30px rgba(35,24,21,.05);display:flex;align-items:center;gap:18px;padding:0 22px}
+  .card .ic{width:58px;height:58px;border-radius:16px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:24px}
+  .card .tx{flex:1;min-width:0}
+  .card .h{font-size:23px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+  .card .s{font-size:18px;color:#9A8E84;margin-top:4px;overflow:hidden;text-overflow:ellipsis}
+  .chip{flex:0 0 auto;font-size:18px;font-weight:600;color:#3C7A4A;background:#E3EFDF;border-radius:12px;padding:8px 12px}
+  #marqVeil{left:0;top:0;width:1920px;height:1080px;background:radial-gradient(ellipse 720px 340px at 50% 50%,rgba(244,239,232,.98) 35%,rgba(244,239,232,.8) 62%,rgba(244,239,232,0) 100%)}
+  #stack{left:0;right:0;top:0;height:1080px;font-size:92px;line-height:104px;text-align:center;letter-spacing:-0.025em}
+  #stack div{position:absolute;left:0;right:0}
+
+  /* gold panel */
+  #gold{background:var(--gold)}
+  #goldT{position:absolute;left:0;right:0;top:498px;font-size:72px;color:#FFF8EE;display:flex;justify-content:center;align-items:center;gap:18px}
+  .tapIcon{width:74px;height:74px;border-radius:20px;background:#FFF8EE;display:inline-flex;align-items:center;justify-content:center}
+
+  /* phone */
+  #phone{position:absolute;width:440px;height:900px;left:740px;top:90px;border-radius:70px;background:#120E0C;padding:14px;box-shadow:0 40px 80px rgba(35,24,21,.16)}
+  #screen{position:absolute;inset:14px;border-radius:58px;background:#FFFDFA;overflow:hidden}
+  #island{position:absolute;left:50%;top:12px;width:124px;height:36px;margin-left:-62px;border-radius:20px;background:#120E0C;z-index:5}
+  #status{position:absolute;left:0;right:0;top:16px;height:30px;font-size:17px;font-weight:600;display:flex;justify-content:space-between;padding:0 38px;z-index:4}
+  #chead{position:absolute;left:0;right:0;top:56px;height:112px;text-align:center;background:rgba(255,253,250,.94);z-index:3;border-bottom:1px solid #EFE9E2}
+  #chead .av{width:60px;height:60px;border-radius:50%;background:linear-gradient(160deg,#E8EEF6,#F7EBD6);margin:4px auto 0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  #chead .av img{width:50px}
+  #chead .nm{font-size:15px;margin-top:5px;color:#5A4E47}
+  #chat{position:absolute;left:0;right:0;top:168px;bottom:76px;overflow:hidden}
+  #msgs{position:absolute;left:0;right:0;top:0;padding:14px 16px 10px}
+  .stamp{font-size:13px;color:#A99D93;text-align:center;margin:2px 0 10px}
+  .m{width:fit-content;max-width:76%;font-size:17px;line-height:1.3;padding:10px 15px;border-radius:21px;margin:5px 0;transform-origin:0 100%}
+  .m.me{margin-left:auto;background:var(--mine);color:#fff;transform-origin:100% 100%}
+  .m.her{background:var(--bubble);color:var(--ink)}
+  .m.cardm{max-width:86%;padding:12px 14px 8px}
+  .m .ttl{font-weight:600;font-size:16px;margin-bottom:8px}
+  .mo{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #DDD5CC}
+  .mo .d{width:34px;height:34px;border-radius:10px;flex:0 0 auto;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .mo .w{flex:1;min-width:0}
+  .mo .a{font-size:14px;font-weight:600}
+  .mo .b{font-size:12.5px;color:#8C8077;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mo .c{font-size:12px;font-weight:600;color:#3C7A4A;background:#E1EEDC;border-radius:8px;padding:4px 7px;white-space:nowrap}
+  .bar{height:8px;border-radius:5px;background:#DDD5CC;margin-top:9px;overflow:hidden}
+  .bar i{display:block;height:100%;width:66%;background:linear-gradient(90deg,var(--sage),#5E8A5F);border-radius:5px}
+  .read{font-size:12px;color:#A99D93;text-align:right;margin:-1px 4px 4px}
+  #typing{position:absolute;left:16px;background:var(--bubble);border-radius:20px;width:70px;height:40px;display:flex;align-items:center;justify-content:center;gap:6px}
+  #typing i{width:9px;height:9px;border-radius:50%;background:#A99D93;display:block}
+  #inbar{position:absolute;left:14px;right:14px;bottom:24px;height:44px;border-radius:22px;border:1.5px solid #E5DED6;font-size:16px;color:#B6AAA0;display:flex;align-items:center;padding:0 16px;justify-content:space-between}
+  #inbar .send{width:30px;height:30px;border-radius:50%;background:var(--mine);display:flex;align-items:center;justify-content:center}
+  #home{position:absolute;left:50%;bottom:8px;width:150px;height:5px;border-radius:3px;background:#231815;margin-left:-75px}
+  #confetti{position:absolute;inset:0;pointer-events:none;z-index:6}
+
+  #steps{left:560px;top:0;width:420px;height:1080px}
+  #steps div{position:absolute;left:0;font-size:58px;line-height:70px}
+
+  /* blue panel */
+  #blue{background:var(--blue);color:#fff}
+  #askL{position:absolute;top:497px;font-size:72px}
+  #askWin{position:absolute;top:418px;height:260px;width:900px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(transparent 0,#000 34%,#000 66%,transparent 100%)}
+  #askList{position:absolute;left:0;top:0;font-size:72px;line-height:86px}
+
+  /* dark 2 */
+  #dark2{background:var(--dark);color:#F7F1EA;overflow:hidden}
+  #d2t{position:absolute;left:0;right:0;top:0;height:100%;display:flex;justify-content:center;align-items:center;gap:20px;font-size:62px;white-space:nowrap}
+  #d2t .av{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#FFFDFA,#EDE4D8);display:flex;align-items:center;justify-content:center}#d2t .av img{width:74px}
+  #d2url{position:absolute;left:0;right:0;font-size:22px;color:#8F837A;text-align:center}
+  #always{position:absolute;font-size:74px;color:var(--blue);white-space:nowrap}
+
+  /* end */
+  #end{left:0;right:0;top:0;height:1080px}
+  #logo{position:absolute;left:0;right:0;top:460px;display:flex;justify-content:center;align-items:center;gap:18px;font-size:92px;letter-spacing:-0.03em}
+  #logo img{width:104px;height:100px;object-fit:contain}
+  #url{position:absolute;left:0;right:0;top:588px;text-align:center;font-size:32px;color:#9A8E84}
+  #grain{position:absolute;inset:0;pointer-events:none;opacity:.035;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 intro -->
+  <div id="intro" class="abs center will">Introducing Chrysa for <b>brands.</b></div>
+  <div id="hero" class="abs will"><img src="chrysa-cut.png" alt=""></div>
+
+  <!-- 2 cycler -->
+  <div id="cyc" class="abs will">
+    <div id="cycHead"><img class="mini" src="chrysa-cut.png" alt=""><span>Chrysa finds the moments</span></div>
+    <div id="cycWin"><div id="cycList"></div></div>
+  </div>
+  <div id="tail" class="abs center will">
+    <span>worth</span>
+    <span class="tick"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="#F4EFE8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span>your voice.</span>
+  </div>
+
+  <!-- 3 dark -->
+  <div id="dark1" class="panel will"><div class="t">
+    <span class="bubbleIcon"><svg width="38" height="38" viewBox="0 0 24 24"><path d="M12 3C6.9 3 3 6.4 3 10.6c0 2.4 1.3 4.5 3.3 5.9L5.6 20l4-2.2c.8.2 1.6.3 2.4.3 5.1 0 9-3.4 9-7.5S17.1 3 12 3z" fill="#FFF8EE"/></svg></span>
+    <span>Written in</span><span class="dim" id="yv">your voice.</span></div></div>
+
+  <!-- 4 marquee -->
+  <div id="marq" class="abs will"></div>
+  <div id="marqVeil" class="abs will"></div>
+  <div id="stack" class="abs will"><div id="s0">Heard.</div><div id="s1">Sorted.</div><div id="s2">Drafted.</div></div>
+
+  <!-- 5 gold -->
+  <div id="gold" class="panel will"><div id="goldT">
+    <span>Sent with 1</span>
+    <span class="tapIcon"><svg width="42" height="42" viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 013 0V10m0-1.2a1.5 1.5 0 013 0V11m0-1a1.5 1.5 0 013 0v4.5A6.5 6.5 0 0111.5 21h-.6a6 6 0 01-4.6-2.2L3.6 15.6a1.6 1.6 0 012.3-2.2L9 15.5" fill="none" stroke="#C98F34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span>tap.</span></div></div>
+
+  <!-- 6 phone -->
+  <div id="steps" class="abs"></div>
+  <div id="phone" class="will">
+    <div id="screen">
+      <div id="island"></div>
+      <div id="status"><span>9:41</span><span>
+        <svg width="70" height="14" viewBox="0 0 70 14"><rect x="0" y="8" width="3.5" height="6" rx="1" fill="#231815"/><rect x="5" y="6" width="3.5" height="8" rx="1" fill="#231815"/><rect x="10" y="3.5" width="3.5" height="10.5" rx="1" fill="#231815"/><rect x="15" y="1" width="3.5" height="13" rx="1" fill="#231815"/><path d="M29 5.5a9 9 0 0112 0l-1.6 1.6a6.7 6.7 0 00-8.8 0zM31.6 8.2a5.3 5.3 0 016.8 0L35 11.6z" fill="#231815"/><rect x="45" y="1.5" width="21" height="11" rx="3.2" fill="none" stroke="#231815" stroke-width="1.2"/><rect x="47" y="3.5" width="15" height="7" rx="1.6" fill="#231815"/><rect x="67" y="5" width="1.8" height="4" rx=".8" fill="#231815"/></svg></span></div>
+      <div id="chead"><div class="av"><img src="chrysa-cut.png" alt=""></div><div class="nm">Chrysa ›</div></div>
+      <div id="chat"><div id="msgs"></div><div id="typing"><i></i><i></i><i></i></div></div>
+      <div id="inbar"><span>Ask Chrysa</span><span class="send"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M12 20V5M5 11l7-7 7 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+      <div id="home"></div>
+      <canvas id="confetti" width="412" height="872"></canvas>
+    </div>
+  </div>
+  <div id="morph" class="abs will"></div>
+
+  <!-- 7 blue -->
+  <div id="blue" class="panel will"><div id="askL">ask Chrysa</div><div id="askWin"><div id="askList"></div></div></div>
+
+  <!-- 8 dark 2 -->
+  <div id="dark2" class="panel will">
+    <div id="d2t"><span>A marketing mind,</span><span class="av"><img src="chrysa-cut.png" alt=""></span><span>yours to keep.</span></div>
+    <div id="d2url">chrysa.ai</div>
+  </div>
+  <div id="always" class="will">always on.</div>
+
+  <!-- 9 end -->
+  <div id="end" class="abs"><div id="logo"><img id="logoImg" src="chrysa-cut.png" alt=""><span id="word"></span></div><div id="url">chrysa.ai</div></div>
+
+  <div id="grain"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const seg=(t,a,b)=>clamp((t-a)/(b-a));
+const lerp=(a,b,p)=>a+(b-a)*p;
+const eio=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;          // cubic in-out
+const eout=p=>1-Math.pow(1-p,3);
+const eout5=p=>1-Math.pow(1-p,5);
+const expo=p=>p===1?1:1-Math.pow(2,-10*p);
+const ein=p=>p*p*p;
+const back=p=>{const c1=1.55,c3=c1+1;return 1+c3*Math.pow(p-1,3)+c1*Math.pow(p-1,2)};
+function css(el,o){for(const k in o)el.style[k]=o[k];}
+function fadeBlur(el,p,dy=0,show=true){ // p 0..1 in
+  css(el,{opacity:p,filter:`blur(${(1-p)*14}px)`,transform:`translateY(${(1-p)*dy}px)`,visibility:p>0.001&&show?'visible':'hidden'});
+}
+
+/* ---------- build content ---------- */
+const words=['customers','conversations','reviews','moments'];
+$('cycList').innerHTML=words.map(w=>`<div>${w}</div>`).join('');
+const askWords=['about reviews','about AI search','about creators','about your rivals','anything.'];
+$('askList').innerHTML=askWords.map(w=>`<div>${w}</div>`).join('');
+
+const cards=[
+ ['R','#E2603A','r/dubai','“quiet brunch spot?”','94% intent'],
+ ['G','#4A78C2','Google search','“oat latte near JLT”','Fix ready'],
+ ['AI','#231815','ChatGPT','“best cafés, Marina”','Missing'],
+ ['♪','#1B1411','@layla.eats','Reel: spring menus','96% real'],
+ ['★','#C98F34','Google review','“saffron bun, unreal”','Reply drafted'],
+ ['IG','#B24A7C','@noor.d','asked about your beans','88% intent'],
+ ['X','#3A3330','@foodie_uae','compared you to a rival','Worth a reply'],
+ ['P','#5E8A5F','Perplexity','“specialty coffee”','You appear'],
+ ['R','#E2603A','r/abudhabi','“gluten-free pastries?”','91% intent'],
+ ['★','#C98F34','Tripadvisor','“lunch felt slow”','Reply drafted'],
+ ['IG','#B24A7C','@sara.m','tagged you in a story','Say thanks'],
+ ['G','#4A78C2','Google Maps','opening hours missing','Fix ready'],
+];
+function rowHTML(off){let h='';for(let i=0;i<14;i++){const c=cards[(i+off)%cards.length];
+  const chipCol=(c[4]==='Missing')?'style="color:#9A3B2B;background:#F4E1DA"':'';
+  h+=`<div class="card"><div class="ic" style="background:${c[1]}">${c[0]}</div><div class="tx"><div class="h">${c[2]}</div><div class="s">${c[3]}</div></div><div class="chip" ${chipCol}>${c[4]}</div></div>`;}
+  return h;}
+for(let r=0;r<5;r++){const d=document.createElement('div');d.className='row';d.id='row'+r;d.style.top=(206+r*140)+'px';d.innerHTML=rowHTML(r*3);$('marq').appendChild(d);}
+
+/* chat script: [time, kind, html] */
+const chat=[
+ [8.55,'me','Morning Chrysa. Spring menu launches Friday.'],
+ [9.05,'me','What needs me today?'],
+ [10.05,'her','On it. Reading 1,240 conversations about your category.'],
+ [10.75,'her','Every claim sourced, nothing guessed.'],
+ [11.75,'card',`<div class="ttl">3 moments worth your voice</div>
+   <div class="mo"><div class="d" style="background:#E2603A">R</div><div class="w"><div class="a">r/dubai</div><div class="b">Asking for a quiet brunch spot</div></div><div class="c">94% intent</div></div>
+   <div class="mo"><div class="d" style="background:#4A78C2">G</div><div class="w"><div class="a">“oat latte near JLT”</div><div class="b">412 searches, you're not listed</div></div><div class="c">Fix ready</div></div>
+   <div class="mo"><div class="d" style="background:#231815">AI</div><div class="w"><div class="a">ChatGPT</div><div class="b">Names a rival, not you</div></div><div class="c">Fix ready</div></div>`],
+ [12.85,'her','Replies drafted in your voice. Shall I send them?'],
+ [13.85,'me','Yes, all three.'],
+ [14.85,'her','Done. 3 replies live, 2 fixes shipped.<div class="bar"><i></i></div><div style="font-size:13px;color:#8C8077;margin-top:6px">Now named in 4 of 6 AI answers</div>'],
+];
+const typingSpans=[[9.45,10.05],[11.05,11.75],[14.25,14.85]];
+const msgEls=chat.map(([t,k,h])=>{const d=document.createElement('div');d.className='m '+(k==='me'?'me':'her')+(k==='card'?' cardm':'');d.innerHTML=h;return d;});
+const stamp=document.createElement('div');stamp.className='stamp';stamp.innerHTML='<b style="font-weight:600">Today</b> 8:02';
+$('msgs').appendChild(stamp);msgEls.forEach(e=>$('msgs').appendChild(e));
+const readEl=document.createElement('div');readEl.className='read';readEl.textContent='Read 8:03';
+$('msgs').insertBefore(readEl,msgEls[7]);
+// pre-measure heights after k messages
+let H=[];
+function measure(){msgEls.forEach(e=>e.style.display='none');readEl.style.display='none';
+  H=[$('msgs').offsetHeight];
+  msgEls.forEach((e,i)=>{e.style.display='block';if(i===7)readEl.style.display='block';H.push($('msgs').offsetHeight);});}
+
+const steps=['Listen','Brief','Draft','Approve','Measure'];
+const stepT=[9.9,11.6,12.7,13.7,14.7];
+steps.forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;d.id='st'+i;$('steps').appendChild(d);});
+
+/* confetti */
+const conf=[];{let s=7;const R=()=>{s=(s*16807)%2147483647;return s/2147483647};
+  const cols=['#C98F34','#41628F','#7A3B2B','#93A18E','#E8C77E','#A5BCD6','#E2603A'];
+  for(let i=0;i<110;i++)conf.push({x:R()*412,y:-20-R()*240,vx:(R()-.5)*90,vy:220+R()*260,r:R()*6.28,vr:(R()-.5)*10,w:5+R()*6,h:9+R()*8,c:cols[i%cols.length]});}
+function drawConfetti(t){const c=$('confetti'),g=c.getContext('2d');g.clearRect(0,0,412,872);
+  const dt=t-14.95;if(dt<0||dt>2.6)return;const fade=1-seg(dt,1.8,2.6);
+  conf.forEach(p=>{const x=p.x+p.vx*dt,y=p.y+p.vy*dt+60*dt*dt;g.save();g.globalAlpha=fade;g.translate(x,y);g.rotate(p.r+p.vr*dt);g.fillStyle=p.c;g.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.r+dt*6)));g.restore();});}
+
+/* ---------- render ---------- */
+function show(el,v){el.style.visibility=v?'visible':'hidden';}
+function render(t){
+  // ---- 1 intro (0 - 2.0)
+  const introIn=eout(seg(t,0.25,0.9)), introOut=seg(t,1.85,2.25);
+  fadeBlur($('intro'),introIn*(1-introOut),24);
+  $('intro').style.transform=`translateY(${(1-introIn)*24 - eio(introOut)*40}px)`;
+  const hp=seg(t,0.45,1.25);
+  const hs=lerp(0.55,1,back(hp))*(1-0.55*eio(seg(t,1.75,2.35)));
+  const hy=-eio(seg(t,1.75,2.35))*230 + (1-eout(hp))*60;
+  css($('hero'),{opacity:clamp(hp*2)*(1-seg(t,2.15,2.4)),filter:`blur(${(1-eout(hp))*18}px)`,transform:`translateY(${hy}px) scale(${hs}) rotate(${(1-eout(hp))*-8 + Math.sin(t*2.2)*1.2}deg)`,visibility:t<2.4?'visible':'hidden'});
+
+  // ---- 2 cycler (1.9 - 3.15)
+  const cIn=eout(seg(t,1.95,2.45)), cOut=seg(t,3.0,3.3);
+  fadeBlur($('cyc'),cIn*(1-cOut),30);
+  // head shows the noun only at the end; words scroll in list under the prefix
+  const head=$('cycHead').querySelector('span');
+  const pos=lerp(0,3,eio(seg(t,2.2,2.95)));
+  head.textContent='Chrysa finds the';
+  $('cycList').style.transform=`translateY(${-pos*70}px)`;
+  [...$('cycList').children].forEach((d,i)=>{const dist=Math.abs(i-pos);d.style.color=dist<0.5?'#231815':'#BDB1A6';d.style.opacity=clamp(1.2-dist*0.35);});
+  $('cycWin').style.top=(540)+'px';
+  // tail line
+  const tIn=eout(seg(t,3.15,3.6)), tOut=seg(t,3.95,4.15);
+  fadeBlur($('tail'),tIn*(1-tOut*0),22,t<4.3);
+
+  // ---- 3 dark panel rises (3.95 - 4.75)
+  const dIn=eio(seg(t,3.9,4.25)), dOut=eio(seg(t,4.75,5.1));
+  css($('dark1'),{transform:`translateY(${(1-dIn)*1080}px) translateX(${-dOut*1920}px)`,visibility:(t>3.9&&t<5.1)?'visible':'hidden'});
+  $('yv').style.color=t>4.35?'#F7F1EA':'#8F837A';
+  $('yv').style.transition='none';
+  const yvp=seg(t,4.2,4.5);$('yv').style.color=`rgb(${lerp(143,247,yvp)},${lerp(131,241,yvp)},${lerp(122,234,yvp)})`;
+
+  // ---- 4 marquee (4.75 - 6.75)
+  const mVis=t>4.7&&t<7.0;
+  [0,1,2,3,4].forEach(r=>{const dir=r%2?1:-1;const x=(dir<0? -60 - (t-4.7)*120 : -900 + (t-4.7)*120);$('row'+r).style.transform=`translateX(${x}px)`;});
+  show($('marq'),mVis);show($('marqVeil'),mVis);show($('stack'),mVis);
+  const sp=[seg(t,5.0,5.35),seg(t,5.55,5.9),seg(t,6.1,6.45)];
+  const nShown=sp.filter(x=>x>0).length;
+  const lift=lerp(0,52,eio(seg(t,5.55,5.9)))+lerp(0,52,eio(seg(t,6.1,6.45)));
+  ['s0','s1','s2'].forEach((id,i)=>{const p=eout(sp[i]);const el=$(id);
+    el.style.top=(488+i*104-lift)+'px';el.style.opacity=p;el.style.filter=`blur(${(1-p)*12}px)`;
+    el.style.transform=`translateY(${(1-p)*30}px)`;});
+
+  // ---- 5 gold panel (6.6 - 8.2) then morph to phone
+  const gIn=eio(seg(t,6.6,6.95));
+  const gx=(1-gIn)*1920;
+  const goldVis=t>6.6&&t<7.65;
+  css($('gold'),{transform:`translateX(${gx}px)`,visibility:goldVis?'visible':'hidden'});
+  const gtp=seg(t,6.85,7.15);fadeBlur($('goldT'),eout(gtp)*(1-seg(t,7.45,7.6)),20);
+  // morph rect from full screen to phone screen rect
+  const ph={x:740+14,y:90+14,w:440-28,h:900-28,r:58};
+  const mp=eio(seg(t,7.6,8.25));
+  const morphVis=t>=7.6&&t<8.45;
+  css($('morph'),{left:lerp(0,ph.x,mp)+'px',top:lerp(0,ph.y,mp)+'px',width:lerp(1920,ph.w,mp)+'px',height:lerp(1080,ph.h,mp)+'px',
+    borderRadius:lerp(0,ph.r,mp)+'px',background:'#C98F34',opacity:1-seg(t,8.15,8.45),visibility:morphVis?'visible':'hidden'});
+
+  // ---- 6 phone + steps (8.1 - 16.3)
+  const phVis=t>8.05&&t<16.45;
+  const phIn=eout(seg(t,8.05,8.35));
+  const shift=eio(seg(t,9.3,9.9))*180;
+  css($('phone'),{visibility:phVis?'visible':'hidden',opacity:phIn,transform:`translateX(${shift}px) scale(${lerp(0.985,1,phIn)})`});
+  // messages
+  let k=0;chat.forEach((c,i)=>{if(t>=c[0])k=i+1;});
+  msgEls.forEach((e,i)=>{const p=seg(t,chat[i][0],chat[i][0]+0.32);e.style.display=i<k?'block':'none';
+    e.style.transform=`scale(${lerp(0.6,1,back(p))})`;e.style.opacity=clamp(p*2.5);});
+  readEl.style.display=k>=8?'block':'none';
+  const viewH=872-168-76;
+  const target=i=>Math.max(0,H[i]-viewH+ (i<chat.length?0:0));
+  let scroll=target(0);
+  for(let i=1;i<=k;i++){scroll=lerp(target(i-1),target(i),eio(seg(t,chat[i-1][0],chat[i-1][0]+0.45)));}
+  // typing extra room
+  let typ=null;typingSpans.forEach(s=>{if(t>=s[0]&&t<s[1])typ=s;});
+  if(typ){const need=Math.max(0,H[k]+50-viewH);scroll=Math.max(scroll,lerp(target(k),need,eio(seg(t,typ[0],typ[0]+0.3))));}
+  $('msgs').style.transform=`translateY(${-scroll}px)`;
+  const ty=$('typing');
+  if(typ){const p=seg(t,typ[0],typ[0]+0.25);ty.style.display='flex';ty.style.top=(H[k]-scroll+4)+'px';ty.style.transform=`scale(${lerp(.5,1,back(p))})`;ty.style.opacity=p;
+    [...ty.children].forEach((d,i)=>{const a=(Math.sin((t*7)-i*0.9)+1)/2;d.style.opacity=0.35+0.65*a;d.style.transform=`translateY(${-a*3}px)`;});}
+  else ty.style.display='none';
+  drawConfetti(t);
+  // steps
+  let si=-1;stepT.forEach((s,i)=>{if(t>=s)si=i;});
+  const listShift=(()=>{let y=0;for(let i=1;i<steps.length;i++)y+=eio(seg(t,stepT[i],stepT[i]+0.4))*35;return y;})();
+  steps.forEach((s,i)=>{const el=$('st'+i);const p=eout(seg(t,stepT[i],stepT[i]+0.4));
+    el.style.top=(505+i*70-listShift)+'px';el.style.opacity=p*(1-seg(t,16.0,16.3));
+    el.style.filter=`blur(${(1-p)*10}px)`;el.style.transform=`translateY(${(1-p)*24}px)`;
+    const act=(i===si)?1:0;el.style.color=act?'#231815':'#BDB1A6';});
+  show($('steps'),t>9.5&&t<16.45);
+
+  // ---- 7 blue (16.1 - 18.6)
+  const bIn=eio(seg(t,16.05,16.45)), bOut=t>18.45;
+  css($('blue'),{transform:`translateX(${(1-bIn)*1920}px)`,visibility:(t>16.05&&t<19.0)?'visible':'hidden'});
+  const askP=lerp(0,4,eio(seg(t,16.7,17.9)));
+  const askIn=eout(seg(t,16.35,16.75));
+  $('askL').style.opacity=askIn;$('askWin').style.opacity=askIn;
+  // layout: "ask Chrysa" + gap + list, centred as a group (list width varies; centre around current word)
+  const meas=$('askList').children;
+  const cur=Math.round(askP);
+  const wCur=meas[clamp(cur,0,4)].getBoundingClientRect().width||400;
+  const wL=$('askL').getBoundingClientRect().width;
+  const total=wL+24+wCur;
+  const lx=(1920-total)/2;
+  $('askL').style.left=lx+'px';$('askWin').style.left=(lx+wL+24)+'px';
+  $('askList').style.transform=`translateY(${87 - askP*86}px)`;
+  [...meas].forEach((d,i)=>{const dist=Math.abs(i-askP);d.style.opacity=clamp(1-dist*0.62);});
+
+  // ---- 8 dark 2 (18.4 - 20.6)
+  const d2In=eio(seg(t,18.4,18.8));
+  const shrink=eio(seg(t,19.5,20.05));
+  const W=lerp(1920,560,shrink),Hh=lerp(1080,170,shrink);
+  const slide=eio(seg(t,20.15,20.55));
+  const cx=lerp(960,960-200,shrink)-slide*0;
+  css($('dark2'),{left:(cx-W/2)+'px',top:(540-Hh/2)+'px',width:W+'px',height:Hh+'px',borderRadius:lerp(0,28,shrink)+'px',
+     transform:`translateX(${(1-d2In)*-1920}px)`,visibility:(t>18.4&&t<20.75)?'visible':'hidden',opacity:1-seg(t,20.45,20.7)});
+  const ts=lerp(1,0.255,shrink);
+  css($('d2t'),{transform:`scale(${ts})`,opacity:eout(seg(t,18.65,19.0))});
+  $('d2url').style.top=(Hh/2+78*ts)+'px';$('d2url').style.opacity=eout(seg(t,19.0,19.3))*(1-shrink);
+  $('d2url').style.transform=`scale(${ts})`;
+  const ap=eout(seg(t,20.05,20.4));
+  css($('always'),{left:(960+120)+'px',top:'494px',opacity:ap*(1-seg(t,20.45,20.7)),filter:`blur(${(1-ap)*12}px)`,transform:`translateX(${(1-ap)*30}px)`,visibility:(t>19.9&&t<20.75)?'visible':'hidden'});
+
+  // ---- 9 end (20.7 - 23)
+  const name='Chrysa';
+  const nChars=Math.floor(clamp((t-20.75)/0.075,0,name.length));
+  $('word').textContent=name.slice(0,nChars);
+  const lp=seg(t,21.25,21.75);
+  css($('logoImg'),{width:lerp(0,104,eout5(lp))+'px',opacity:lp,transform:`scale(${lerp(0.4,1,back(lp))}) rotate(${(1-eout(lp))*-14}deg)`});
+  $('logo').style.gap=lerp(0,18,eout5(lp))+'px';
+  const up=eout(seg(t,21.55,21.95));
+  css($('url'),{opacity:up,transform:`translateY(${(1-up)*14}px)`});
+  show($('end'),t>20.7);
+  $('word').style.opacity=t>20.7?1:0;
+}
+window.__ready=document.fonts.ready.then(()=>Promise.all([...document.images].map(i=>i.complete?1:new Promise(r=>i.onload=r)))).then(()=>{measure();render(0);});
+window.render=render;
+// live preview when opened directly in a browser
+if(!navigator.webdriver){const t0=performance.now();(function loop(){window.__ready.then(()=>render(((performance.now()-t0)/1000)%23.5));requestAnimationFrame(loop);})();}
+</script>
+</body>
+</html>
