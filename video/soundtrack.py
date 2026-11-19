@@ -4,6 +4,7 @@
     python3 soundtrack.py out.wav film2      # film 2, "Your morning, already sorted."
     python3 soundtrack.py out.wav film3      # film 3, "Be found where people ask."
     python3 soundtrack.py out.wav film4      # film 4, "The Pearl"
+    python3 soundtrack.py out.wav film5      # film 5, the playful one
 
 All three share one motif (an electric-piano arpeggio over a soft pad, 100 BPM) so the
 series sounds like one family: film 2 sits a tone higher for the morning, film 3 starts
@@ -13,7 +14,7 @@ import numpy as np, wave, sys
 
 SR = 48000
 FILM = sys.argv[2] if len(sys.argv) > 2 else 'launch'
-DUR = {'launch': 19.0, 'film2': 16.2, 'film3': 16.1, 'film4': 18.9}[FILM]
+DUR = {'launch': 19.0, 'film2': 16.2, 'film3': 16.1, 'film4': 18.9, 'film5': 17.4}[FILM]
 N = int(SR * DUR)
 L = np.zeros(N); R = np.zeros(N)
 rng = np.random.default_rng(3)
@@ -156,6 +157,61 @@ elif FILM == 'film4':
     bed([(0, F_MAJ)], 99, 17.9, start=14.4)                                          # the motif, no drums
     add(pad(hz(65), 3.5), 14.4, 0, 0.06)
     close(16.75, 17.25)
+
+elif FILM == 'film5':
+    def marimba(f, d=0.6):
+        t = t_(d); return (np.sin(2 * np.pi * f * t) + 0.35 * np.sin(2 * np.pi * 4 * f * t) * np.exp(-t * 30)) * np.exp(-t * 7)
+    def boing(f0=180, f1=520, d=0.35):
+        t = t_(d); fr = f0 * (f1 / f0) ** (t / d); ph = 2 * np.pi * np.cumsum(fr) / SR
+        return np.sin(ph + 2.5 * np.sin(2 * np.pi * 28 * t)) * np.exp(-t * 6)
+    def wah(f, d=0.5):
+        t = t_(d); fr = f * (1 - 0.06 * t / d) * (1 + 0.012 * np.sin(2 * np.pi * 6 * t)); ph = 2 * np.pi * np.cumsum(fr) / SR
+        s = sum(np.sin(k * ph) / k for k in range(1, 7)); return s * np.minimum(1, t / 0.04) * np.exp(-t * 2.2)
+    def clap():
+        t = t_(0.12); n = rng.standard_normal(len(t)); n = n - np.r_[0, n[:-1]] * 0.6; return n * np.exp(-t * 35) * 0.5
+    BB = 0.5                                                  # 120 BPM
+    C_MAJ = [[60, 64, 67, 72], [55, 59, 62, 67], [57, 60, 64, 69], [53, 57, 60, 65]]
+    tune = [0, 2, 1, 3, 2, 1, 2, 3]
+    def play(a, b, loud=1.0, drums=True):
+        t0 = a
+        while t0 < b - 0.01:
+            bar = int((t0 + 1e-6) / (4 * BB)); ch = C_MAJ[bar % 4]
+            for k in range(8):
+                tt = t0 + k * BB / 2
+                if tt >= b: break
+                add(marimba(hz(ch[tune[k]] + 12)), tt, (-0.3 if k % 2 else 0.3), 0.11 * loud)
+            for k in range(4):
+                tt = t0 + k * BB
+                if tt >= b: break
+                add(marimba(hz(ch[0] - 12), 0.4), tt, 0, 0.14 * loud)
+                if drums:
+                    if k in (0, 2): add(kick(), tt, 0, 0.26 * loud)
+                    else: add(clap(), tt, 0.1, 0.3 * loud)
+            t0 += 4 * BB
+    play(0.75, 2.75, 0.8, drums=False)                        # hello
+    play(4.6, 9.3, 1.0)                                       # the rescue
+    play(9.5, 14.0, 1.15)                                     # the happy ending
+    # Chrysa drops in and bounces
+    t = t_(0.6); add(np.sin(2 * np.pi * np.cumsum(1400 * 2 ** (-t / 0.25)) / SR) * np.exp(-t * 2), 0.15, 0, 0.08)
+    for at, g in ((0.75, 0.3), (1.25, 0.2), (1.55, 0.13), (1.75, 0.08)): add(boing(), at, -0.2, g)
+    # uh-oh: a sad wah-wah under the rain cloud
+    for i, (n, at) in enumerate(((62, 2.95), (61, 3.45), (60, 3.95))): add(wah(hz(n - 12), 0.55 if i < 2 else 0.9), at, 0, 0.12)
+    for i in range(30): add(tick(), 2.7 + i * 0.065 + rng.random() * 0.03, rng.uniform(-.3, .5), 0.12)   # rain
+    # jumps and pops
+    for c in (5.2, 6.5, 7.8):
+        add(boing(220, 660, 0.3), c - 0.38, -0.2, 0.18)
+        add(pop(1400), c, 0, 0.3); add(pop(2100), c + 0.03, 0.2, 0.18)
+        sparkle(c, n=6, spread=0.3)
+        add(boing(), c + 0.38, -0.2, 0.12)
+    for i, c in enumerate((5.2, 6.5, 7.8)): add(marimba(hz((72, 76, 79)[i]), 1.0), c + 0.05, 0, 0.22)   # 1! 2! 3!
+    for i in range(6): add(pop(900 + i * 120), 8.45 + i * 0.28, rng.uniform(-.5, .5), 0.12)          # the crowd
+    # the café cheers up: a rising fanfare, then "Yay!"
+    for i, n in enumerate((60, 64, 67, 72, 76, 79, 84)): add(marimba(hz(n), 0.8), 9.3 + i * 0.07, 0, 0.18)
+    add(chime(hz(84)), 9.85, 0, 0.1); sparkle(9.9, n=30, spread=1.2)
+    for at in (9.9, 10.3, 10.7, 12.3): add(boing(), at, -0.2, 0.12)
+    t = t_(0.6); add(np.sin(2 * np.pi * np.cumsum(300 * 2 ** (t / 0.2)) / SR) * np.sin(np.pi * t / 0.6), 11.7, 0, 0.05)  # the spin
+    add(whoosh(0.7), 13.85, 0, 0.18)
+    close(14.65, 15.15, root=60)
 
 def room(x):
     y = x.copy()

@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chrysa Helps Film</title>
+<link rel="stylesheet" href="film.css">
+<style>
+  #stage{background:linear-gradient(#6EC3F4 0%,#A9DEFF 62%,#CDEBFF 100%)}
+  .abs{position:absolute}
+  #ground{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(#8FD86F,#6CC24A);border-top-left-radius:50% 60px;border-top-right-radius:50% 60px}
+  #sun{position:absolute;border-radius:50%;background:radial-gradient(circle,#FFF3A8 0%,#FFD43B 55%,#FFB830 100%);box-shadow:0 0 80px 30px rgba(255,214,80,.55)}
+  #rays{position:absolute;border-radius:50%;background:repeating-conic-gradient(rgba(255,226,120,.55) 0 10deg,rgba(255,226,120,0) 10deg 30deg)}
+  .cloud{position:absolute;width:220px;height:80px;background:#fff;border-radius:60px}
+  .cloud::before,.cloud::after{content:"";position:absolute;background:inherit;border-radius:50%}
+  .cloud::before{width:110px;height:110px;left:30px;top:-55px}
+  .cloud::after{width:80px;height:80px;left:115px;top:-35px}
+  .cloud.rain{background:#9AA8B6}
+
+  /* the café */
+  #cafe{position:absolute;width:420px;height:380px;transform-origin:50% 100%}
+  #cafe .wall{position:absolute;left:30px;right:30px;bottom:0;height:250px;background:#FFF1DA;border-radius:22px 22px 6px 6px;box-shadow:inset 0 -14px 0 rgba(0,0,0,.05)}
+  #cafe .roof{position:absolute;left:0;right:0;top:40px;height:96px;border-radius:24px;
+    background:repeating-linear-gradient(90deg,#FF6B6B 0 52px,#FFFFFF 52px 104px);box-shadow:0 10px 0 rgba(0,0,0,.08)}
+  #cafe .sign{position:absolute;left:50%;top:0;transform:translateX(-50%);background:#7A3B2B;color:#FFF1DA;font-weight:800;font-size:34px;padding:6px 26px;border-radius:16px;letter-spacing:.02em}
+  #cafe .win{position:absolute;top:142px;width:96px;height:84px;border-radius:18px;background:#BFE3FF;border:7px solid #C98F34;overflow:hidden}
+  #cafe .win i{position:absolute;width:26px;height:26px;border-radius:50%;background:#231815;left:28px;top:26px}
+  #cafe .brow{position:absolute;top:120px;width:80px;height:10px;border-radius:6px;background:#7A3B2B}
+  #cafe .door{position:absolute;left:50%;bottom:0;width:90px;height:92px;margin-left:-45px;background:#C98F34;border-radius:48px 48px 4px 4px;box-shadow:inset 0 0 0 8px #A8742A}
+  #mouth{position:absolute;left:50%;top:226px;margin-left:-60px}
+  #tears i{position:absolute;width:16px;height:22px;background:#4CC9F0;border-radius:50% 50% 50% 50%/60% 60% 40% 40%}
+
+  #rainCloud{position:absolute}
+  #drops i{position:absolute;width:6px;height:26px;border-radius:3px;background:#5AA9E6}
+
+  /* Chrysa */
+  #hero{position:absolute;transform-origin:50% 100%}
+  #hero img{width:100%;display:block}
+  #shadow{position:absolute;height:24px;border-radius:50%;background:rgba(40,80,20,.25)}
+
+  /* bubbles, stars, people */
+  .bub{position:absolute;width:140px;height:140px;margin:-70px 0 0 -70px;border-radius:50%;
+    background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.95) 0 10%,rgba(255,255,255,.35) 22%,rgba(255,255,255,.18) 60%,rgba(255,255,255,.5) 100%);
+    box-shadow:inset 0 0 0 4px rgba(255,255,255,.75),0 8px 24px rgba(30,90,140,.18);display:flex;align-items:center;justify-content:center;font-size:72px;font-family:"Noto Color Emoji"}
+  .star{position:absolute;font-size:40px;margin:-20px 0 0 -20px;color:#FFD43B;text-shadow:0 0 12px rgba(255,212,59,.8);font-family:"Inter"}
+  .kid{position:absolute;width:78px;height:118px;margin-left:-39px;transform-origin:50% 100%}
+  .kid .b{position:absolute;left:10px;right:10px;bottom:0;height:62px;border-radius:26px 26px 12px 12px}
+  .kid .h{position:absolute;left:9px;top:0;width:60px;height:60px;border-radius:50%}
+  .kid .h::before,.kid .h::after{content:"";position:absolute;top:22px;width:8px;height:10px;border-radius:4px;background:#231815}
+  .kid .h::before{left:17px}.kid .h::after{right:17px}
+  .kid .m{position:absolute;left:28px;top:38px;width:22px;height:11px;border:4px solid #231815;border-top:none;border-radius:0 0 14px 14px}
+
+  /* big friendly words */
+  .say{position:absolute;left:0;right:0;text-align:center;font-family:"Inter";font-weight:800;letter-spacing:-0.01em;line-height:1.05;padding:0 5%;
+    -webkit-text-stroke:12px #FFFFFF;paint-order:stroke fill;filter:drop-shadow(0 8px 0 rgba(30,70,110,.18))}
+  .say span{display:inline-block;transform-origin:50% 100%}
+  #num{position:absolute;font-family:"Inter";font-weight:800;-webkit-text-stroke:14px #fff;paint-order:stroke fill;filter:drop-shadow(0 8px 0 rgba(30,70,110,.18))}
+  canvas.conf{z-index:20}
+
+  #iris{position:absolute;border-radius:50%;background:#FFE27A}
+  #end{z-index:30}
+  #end .logo{font-weight:800}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="rays"></div><div id="sun"></div>
+  <div class="cloud" id="cl0"></div><div class="cloud" id="cl1"></div><div class="cloud" id="cl2"></div>
+  <div id="ground"></div>
+
+  <div id="cafe">
+    <div class="wall"></div>
+    <div class="roof"></div>
+    <div class="sign">Café</div>
+    <div class="win" style="left:92px"><i id="pl"></i></div>
+    <div class="win" style="right:92px"><i id="pr"></i></div>
+    <div class="brow" id="bl" style="left:98px"></div><div class="brow" id="br" style="right:98px"></div>
+    <svg id="mouth" width="120" height="60" viewBox="0 0 120 60"><path id="mp" d="" fill="none" stroke="#231815" stroke-width="9" stroke-linecap="round"/></svg>
+    <div id="tears"><i id="tr0"></i><i id="tr1"></i></div>
+    <div class="door"></div>
+  </div>
+  <div id="rainCloud"><div class="cloud rain" style="position:relative"></div><div id="drops"></div></div>
+
+  <div id="shadow"></div>
+  <div id="hero"><img src="chrysa-cut.png" alt=""></div>
+  <div id="bubbles"></div>
+  <div id="stars"></div>
+  <div id="kids"></div>
+
+  <div class="say" id="w0"></div>
+  <div class="say" id="w1"></div>
+  <div class="say" id="w2"></div>
+  <div class="say" id="w3"></div>
+  <div class="say" id="w4"></div>
+  <div id="num"></div>
+  <canvas id="conf" class="conf"></canvas>
+
+  <div id="iris"></div>
+  <div id="end" class="scene">
+    <div class="logo"><img id="endImg" src="chrysa-cut.png" alt=""><span id="endWord"></span></div>
+    <div class="sub" id="endSub">Helping people find you.</div>
+    <div class="url" id="endUrl">chrysa.ai</div>
+  </div>
+  <div id="grain"></div>
+</div>
+<script src="film.js"></script>
+<script>
+const DUR = 17.4;
+const U = V ? 0.78 : 1;                                   // scale of the world in portrait
+const GY = SH * (V ? 0.74 : 0.8);                         // ground line
+const HX = SW * (V ? 0.27 : 0.3), HW = 250 * U;           // Chrysa
+const CX = SW * (V ? 0.7 : 0.72);                         // café centre
+const RAINBOW = ['#FF5E5B', '#FF9F1C', '#F7C531', '#4CC36A', '#3AA7F0', '#8E6CEF'];
+
+/* ---------- scenery ---------- */
+const ground = $('ground'); ground.style.height = (SH - GY + 40) + 'px';
+const sun = $('sun'), rays = $('rays'), sunR = 110 * U;
+sun.style.width = sun.style.height = 2 * sunR + 'px'; sun.style.left = (SW * 0.12 - sunR) + 'px'; sun.style.top = (SH * 0.1 - sunR * 0.4) + 'px';
+rays.style.width = rays.style.height = 6 * sunR + 'px'; rays.style.left = (SW * 0.12 - 3 * sunR) + 'px'; rays.style.top = (SH * 0.1 + sunR * 0.6 - 3 * sunR) + 'px';
+const cafe = $('cafe');
+cafe.style.left = (CX - 210) + 'px'; cafe.style.top = (GY - 380 + 6) + 'px';
+const DOOR = { x: CX, y: GY };
+
+/* ---------- words ---------- */
+const WORDS = {
+  w0: ['Hi! I’m Chrysa!', 0.95, 2.65],
+  w1: ['Uh-oh! Nobody can find the café.', 2.9, 4.75],
+  w2: ['And lots more!', 8.45, 9.5],
+  w3: ['Yay!', 9.85, 11.45],
+  w4: ['Chrysa helps people find you!', 11.6, 13.85],
+};
+for (const id in WORDS) {
+  const [s] = WORDS[id], el = $(id);
+  el.innerHTML = [...s].map((c, i) => c === ' ' ? ' ' : `<span style="color:${RAINBOW[i % 6]}">${c}</span>`).join('');
+  el.style.fontSize = (id === 'w3' ? 230 : 84) * (V ? 0.92 : 1) + 'px';
+  el.style.top = (id === 'w3' ? SH * (V ? 0.28 : 0.2) : SH * (V ? 0.1 : 0.07)) + 'px';
+}
+function words(t) {
+  for (const id in WORDS) {
+    const [s, a, b] = WORDS[id], el = $(id);
+    vis(el, t >= a && t < b);
+    const out = seg(t, b - 0.25, b);
+    [...el.children].forEach((sp, i) => {
+      const p = seg(t, a + i * 0.035, a + i * 0.035 + 0.35);
+      const wob = Math.sin((t - a) * 6 + i * 0.7) * 3 * seg(t, a + 0.5, a + 0.9);
+      sp.style.transform = `translateY(${(1 - back(p)) * 60 + wob - out * 30}px) scale(${lerp(0.3, 1, back(p)) * (1 - out * 0.4)})`;
+      sp.style.opacity = clamp(p * 3) * (1 - out);
+    });
+  }
+}
+
+/* ---------- Chrysa's bounces and jumps ---------- */
+const CATCH = [5.2, 6.5, 7.8];
+const HOPS = [[0.75, 1.25, 150], [1.25, 1.55, 55], [1.55, 1.75, 18],              // landing bounces
+  ...CATCH.map(c => [c - 0.38, c + 0.38, 260 * U]),                               // jumps to catch
+  [9.9, 10.3, 120], [10.3, 10.7, 120], [11.7, 12.3, 220 * U]];                     // happy hops
+const IMPACTS = [0.75, 1.25, 1.55, 1.75, ...CATCH.map(c => c + 0.38), 10.3, 10.7, 12.3];
+function hero(t) {
+  let h = 0, flying = false;
+  if (t < 0.75) { const p = seg(t, 0.15, 0.75); h = 900 * (1 - p * p); flying = true; }
+  for (const [a, b, H] of HOPS) if (t >= a && t < b) { const p = (t - a) / (b - a); h = H * 4 * p * (1 - p); flying = true; }
+  let sq = 0; for (const i of IMPACTS) if (t >= i && t < i + 0.22) sq = Math.max(sq, 0.22 * (1 - (t - i) / 0.22));
+  const stretch = flying ? 0.06 : 0;
+  const sy = 1 - sq + stretch, sx = 1 + sq * 0.8 - stretch * 0.5;
+  const spin = (t >= 11.7 && t < 12.3) ? eio(seg(t, 11.7, 12.3)) * 360 : 0;
+  const el = $('hero');
+  el.style.width = HW + 'px';
+  el.style.left = (HX - HW / 2) + 'px';
+  el.style.top = (GY - HW * 0.957 + 10 - h) + 'px';
+  el.style.transform = `scale(${sx},${sy}) rotate(${spin + Math.sin(t * 3) * 2}deg)`;
+  const sh = $('shadow'), sw = HW * 0.8 * (1 - clamp(h / 900) * 0.7);
+  sh.style.width = sw + 'px'; sh.style.left = (HX - sw / 2) + 'px'; sh.style.top = (GY - 6) + 'px';
+  sh.style.opacity = 0.9 - clamp(h / 900) * 0.7;
+  return GY - HW * 0.5 - h;                                    // Chrysa's middle, for catching
+}
+
+/* ---------- bubbles, stars and new friends ---------- */
+const TREATS = ['☕', '🥐', '🍰'];
+const bubs = CATCH.map((c, i) => { const d = document.createElement('div'); d.className = 'bub'; d.textContent = TREATS[i]; $('bubbles').appendChild(d); return d; });
+const STARS = []; CATCH.forEach(() => { const g = []; for (let k = 0; k < 8; k++) { const s = document.createElement('div'); s.className = 'star'; s.textContent = '✦'; $('stars').appendChild(s); g.push(s); } STARS.push(g); });
+const SKIN = ['#F2C9A0', '#D9A273', '#A8693F', '#FFDCC0', '#8A5634', '#E8B48A', '#C68B5C', '#F7D2B0', '#B97A4E'];
+const SHIRT = ['#FF5E5B', '#3AA7F0', '#8E6CEF', '#4CC36A', '#FF9F1C', '#F75CA8', '#2EC4B6', '#F7C531', '#FF7A45'];
+// the three Chrysa catches, then a crowd who heard about the café
+const KIDS = [...CATCH.map((c, i) => ({ from: HX, start: c + 0.35, walk: 1.9 })),
+  ...[0, 1, 2, 3, 4, 5].map(i => ({ from: -80, start: 8.4 + i * 0.28, walk: 1.5 }))];
+const kidEls = KIDS.map((k, i) => {
+  const d = document.createElement('div'); d.className = 'kid';
+  d.innerHTML = `<div class="b" style="background:${SHIRT[i % 9]}"></div><div class="h" style="background:${SKIN[i % 9]}"></div><div class="m"></div>`;
+  $('kids').appendChild(d); return d;
+});
+function friends(t, catchY) {
+  CATCH.forEach((c, i) => {
+    const b = bubs[i];
+    const p = seg(t, c - 2.0, c);
+    const sx = HX + (i % 2 ? 1 : -1) * SW * 0.18, sy = SH + 100;
+    const tx = HX, ty = GY - HW * 0.5 - 260 * U - 40 * U;
+    const x = lerp(sx, tx, eout(p)) + Math.sin(t * 2.4 + i) * 26 * (1 - p);
+    const y = lerp(sy, ty, eout(p));
+    const popP = seg(t, c, c + 0.16);
+    vis(b, t > c - 2.0 && t < c + 0.16);
+    b.style.left = x + 'px'; b.style.top = y + 'px';
+    b.style.transform = `scale(${U * (1 + popP * 0.5) * (1 + Math.sin(t * 5 + i) * 0.03)})`;
+    b.style.opacity = 1 - popP;
+    STARS[i].forEach((s, k) => {
+      const sp = seg(t, c, c + 0.6), ang = k / 8 * 6.283 + i;
+      vis(s, sp > 0 && sp < 1);
+      s.style.left = (tx + Math.cos(ang) * eout(sp) * 150 * U) + 'px';
+      s.style.top = (ty + Math.sin(ang) * eout(sp) * 150 * U) + 'px';
+      s.style.opacity = 1 - sp; s.style.transform = `scale(${U * (1 - sp * 0.5)}) rotate(${sp * 180}deg)`;
+    });
+  });
+  KIDS.forEach((k, i) => {
+    const el = kidEls[i], p = seg(t, k.start, k.start + k.walk), enter = seg(t, k.start + k.walk, k.start + k.walk + 0.3);
+    const born = eout(seg(t, k.start, k.start + 0.25));
+    vis(el, t > k.start && enter < 1);
+    const x = lerp(k.from, DOOR.x, p);
+    const bob = Math.abs(Math.sin((t - k.start) * 11)) * 12 * (p < 1 ? 1 : 0);
+    el.style.left = x + 'px'; el.style.top = (GY - 118 - bob + 4) + 'px';
+    const near = lerp(1, 0.62, eio(seg(p, 0.7, 1)));
+    el.style.transform = `scale(${1.25 * U * near * (k.from === HX ? born : 1) * (1 - enter * 0.6)}) rotate(${Math.sin((t - k.start) * 11) * 6}deg)`;
+    el.style.opacity = 1 - enter;
+  });
+}
+
+/* ---------- the café's mood ---------- */
+const drops = []; for (let i = 0; i < 14; i++) { const d = document.createElement('i'); $('drops').appendChild(d); drops.push(d); }
+function mood(t) {
+  const happy = eio(seg(t, 9.35, 9.8));
+  // mouth: frown to grin
+  const y0 = lerp(40, 18, happy), yc = lerp(4, 64, happy);
+  $('mp').setAttribute('d', `M 18 ${y0} Q 60 ${yc} 102 ${y0}`);
+  // eyes look at Chrysa while sad, then sparkle
+  const look = happy ? 0 : -8;
+  $('pl').style.transform = $('pr').style.transform = `translate(${look}px, ${lerp(8, -2, happy)}px) scale(${1 + happy * 0.2})`;
+  $('bl').style.transform = `translateY(${-happy * 14}px) rotate(${lerp(-16, 0, happy)}deg)`;
+  $('br').style.transform = `translateY(${-happy * 14}px) rotate(${lerp(16, 0, happy)}deg)`;
+  document.querySelectorAll('#cafe .win').forEach(w => { w.style.background = happy > 0.5 ? '#FFE48A' : '#BFE3FF'; });
+  // tears while sad
+  [0, 1].forEach(i => {
+    const tr = $('tr' + i), cyc = ((t * 0.9 + i * 0.5) % 1);
+    vis(tr, t > 2.7 && t < 9.35);
+    tr.style.left = (i ? 300 : 104) + 'px'; tr.style.top = (236 + cyc * 60) + 'px'; tr.style.opacity = 1 - cyc;
+  });
+  // happy wiggle
+  const wig = Math.sin(seg(t, 9.4, 10.4) * Math.PI * 4) * (1 - seg(t, 9.4, 10.4)) * 0.06;
+  const pop = 1 + Math.sin(seg(t, 9.4, 9.8) * Math.PI) * 0.08;
+  cafe.style.transform = `scale(${U * pop}) rotate(${wig * 30}deg)`;
+  // the rain cloud arrives with "uh-oh" and is blown away when the café is happy
+  const rc = $('rainCloud'), arrive = eout(seg(t, 2.55, 3.1)), leave = eio(seg(t, 9.2, 9.9));
+  rc.style.left = (CX - 110 * U + leave * SW * 0.5) + 'px';
+  rc.style.top = (GY - 380 * U - 150 * U - (1 - arrive) * 300) + 'px';
+  rc.style.transform = `scale(${U * 1.3})`; rc.style.transformOrigin = '0 0';
+  vis(rc, t > 2.55 && t < 9.9);
+  drops.forEach((d, i) => {
+    const cyc = ((t * 1.6 + i * 0.37) % 1);
+    d.style.left = (20 + (i * 53) % 190) + 'px'; d.style.top = (40 + cyc * 160) + 'px';
+    d.style.opacity = (1 - cyc) * (1 - leave);
+  });
+  // sun brightens
+  const glow = 0.55 + 0.45 * happy;
+  sun.style.boxShadow = `0 0 ${80 + 60 * happy}px ${30 + 30 * happy}px rgba(255,214,80,${glow})`;
+  rays.style.transform = `rotate(${t * 12}deg) scale(${1 + happy * 0.25})`;
+  rays.style.opacity = 0.6 + 0.4 * happy;
+}
+
+const conf = makeConfetti($('conf'), V ? 240 : 280, 55, ['#FF5E5B', '#FF9F1C', '#F7C531', '#4CC36A', '#3AA7F0', '#8E6CEF', '#F75CA8', '#FFFFFF']);
+
+function render(t) {
+  // clouds drift
+  [[0.35, 0.16, 18], [0.6, 0.09, 12], [0.85, 0.2, 22]].forEach(([fx, fy, v], i) => {
+    const c = $('cl' + i); c.style.left = ((SW * fx + t * v) % (SW + 300) - 150) + 'px'; c.style.top = (SH * fy) + 'px';
+    c.style.transform = `scale(${U * (0.9 + i * 0.15)})`;
+  });
+  const cy = hero(t);
+  friends(t, cy);
+  mood(t);
+  words(t);
+
+  // the count
+  const num = $('num'); let n = 0; CATCH.forEach(c => { if (t >= c) n = CATCH.indexOf(c) + 1; });
+  const lastC = n ? CATCH[n - 1] : 0, np = seg(t, lastC, lastC + 0.35);
+  vis(num, n > 0 && t < 8.35);
+  num.textContent = n + '!';
+  num.style.color = RAINBOW[(n * 2) % 6];
+  num.style.fontSize = 200 * (V ? 0.9 : 1) + 'px';
+  num.style.left = (SW * (V ? 0.5 : 0.5) - 90) + 'px'; num.style.top = (SH * (V ? 0.12 : 0.06)) + 'px';
+  num.style.transform = `scale(${lerp(0.2, 1, back(np))}) rotate(${(1 - eout(np)) * -20}deg)`;
+  num.style.opacity = 1 - seg(t, 8.15, 8.35);
+
+  conf(t - 9.9);
+
+  // a sunny iris wipe into the closing card
+  const ir = $('iris'), R = Math.hypot(SW, SH) * eio(seg(t, 13.9, 14.6));
+  vis(ir, t > 13.9);
+  ir.style.width = ir.style.height = 2 * R + 'px';
+  ir.style.left = (HX - R) + 'px'; ir.style.top = (GY - HW * 0.5 - R) + 'px';
+  endCard(t, 14.65);
+  // the wordmark bounces in letter by letter colour
+  const w = $('endWord'); w.style.color = '#231815';
+}
+boot(render, DUR);
+</script>
+</body>
+</html>

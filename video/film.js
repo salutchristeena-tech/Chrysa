@@ -33,10 +33,10 @@ function panel(el, t, a, b, inDir = 'right', outDir = 'left', dur = 0.35) {
   el.style.transform = `translate(${(1 - pin) * ix + pout * ox}px, ${(1 - pin) * iy + pout * oy}px)`;
   vis(el, t > a && t < b + dur);
 }
-function makeConfetti(canvas, n, seed) {
+function makeConfetti(canvas, n, seed, palette) {
   canvas.width = SW; canvas.height = SH;
   let s = seed; const R = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
-  const cols = ['#C98F34', '#41628F', '#7A3B2B', '#93A18E', '#E8C77E', '#A5BCD6', '#E2603A'];
+  const cols = palette || ['#C98F34', '#41628F', '#7A3B2B', '#93A18E', '#E8C77E', '#A5BCD6', '#E2603A'];
   const ps = [];
   for (let i = 0; i < n; i++) ps.push({ x: R() * SW, y: -30 - R() * 500, vx: (R() - .5) * 260, vy: 380 + R() * 480, r: R() * 6.28, vr: (R() - .5) * 10, w: 10 + R() * 10, h: 16 + R() * 14, c: cols[i % cols.length] });
   return dt => {
