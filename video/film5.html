@@ -52,7 +52,8 @@
   /* big friendly words */
   .say{position:absolute;left:0;right:0;text-align:center;font-family:"Inter";font-weight:800;letter-spacing:-0.01em;line-height:1.05;padding:0 5%;
     -webkit-text-stroke:12px #FFFFFF;paint-order:stroke fill;filter:drop-shadow(0 8px 0 rgba(30,70,110,.18))}
-  .say span{display:inline-block;transform-origin:50% 100%}
+  .say .wd{display:inline-block;white-space:nowrap}
+  .say .lt{display:inline-block;transform-origin:50% 100%}
   #num{position:absolute;font-family:"Inter";font-weight:800;-webkit-text-stroke:14px #fff;paint-order:stroke fill;filter:drop-shadow(0 8px 0 rgba(30,70,110,.18))}
   canvas.conf{z-index:20}
 
@@ -105,10 +106,10 @@
 <script src="film.js"></script>
 <script>
 const DUR = 17.4;
-const U = V ? 0.78 : 1;                                   // scale of the world in portrait
-const GY = SH * (V ? 0.74 : 0.8);                         // ground line
-const HX = SW * (V ? 0.27 : 0.3), HW = 250 * U;           // Chrysa
-const CX = SW * (V ? 0.7 : 0.72);                         // café centre
+const U = V ? 0.92 : 1;                                   // scale of the world in portrait
+const GY = SH * (V ? 0.68 : 0.8);                         // ground line
+const HX = SW * (V ? 0.25 : 0.3), HW = 250 * U;           // Chrysa
+const CX = SW * (V ? 0.71 : 0.72);                         // café centre
 const RAINBOW = ['#FF5E5B', '#FF9F1C', '#F7C531', '#4CC36A', '#3AA7F0', '#8E6CEF'];
 
 /* ---------- scenery ---------- */
@@ -130,7 +131,8 @@ const WORDS = {
 };
 for (const id in WORDS) {
   const [s] = WORDS[id], el = $(id);
-  el.innerHTML = [...s].map((c, i) => c === ' ' ? ' ' : `<span style="color:${RAINBOW[i % 6]}">${c}</span>`).join('');
+  let i = 0;   // letters are grouped per word so a word never breaks across lines
+  el.innerHTML = s.split(' ').map(w => `<span class="wd">${[...w].map(c => `<span class="lt" style="color:${RAINBOW[i++ % 6]}">${c}</span>`).join('')}</span>`).join(' ');
   el.style.fontSize = (id === 'w3' ? 230 : 84) * (V ? 0.92 : 1) + 'px';
   el.style.top = (id === 'w3' ? SH * (V ? 0.28 : 0.2) : SH * (V ? 0.1 : 0.07)) + 'px';
 }
@@ -139,7 +141,7 @@ function words(t) {
     const [s, a, b] = WORDS[id], el = $(id);
     vis(el, t >= a && t < b);
     const out = seg(t, b - 0.25, b);
-    [...el.children].forEach((sp, i) => {
+    el.querySelectorAll('.lt').forEach((sp, i) => {
       const p = seg(t, a + i * 0.035, a + i * 0.035 + 0.35);
       const wob = Math.sin((t - a) * 6 + i * 0.7) * 3 * seg(t, a + 0.5, a + 0.9);
       sp.style.transform = `translateY(${(1 - back(p)) * 60 + wob - out * 30}px) scale(${lerp(0.3, 1, back(p)) * (1 - out * 0.4)})`;
