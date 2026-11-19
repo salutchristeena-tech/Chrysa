@@ -189,7 +189,7 @@
 
   <!-- 6b outcome -->
   <div id="steps2" class="abs"></div>
-  <div id="stat" class="abs will"><div id="statN"><span id="nn">0</span><span class="of"> of 6</span></div><div id="statC">AI answers now <b>name you.</b></div></div>
+  <div id="stat" class="abs will"><div id="statN"><span id="nn">0</span><span class="of"> of 6</span></div><div id="statC">Top answers now <b>name you.</b></div></div>
   <canvas id="conf2" width="1920" height="1080"></canvas>
 
   <!-- 7 blue -->
@@ -233,13 +233,13 @@ function fadeBlur(el,p,dy=0,show=true){ // p 0..1 in
 /* ---------- build content ---------- */
 const words=['customers','conversations','reviews','moments'];
 $('cycList').innerHTML=words.map(w=>`<div>${w}</div>`).join('');
-const askWords=['about reviews','about AI search','about creators','about your rivals','anything.'];
+const askWords=['about reviews','about search','about creators','about your rivals','anything.'];
 $('askList').innerHTML=askWords.map(w=>`<div>${w}</div>`).join('');
 
 const cards=[
  ['R','#E2603A','r/dubai','“quiet brunch spot?”','94% intent'],
  ['G','#4A78C2','Google search','“oat latte near JLT”','Fix ready'],
- ['AI','#231815','ChatGPT','“best cafés, Marina”','Missing'],
+ ['✦','#231815','ChatGPT','“best cafés, Marina”','Missing'],
  ['♪','#1B1411','@layla.eats','Reel: spring menus','96% real'],
  ['★','#C98F34','Google review','“saffron bun, unreal”','Reply drafted'],
  ['IG','#B24A7C','@noor.d','asked about your beans','88% intent'],

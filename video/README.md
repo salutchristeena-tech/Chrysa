@@ -41,8 +41,8 @@ The vertical version is laid out at 864 x 1536 and rendered at 1.25x, so its typ
 | 4.7 | Scrolling cards of real signals: "Heard. Sorted. Drafted." |
 | 6.6 | Gold panel: "Sent with 1 tap." |
 | 7.8 | Listen, Brief, Draft, Approve, Measure appear large and centred, one after another |
-| 10.2 | A counter climbs to "4 of 6", above "AI answers now name you.", with confetti |
-| 12.0 | Blue panel: "ask Chrysa" about reviews, AI search, creators, your rivals, then "anything." |
+| 10.2 | A counter climbs to "4 of 6", above "Top answers now name you.", with confetti |
+| 12.0 | Blue panel: "ask Chrysa" about reviews, search, creators, your rivals, then "anything." |
 | 14.35 | "A marketing mind, yours to keep." The panel shrinks to a card next to "always on." |
 | 16.65 | The Chrysa wordmark types itself in, with chrysa.ai underneath |
 
