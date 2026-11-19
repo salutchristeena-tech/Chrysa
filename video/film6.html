@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ask Chrysa Film</title>
+<link rel="stylesheet" href="film.css">
+<style>
+  :root{--ox:#4D0E12;--line:#EFE6DA}
+  /* opening title */
+  #t1{display:flex;align-items:center;gap:22px;font-size:96px;letter-spacing:-0.03em}
+  #t1 img{width:120px;height:115px;object-fit:contain}
+  html.v #t1{flex-direction:column;font-size:84px;gap:14px}
+
+  /* the tab */
+  #panel{position:absolute;width:1000px;height:800px;background:#FFFDFA;border-radius:44px;
+    box-shadow:0 2px 0 rgba(35,24,21,.04),0 40px 90px rgba(35,24,21,.14);overflow:hidden}
+  html.v #panel{width:780px;height:1040px}
+  #ph{position:absolute;left:0;right:0;top:0;height:120px;display:flex;align-items:center;gap:18px;padding:0 40px;border-bottom:1px solid var(--line)}
+  #ph .av{width:72px;height:72px;border-radius:50%;background:linear-gradient(160deg,#E8EEF6,#F7EBD6);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  #ph .av img{width:60px}
+  #ph .nm{font-size:34px;font-weight:600;flex:1}
+  #ph .st{font-size:24px;color:var(--green);display:flex;align-items:center;gap:10px}
+  #ph .st i{width:12px;height:12px;border-radius:50%;background:#4E9A5E;display:block}
+  #conv{position:absolute;left:40px;right:40px;top:150px;bottom:150px;justify-content:center;display:flex;flex-direction:column;gap:22px}
+  .qb{align-self:flex-end;max-width:78%;background:var(--ox);color:#fff;border-radius:30px 30px 10px 30px;padding:24px 32px;font-size:44px;line-height:1.25;transform-origin:100% 100%;display:flex;align-items:center;gap:14px}
+  .row{display:flex;gap:16px;align-items:flex-end}
+  .row .mini{width:72px;height:69px;object-fit:contain;flex:0 0 auto}
+  .ab{max-width:84%;background:#fff;border:2px solid var(--line);border-radius:30px 30px 30px 10px;padding:26px 32px;font-size:42px;line-height:1.3;transform-origin:0 100%}
+  .ab .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .tag{display:inline-flex;align-items:center;gap:8px;font-size:25px;font-weight:600;border-radius:14px;padding:8px 14px;white-space:nowrap}
+  .tag.ev{background:#E3EFDF;color:var(--green)}
+  .tag.rd{background:#F6E9D2;color:#9A6A1E}
+  .ab .soft{color:#8C7D73}
+  .ab .rd-line{margin-top:12px;padding-top:12px;border-top:1px dashed #E5DBCF}
+  .ab .draft{margin-top:4px;background:#FBF6EF;border-radius:20px;padding:20px 24px;font-size:40px}
+  .ab .bt{display:inline-block;margin-top:18px;font-size:30px;font-weight:600;color:#FFF8EE;background:var(--ink);border-radius:999px;padding:13px 26px}
+  .think{background:#fff;border:2px solid var(--line);border-radius:30px 30px 30px 10px;padding:24px 30px;font-size:38px;color:#8C7D73;display:flex;align-items:center;gap:12px}
+  .dots{display:flex;gap:8px}.dots i{width:12px;height:12px;border-radius:50%;background:#B9ADA3;display:block}
+
+  #inp{position:absolute;left:32px;right:32px;bottom:30px;height:92px;border-radius:46px;border:2px solid #E5DED6;display:flex;align-items:center;gap:16px;padding:0 14px 0 34px}
+  #itx{flex:1;font-size:36px;white-space:nowrap;overflow:hidden}
+  #itx.ph{color:#B6AAA0}
+  #caret{width:3px;height:40px;background:var(--ox);margin-left:-14px}
+  #wave{display:none;flex:1;align-items:center;gap:7px;height:60px}
+  #wave i{width:7px;border-radius:4px;background:var(--ox);display:block}
+  .btn{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  #mic{background:#F1E9DE}
+  #send{background:var(--ox)}
+  #ring{position:absolute;border-radius:50%;border:4px solid #C98F34;pointer-events:none}
+
+  /* topic word beside the tab (landscape) or above it (portrait) */
+  #topic{position:absolute;text-align:left}
+  #topic .k{font-size:34px;color:var(--soft)}
+  #topic .w{font-size:96px;letter-spacing:-0.03em;line-height:1.05;position:relative;height:110px}
+  #topic .w span{position:absolute;left:0;top:0;white-space:nowrap}
+  html.v #topic{text-align:center}
+  html.v #topic .w span{left:0;right:0}
+
+  /* flurry */
+  .fly{position:absolute;background:var(--ox);color:#fff;border-radius:28px 28px 8px 28px;padding:16px 24px;font-size:30px;white-space:nowrap;box-shadow:0 14px 34px rgba(77,14,18,.18)}
+  #anyth{font-size:120px;letter-spacing:-0.035em}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="s1" class="scene"><div id="t1"><img id="t1img" src="chrysa-cut.png" alt=""><span id="t1t">Ask Chrysa anything.</span></div></div>
+
+  <div id="topic"><div class="k">Ask about</div><div class="w" id="tw"></div></div>
+
+  <div id="panel">
+    <div id="ph"><span class="av"><img src="chrysa-cut.png" alt=""></span><span class="nm">Ask Chrysa</span><span class="st" id="st"><i></i><span id="stt">Here for you</span></span></div>
+    <div id="conv">
+      <div class="qb" id="qb"></div>
+      <div class="row" id="thr"><img class="mini" src="chrysa-cut.png" alt=""><div class="think">Thinking <span class="dots" id="dots"><i></i><i></i><i></i></span></div></div>
+      <div class="row" id="abr"><img class="mini" src="chrysa-cut.png" alt=""><div class="ab" id="ab"></div></div>
+    </div>
+    <div id="inp">
+      <span id="itx" class="ph">Ask anything</span><span id="caret"></span>
+      <span id="wave"></span>
+      <span class="btn" id="mic"><svg width="30" height="30" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="#4D0E12"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21" stroke="#4D0E12" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span>
+      <span class="btn" id="send"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M12 20V5M5 11l7-7 7 7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div id="ring"></div>
+  </div>
+
+  <div id="flurry"></div>
+  <div id="s3" class="scene"><div id="anyth">Ask anything.</div></div>
+
+  <div id="end" class="scene">
+    <div class="logo"><img id="endImg" src="chrysa-cut.png" alt=""><span id="endWord"></span></div>
+    <div class="sub" id="endSub">Out loud, if you like.</div>
+    <div class="url" id="endUrl">chrysa.ai</div>
+  </div>
+  <div id="grain"></div>
+</div>
+<script src="film.js"></script>
+<script>
+const DUR = 21.0;
+const EV = s => `<span class="tag ev">✓ Evidence · ${s}</span>`;
+const RD = s => `<span class="tag rd">◐ ${s}</span>`;
+// Each question: when it starts, what is asked, the answer, and the topic word shown beside the tab.
+const QS = [
+  { t: 2.3, topic: 'results.', q: 'How are Reels doing?',
+    a: `Beautifully. Every dirham on Reels brings back four.<div class="tags">${EV('Meta, last 30 days')}</div><div class="soft" style="margin-top:14px;font-size:30px">Budget moves are yours to make.</div>` },
+  { t: 5.05, topic: 'reasons.', q: 'Why did Tuesday’s sales dip?',
+    a: `Delivery orders rose 18% while walk-ins fell on a rainy day.<div class="tags">${EV('till and weather data')}</div><div class="rd-line">Footfall, not demand. Nothing to fix.</div><div class="tags">${RD('Her reading')}</div>` },
+  { t: 8.0, topic: 'reputation.', q: 'What are people saying about us?',
+    a: `Mostly love for the saffron bun. Two people mentioned slow lunch service this week.<div class="tags">${EV('214 reviews and comments')}</div>` },
+  { t: 10.75, topic: 'creators.', q: 'Who should we work with next?',
+    a: `@layla.eats. 96% real followers, and her last three posts drove bookings.<div class="tags">${EV('creator and booking data')}</div>` },
+  { t: 13.5, topic: 'anything.', q: 'Draft a post for Friday.', voice: true,
+    a: `<div class="draft">Friday tastes like saffron. Fresh buns from 8am, until they’re gone.</div><span class="bt" id="appr">Approve</span>` },
+];
+const SLOT = [2.75, 2.95, 2.75, 2.75, 3.2];      // how long each question stays
+QS.forEach((q, i) => { q.end = q.t + SLOT[i]; });
+
+let shown = -1;
+function setSlot(i) {
+  if (i === shown) return; shown = i;
+  if (i < 0) return;
+  const q = QS[i];
+  $('qb').innerHTML = (q.voice ? '<svg width="28" height="28" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="#fff"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>' : '') + `<span>${q.q}</span>`;
+  $('ab').innerHTML = q.a;
+}
+const W = $('wave'); for (let i = 0; i < 34; i++) W.appendChild(document.createElement('i'));
+$('tw').innerHTML = QS.map((q, i) => `<span id="tw${i}">${q.topic}</span>`).join('');
+
+const FLY = ['Are we in ChatGPT’s answers?', 'Which post worked best?', 'What should I do today?', 'Is lunch priced right?',
+  'Who mentioned us?', 'Why are DMs slow?', 'What’s our best day?', 'Reply to that review', 'How do we beat the café next door?', 'Plan next week'];
+let sd = 9; const Rr = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
+const flyEls = FLY.map((s, i) => {
+  const d = document.createElement('div'); d.className = 'fly'; d.textContent = s; $('flurry').appendChild(d);
+  return { el: d, t: 17.0 + i * 0.13, x: 0.08 + Rr() * 0.84, y: 0.08 + Rr() * 0.84, r: (Rr() - 0.5) * 10 };
+});
+
+function layout() {
+  const p = $('panel');
+  const pw = V ? 780 : 1000, phh = V ? 1040 : 800;
+  const px = V ? (SW - pw) / 2 : SW - pw - 150, py = V ? SH - phh - 150 : (SH - phh) / 2;
+  p.style.left = px + 'px'; p.style.top = py + 'px';
+  const tp = $('topic');
+  if (V) { tp.style.left = '0px'; tp.style.width = SW + 'px'; tp.style.top = (py - 230) + 'px'; }
+  else { tp.style.left = '150px'; tp.style.width = '600px'; tp.style.top = (SH / 2 - 90) + 'px'; }
+  return { px, py, pw, phh };
+}
+let L = null;
+
+function render(t) {
+  if (!L) L = layout();
+  // 1 title (0 - 1.9)
+  vis($('s1'), t < 2.0);
+  const tp = seg(t, 0.35, 0.95);
+  $('t1img').style.transform = `scale(${lerp(0.4, 1, back(tp))}) rotate(${(1 - eout(tp)) * -12}deg)`;
+  $('t1img').style.opacity = tp;
+  fade($('t1t'), eout(seg(t, 0.15, 0.6)), 26);
+  const o1 = eio(seg(t, 1.55, 1.95));
+  $('s1').style.opacity = 1 - o1; $('s1').style.transform = `translateY(${-o1 * 80}px) scale(${1 - o1 * 0.08})`;
+
+  // 2 the tab (1.75 - 17.0)
+  const pin = eout(seg(t, 1.75, 2.3)), pout = eio(seg(t, 16.75, 17.15));
+  const p = $('panel');
+  vis(p, t > 1.75 && t < 17.2);
+  p.style.opacity = pin * (1 - pout);
+  p.style.transform = `translateY(${(1 - pin) * 120 - pout * 60}px) scale(${lerp(0.94, 1, pin) * (1 - pout * 0.06)})`;
+  // the topic word
+  vis($('topic'), t > 2.2 && t < 17.2);
+  $('topic').querySelector('.k').style.opacity = eout(seg(t, 2.3, 2.7)) * (1 - pout);
+  QS.forEach((q, i) => {
+    const a = eout(seg(t, q.t, q.t + 0.4)), b = i < QS.length - 1 ? seg(t, q.end - 0.2, q.end + 0.1) : pout;
+    const el = $('tw' + i);
+    el.style.opacity = a * (1 - b); el.style.transform = `translateY(${(1 - a) * 50 - b * 40}px)`; el.style.filter = `blur(${(1 - a) * 10 + b * 10}px)`;
+    el.style.color = i === QS.length - 1 ? '#C98F34' : '#231815';
+  });
+
+  // which question is live
+  let i = -1; QS.forEach((q, k) => { if (t >= q.t - 0.05) i = k; });
+  setSlot(i);
+  const q = QS[Math.max(0, i)];
+  const st = t - q.t;
+  const voice = !!q.voice;
+  // input: typing, or the voice waveform
+  const typeDur = voice ? 1.05 : Math.min(0.75, q.q.length * 0.03), sendAt = typeDur + 0.12;
+  const itx = $('itx'), wave = $('wave');
+  if (i < 0 || st >= sendAt) { itx.textContent = 'Ask anything'; itx.className = 'ph'; }
+  else if (!voice) { itx.className = ''; typeOn(itx, q.q, t, q.t, typeDur / q.q.length); }
+  const listening = voice && st >= 0 && st < sendAt;
+  itx.style.display = listening ? 'none' : 'block';
+  wave.style.display = listening ? 'flex' : 'none';
+  if (listening) [...wave.children].forEach((b, k) => { b.style.height = (10 + Math.abs(Math.sin(t * 11 + k * 0.7) * Math.sin(t * 3.1 + k * 1.3)) * 50) + 'px'; });
+  $('caret').style.opacity = (!listening && st >= 0 && st < typeDur && Math.floor(t * 6) % 2 === 0) ? 1 : 0;
+  $('mic').style.background = listening ? '#C98F34' : '#F1E9DE';
+  $('mic').style.transform = `scale(${listening ? 1 + Math.sin(t * 9) * 0.06 : 1})`;
+  const sp = seg(t, q.t + sendAt - 0.1, q.t + sendAt + 0.1);
+  $('send').style.transform = `scale(${1 - Math.sin(sp * Math.PI) * 0.12})`;
+  $('stt').textContent = listening ? 'Listening…' : 'Here for you';
+
+  // the conversation for this question
+  const clear = i < QS.length - 1 ? eio(seg(t, q.end - 0.25, q.end)) : 0;
+  const conv = $('conv');
+  conv.style.opacity = 1 - clear; conv.style.transform = `translateY(${-clear * 50}px)`;
+  const qp = seg(t, q.t + sendAt, q.t + sendAt + 0.3);
+  $('qb').style.opacity = clamp(qp * 3); $('qb').style.transform = `scale(${lerp(0.6, 1, back(qp))})`;
+  vis($('qb'), qp > 0);
+  const thinkA = q.t + sendAt + 0.25, ansA = thinkA + (voice ? 0.55 : 0.5);
+  const thinking = t >= thinkA && t < ansA;
+  $('thr').style.display = thinking ? 'flex' : 'none';
+  [...$('dots').children].forEach((d, k) => { const a = (Math.sin(t * 8 - k * 0.9) + 1) / 2; d.style.opacity = 0.3 + 0.7 * a; d.style.transform = `translateY(${-a * 5}px)`; });
+  const ap = seg(t, ansA, ansA + 0.35);
+  $('abr').style.display = t >= ansA ? 'flex' : 'none';
+  $('ab').style.opacity = clamp(ap * 2.5); $('ab').style.transform = `scale(${lerp(0.7, 1, back(ap))})`;
+  $('ab').querySelectorAll('.tags').forEach((g, k) => { const tp2 = eout(seg(t, ansA + 0.3 + k * 0.35, ansA + 0.6 + k * 0.35)); g.style.opacity = tp2; g.style.transform = `translateY(${(1 - tp2) * 10}px)`; });
+  $('ab').querySelectorAll('.rd-line,.soft').forEach(g => { const tp2 = eout(seg(t, ansA + 0.5, ansA + 0.85)); g.style.opacity = tp2; });
+  // approve the drafted post
+  const appr = document.getElementById('appr');
+  const ring = $('ring');
+  if (appr) {
+    const at = ansA + 1.15, pp = seg(t, at, at + 0.2);
+    appr.style.transform = `scale(${1 - Math.sin(pp * Math.PI) * 0.1})`;
+    if (t >= at + 0.08) { appr.textContent = 'Scheduled for Friday ✓'; appr.style.background = '#3C7A4A'; } else { appr.textContent = 'Approve'; appr.style.background = '#231815'; }
+    const rp = seg(t, at, at + 0.5);
+    vis(ring, rp > 0 && rp < 1);
+    if (rp > 0 && rp < 1) {
+      const pr = p.getBoundingClientRect(), br = appr.getBoundingClientRect();
+      const cx = (br.left + br.width / 2 - pr.left), cy = (br.top + br.height / 2 - pr.top), r = 30 + rp * 90;
+      ring.style.left = (cx - r) + 'px'; ring.style.top = (cy - r) + 'px'; ring.style.width = ring.style.height = 2 * r + 'px'; ring.style.opacity = 1 - rp;
+    }
+  } else vis(ring, false);
+
+  // 3 the flurry (17.0 - 18.9)
+  flyEls.forEach(f => {
+    const a = seg(t, f.t, f.t + 0.3), out = seg(t, 18.35, 18.6);
+    vis(f.el, t > f.t && t < 18.65);
+    const w = f.el.offsetWidth, h = f.el.offsetHeight;
+    const x = clamp(f.x * SW - w / 2, 20, SW - w - 20), y = clamp(f.y * SH - h / 2, 30, SH - h - 30);
+    f.el.style.left = x + 'px'; f.el.style.top = y + 'px';
+    f.el.style.opacity = clamp(a * 2) * (1 - out) * (t > 17.65 ? lerp(1, 0.28, seg(t, 17.65, 17.9)) : 1);
+    f.el.style.transform = `scale(${lerp(0.5, 1, back(a))}) rotate(${f.r}deg)`;
+  });
+  vis($('s3'), t > 17.6 && t < 18.75);
+  const an = eout(seg(t, 17.65, 18.0));
+  $('anyth').style.opacity = an * (1 - seg(t, 18.45, 18.7));
+  $('anyth').style.transform = `scale(${lerp(0.85, 1, back(an))})`;
+
+  endCard(t, 18.8);
+}
+boot(render, DUR);
+</script>
+</body>
+</html>

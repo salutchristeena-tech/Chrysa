@@ -5,6 +5,7 @@
     python3 soundtrack.py out.wav film3      # film 3, "Be found where people ask."
     python3 soundtrack.py out.wav film4      # film 4, "The Pearl"
     python3 soundtrack.py out.wav film5      # film 5, the playful one
+    python3 soundtrack.py out.wav film6      # film 6, "Ask Chrysa"
 
 All three share one motif (an electric-piano arpeggio over a soft pad, 100 BPM) so the
 series sounds like one family: film 2 sits a tone higher for the morning, film 3 starts
@@ -14,7 +15,7 @@ import numpy as np, wave, sys
 
 SR = 48000
 FILM = sys.argv[2] if len(sys.argv) > 2 else 'launch'
-DUR = {'launch': 19.0, 'film2': 16.2, 'film3': 16.1, 'film4': 18.9, 'film5': 17.4}[FILM]
+DUR = {'launch': 19.0, 'film2': 16.2, 'film3': 16.1, 'film4': 18.9, 'film5': 17.4, 'film6': 21.0}[FILM]
 N = int(SR * DUR)
 L = np.zeros(N); R = np.zeros(N)
 rng = np.random.default_rng(3)
@@ -212,6 +213,30 @@ elif FILM == 'film5':
     t = t_(0.6); add(np.sin(2 * np.pi * np.cumsum(300 * 2 ** (t / 0.2)) / SR) * np.sin(np.pi * t / 0.6), 11.7, 0, 0.05)  # the spin
     add(whoosh(0.7), 13.85, 0, 0.18)
     close(14.65, 15.15, root=60)
+
+elif FILM == 'film6':
+    bed([(0, F_MAJ)], 2.3, 18.7)
+    add(pop(660), 0.4, 0, 0.22); add(epiano(hz(84), 2), 0.45, 0, 0.12)            # title
+    add(whoosh(0.5), 1.7, 0, 0.14)                                                 # the tab opens
+    QT = [(2.3, 'How are Reels doing?'), (5.05, 'Why did Tuesday’s sales dip?'), (8.0, 'What are people saying about us?'), (10.75, 'Who should we work with next?')]
+    for t0, q in QT:
+        dur = min(0.75, len(q) * 0.03)
+        for k in range(len(q)):
+            if q[k] != ' ': add(tick(), t0 + k * dur / len(q), 0.15, 0.32)
+        send = t0 + dur + 0.12
+        add(pop(1180), send, 0.3, 0.2)                                             # sent
+        add(pop(760), send + 0.25 + 0.5, -0.3, 0.2)                                # answered
+        add(epiano(hz(84), 1.0), send + 0.25 + 0.5, -0.2, 0.08)
+        add(tick(), send + 0.25 + 0.5 + 0.3, 0, 0.3)                               # evidence tag
+    # the spoken question
+    add(pop(520), 13.5, 0, 0.16)
+    t = t_(1.05); add(np.sin(2 * np.pi * 220 * t) * (0.5 + 0.5 * np.sin(2 * np.pi * 7 * t)) * np.sin(np.pi * t / 1.05), 13.5, 0, 0.03)
+    add(pop(1180), 14.67, 0.3, 0.2); add(pop(760), 15.47, -0.3, 0.2)
+    add(pop(1400), 16.62, 0, 0.26); add(chime(hz(84)), 16.65, 0, 0.08)            # approved
+    add(whoosh(0.5), 16.75, 0, 0.14)
+    for i in range(10): add(pop(900 + (i % 5) * 140), 17.0 + i * 0.13, -0.6 + (i % 5) * 0.3, 0.13)   # the flurry
+    add(thud(), 17.65, 0, 0.18); add(chime(hz(81)), 17.68, 0, 0.07)
+    close(18.8, 19.3)
 
 def room(x):
     y = x.copy()
