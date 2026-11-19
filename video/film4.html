@@ -93,6 +93,11 @@ for (let i = 0; i < NP; i++) {
 // One golden line hidden in the crowd: the moment that matters.
 const GOLD = { s: '“quiet brunch spot for a first date?”', x0: SW * (V ? 0.5 : 0.7), y0: SH * (V ? 0.3 : 0.32), z: 1, vx: -4, vy: -6, amp: 8, f: 0.5, ph: 1, born: 1.4, a: 8.15 };
 
+const layers = {};
+function layerCanvas(k) {
+  if (!layers[k]) { const c = document.createElement('canvas'); c.width = Math.ceil(SW * k); c.height = Math.ceil(SH * k); layers[k] = c; }
+  return layers[k];
+}
 function warp(t) { return t + 1.6 * Math.max(0, t - 2.5) * seg(t, 2.5, 4.5); }   // the crowd speeds up
 function place(p, t) {
   const tt = Math.min(warp(t), warp(p.a - 1.3));
@@ -121,21 +126,22 @@ function drawSea(t) {
   });
   const crowd = 1 + 0.25 * seg(t, 2.6, 4.4);
   g.textAlign = 'center'; g.textBaseline = 'middle';
-  // three depth layers, the far ones softly out of focus
-  for (const [lo, hi, blur] of [[0, 0.5, 2.6], [0.5, 0.78, 1.1], [0.78, 1.01, 0]]) {
-    g.filter = blur ? `blur(${blur}px)` : 'none';
+  // three depth layers; the far ones are drawn small and scaled up, which softens them like a shallow focus
+  for (const [lo, hi, k] of [[0, 0.5, 0.3], [0.5, 0.78, 0.55], [0.78, 1.01, 1]]) {
+    const off = k < 1 ? layerCanvas(k) : null, h = off ? off.getContext('2d') : g;
+    if (off) { h.setTransform(k, 0, 0, k, 0, 0); h.clearRect(0, 0, SW, SH); h.textAlign = 'center'; h.textBaseline = 'middle'; }
     for (const p of P) {
       if (p.z < lo || p.z >= hi || t < p.born || t >= p.a) continue;
       const { x, y, e } = place(p, t);
       const born = seg(t, p.born, p.born + 0.8);
       const alpha = (0.05 + 0.34 * p.z * p.z) * born * crowd * (1 - seg(e, 0.8, 1));
       if (alpha <= 0.004) continue;
-      g.font = `500 ${(10 + 22 * p.z) * (1 - 0.65 * e)}px Inter, sans-serif`;
-      g.fillStyle = `rgba(244,237,228,${alpha})`;
-      g.fillText(p.s, x, y);
+      h.font = `500 ${(10 + 22 * p.z) * (1 - 0.65 * e)}px Inter, sans-serif`;
+      h.fillStyle = `rgba(244,237,228,${alpha})`;
+      h.fillText(p.s, x, y);
     }
+    if (off) { g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high'; g.drawImage(off, 0, 0, SW * k, SH * k, 0, 0, SW, SH); }
   }
-  g.filter = 'none';
   // the golden line
   if (t >= GOLD.born && t < GOLD.a) {
     const { x, y, e } = place(GOLD, t);
