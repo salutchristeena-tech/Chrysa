@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Pearl Film</title>
+<link rel="stylesheet" href="film.css">
+<style>
+  #stage{background:#120E0C}
+  canvas.full{position:absolute;left:0;top:0}
+  #glow{position:absolute;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(255,236,206,.95) 0%,rgba(244,214,170,.55) 30%,rgba(201,143,52,.18) 55%,rgba(201,143,52,0) 72%)}
+  #shell{position:absolute;object-fit:contain}
+  .cap{position:absolute;left:0;right:0;text-align:center;font-size:52px;text-shadow:0 2px 24px rgba(0,0,0,.6);line-height:1.2;color:#F4EDE4;letter-spacing:-0.015em;padding:0 8%;text-wrap:balance;opacity:0}
+  .cap.dim{color:#9C8F85}
+
+  #card{position:absolute;left:50%;width:780px;margin-left:-390px;background:#FFFDFA;border-radius:34px;padding:34px 40px;text-align:left;
+    box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06);opacity:0}
+  html.v #card{width:720px;margin-left:-360px}
+  #card .top{display:flex;align-items:center;gap:16px}
+  #card .ic{width:54px;height:54px;border-radius:16px;background:#E2603A;color:#fff;font-weight:700;font-size:22px;display:flex;align-items:center;justify-content:center}
+  #card .src{font-size:26px;font-weight:600;flex:1}
+  #card .src span{font-weight:500;color:#9A8E84}
+  #card .chip{font-size:22px;font-weight:600;color:var(--green);background:#E3EFDF;border-radius:14px;padding:9px 15px}
+  #card .q{font-size:46px;line-height:1.15;letter-spacing:-0.02em;margin-top:22px}
+  #card .rep{margin-top:22px;padding-top:18px;border-top:1px solid #E9E1D8;font-size:26px;color:var(--blue);min-height:56px;display:flex;align-items:center;gap:10px}
+
+  #wipe{position:absolute;border-radius:50%;background:var(--bg);pointer-events:none}
+  #s5 .big b{font-weight:500;color:var(--gold)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="sea" class="full"></canvas>
+  <div id="glow"></div>
+  <img id="shell" src="chrysa-cut.png" alt="">
+  <canvas id="pearl" class="full"></canvas>
+
+  <div class="cap" id="c0">Every day, people say thousands of things about you.</div>
+  <div class="cap dim" id="c1">Most of it is noise.</div>
+  <div class="cap" id="c2">Chrysa listens to all of it.</div>
+  <div class="cap" id="c3">And finds the one that matters.</div>
+
+  <div id="card">
+    <div class="top"><span class="ic">R</span><span class="src">r/dubai <span>· just now</span></span><span class="chip">94% intent</span></div>
+    <div class="q">“Quiet brunch spot for a first date?”</div>
+    <div class="rep" id="rep"></div>
+  </div>
+  <div class="cap" id="c4">Someone wants exactly what you offer.</div>
+
+  <div id="wipe"></div>
+
+  <div id="s5" class="scene">
+    <div class="big" id="l1">In all the noise,</div>
+    <div class="big" id="l2">she finds the <b>pearl.</b></div>
+  </div>
+
+  <div id="end" class="scene">
+    <div class="logo"><img id="endImg" src="chrysa-cut.png" alt=""><span id="endWord"></span></div>
+    <div class="sub" id="endSub">A marketing mind you can keep.</div>
+    <div class="url" id="endUrl">chrysa.ai</div>
+  </div>
+  <div id="grain"></div>
+</div>
+<script src="film.js"></script>
+<script>
+const DUR = 18.9;
+const sea = $('sea'), pc = $('pearl');
+[sea, pc].forEach(c => { c.style.width = SW + 'px'; c.style.height = SH + 'px'; });
+// Draw canvases at the device pixel ratio so text stays crisp in 4K.
+const DPR = window.devicePixelRatio || 1;
+[sea, pc].forEach(c => { c.width = SW * DPR; c.height = SH * DPR; c.getContext('2d').setTransform(DPR, 0, 0, DPR, 0, 0); });
+
+const C = { x: SW / 2, y: SH / 2 - (V ? 60 : 30) };   // where the shell settles
+const SHELL_W = V ? 330 : 300;
+
+/* ---------- the noise ---------- */
+const WORDS = ['love this', 'where is the menu?', 'open late?', '★★★★★', 'too pricey', 'anyone tried it?', '#brunch', 'parking?',
+  'best latte in town', 'service was slow', 'do you deliver?', 'tagged you', '4★', 'booked for Friday', 'is it halal?',
+  'the saffron bun', 'meh', 'so cosy', 'dog friendly?', 'gluten free?', 'wifi?', 'queue was long', 'obsessed', 'new spot alert',
+  'vs the one in JLT?', 'kids menu?', 'shared your post', '2★', 'hidden gem', 'opening hours?', 'need a reservation?', '@foodie_uae',
+  'worth it', 'saw this on reels', 'ok but the cake', 'where exactly?', 'brunch deals?', 'quiet place to work?', 'loved the staff',
+  'never again', 'ordered twice', 'price went up?', 'outdoor seating?', 'birthday booking', 'vegan options?'];
+let seed = 7; const Rn = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+const NP = V ? 380 : 500;
+const P = [];
+for (let i = 0; i < NP; i++) {
+  const z = 0.25 + Rn() * 0.75;
+  P.push({ s: WORDS[i % WORDS.length], x0: -0.08 * SW + Rn() * 1.16 * SW, y0: Rn() * SH, z,
+    vx: (Rn() - .5) * 18 * z, vy: -(5 + 14 * z), amp: 6 + Rn() * 14, f: 0.4 + Rn() * 0.8, ph: Rn() * 6.28,
+    born: i < NP * 0.45 ? Rn() * 1.2 : 2.6 + Rn() * 1.8,              // more voices arrive during "noise"
+    a: 5.7 + Rn() * 2.3 });                                             // when the shell draws it in
+}
+// One golden line hidden in the crowd: the moment that matters.
+const GOLD = { s: '“quiet brunch spot for a first date?”', x0: SW * (V ? 0.5 : 0.7), y0: SH * (V ? 0.3 : 0.32), z: 1, vx: -4, vy: -6, amp: 8, f: 0.5, ph: 1, born: 1.4, a: 8.15 };
+
+function warp(t) { return t + 1.6 * Math.max(0, t - 2.5) * seg(t, 2.5, 4.5); }   // the crowd speeds up
+function place(p, t) {
+  const tt = Math.min(warp(t), warp(p.a - 1.3));
+  let x = p.x0 + p.vx * tt + Math.sin(tt * p.f + p.ph) * p.amp;
+  let y = p.y0 + p.vy * tt;
+  const span = SH + 120; y = ((y + 60) % span + span) % span - 60;
+  const e = Math.pow(seg(t, p.a - 1.3, p.a), 2.2);                   // pull towards the shell, accelerating
+  if (e > 0) {
+    const dx = x - C.x, dy = y - C.y, ang = e * 2.4, k = 1 - e;
+    x = C.x + (dx * Math.cos(ang) - dy * Math.sin(ang)) * k;
+    y = C.y + (dx * Math.sin(ang) + dy * Math.cos(ang)) * k;
+  }
+  return { x, y, e };
+}
+function drawSea(t) {
+  const g = sea.getContext('2d');
+  const bg = g.createLinearGradient(0, 0, 0, SH);
+  bg.addColorStop(0, '#1A1411'); bg.addColorStop(1, '#0D0A09');
+  g.fillStyle = bg; g.fillRect(0, 0, SW, SH);
+  // slow caustic light
+  [[0.25, 0.3, '201,143,52', 0.07], [0.75, 0.6, '65,98,143', 0.09], [0.5, 0.15, '244,214,170', 0.05], [0.4, 0.8, '65,98,143', 0.06]].forEach(([fx, fy, col, a], i) => {
+    const cx = SW * (fx + Math.sin(t * 0.21 + i) * 0.08), cy = SH * (fy + Math.cos(t * 0.17 + i * 2) * 0.06), r = Math.max(SW, SH) * 0.45;
+    const rg = g.createRadialGradient(cx, cy, 0, cx, cy, r);
+    rg.addColorStop(0, `rgba(${col},${a})`); rg.addColorStop(1, `rgba(${col},0)`);
+    g.fillStyle = rg; g.fillRect(0, 0, SW, SH);
+  });
+  const crowd = 1 + 0.25 * seg(t, 2.6, 4.4);
+  g.textAlign = 'center'; g.textBaseline = 'middle';
+  // three depth layers, the far ones softly out of focus
+  for (const [lo, hi, blur] of [[0, 0.5, 2.6], [0.5, 0.78, 1.1], [0.78, 1.01, 0]]) {
+    g.filter = blur ? `blur(${blur}px)` : 'none';
+    for (const p of P) {
+      if (p.z < lo || p.z >= hi || t < p.born || t >= p.a) continue;
+      const { x, y, e } = place(p, t);
+      const born = seg(t, p.born, p.born + 0.8);
+      const alpha = (0.05 + 0.34 * p.z * p.z) * born * crowd * (1 - seg(e, 0.8, 1));
+      if (alpha <= 0.004) continue;
+      g.font = `500 ${(10 + 22 * p.z) * (1 - 0.65 * e)}px Inter, sans-serif`;
+      g.fillStyle = `rgba(244,237,228,${alpha})`;
+      g.fillText(p.s, x, y);
+    }
+  }
+  g.filter = 'none';
+  // the golden line
+  if (t >= GOLD.born && t < GOLD.a) {
+    const { x, y, e } = place(GOLD, t);
+    const a = seg(t, GOLD.born, GOLD.born + 1.0) * (1 - seg(e, 0.85, 1));
+    g.save(); g.font = `500 ${34 * (1 - 0.6 * e)}px Inter, sans-serif`;
+    g.shadowColor = 'rgba(232,199,126,0.95)'; g.shadowBlur = 26 + Math.sin(t * 3) * 8;
+    g.fillStyle = `rgba(246,214,150,${a})`; g.fillText(GOLD.s, x, y); g.restore();
+  }
+  // a soft dark band so the captions always read
+  const cy = SH * (V ? 0.76 : 0.79);
+  const band = g.createLinearGradient(0, cy - 220, 0, cy + 200);
+  band.addColorStop(0, 'rgba(13,10,9,0)'); band.addColorStop(0.45, 'rgba(13,10,9,0.82)'); band.addColorStop(0.75, 'rgba(13,10,9,0.82)'); band.addColorStop(1, 'rgba(13,10,9,0.4)');
+  g.fillStyle = band; g.fillRect(0, cy - 220, SW, 420);
+}
+
+/* ---------- the pearl ---------- */
+function drawPearl(t, x, y, r, aura) {
+  const g = pc.getContext('2d'); g.clearRect(0, 0, SW, SH);
+  if (r <= 0.5) return;
+  const halo = g.createRadialGradient(x, y, r * 0.8, x, y, r * (3.2 + aura));
+  halo.addColorStop(0, 'rgba(255,240,220,0.42)'); halo.addColorStop(1, 'rgba(255,240,220,0)');
+  g.fillStyle = halo; g.beginPath(); g.arc(x, y, r * (3.2 + aura), 0, 6.283); g.fill();
+  const body = g.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.05, x, y, r);
+  body.addColorStop(0, '#FFFFFF'); body.addColorStop(0.45, '#F7EFE6'); body.addColorStop(0.82, '#E6D8CB'); body.addColorStop(1, '#CDBFB3');
+  g.fillStyle = body; g.beginPath(); g.arc(x, y, r, 0, 6.283); g.fill();
+  // iridescent sheen drifting across the surface
+  g.save(); g.beginPath(); g.arc(x, y, r, 0, 6.283); g.clip();
+  const sx = x + Math.cos(t * 1.3) * r * 0.5, sy = y + Math.sin(t * 1.1) * r * 0.4;
+  const sheen = g.createRadialGradient(sx, sy, 0, sx, sy, r * 0.9);
+  sheen.addColorStop(0, 'rgba(165,188,214,0.35)'); sheen.addColorStop(0.5, 'rgba(232,199,180,0.18)'); sheen.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = sheen; g.fillRect(x - r, y - r, 2 * r, 2 * r); g.restore();
+  g.fillStyle = 'rgba(255,255,255,0.85)';
+  g.beginPath(); g.ellipse(x - r * 0.38, y - r * 0.42, r * 0.2, r * 0.12, -0.6, 0, 6.283); g.fill();
+}
+
+function capWin(id, a, b) {
+  const p = eout(seg(t_, a, a + 0.5)) * (1 - seg(t_, b - 0.4, b));
+  fade($(id), p, 18, 10); vis($(id), p > 0.001);
+}
+let t_ = 0;
+const REPLY = '↳ Reply drafted in your voice  ✓';
+
+function render(t) {
+  t_ = t;
+  vis(sea, t < 15.2);
+  drawSea(t);
+
+  // captions on the dark sea
+  const capY = SH * (V ? 0.76 : 0.79);
+  ['c0', 'c1', 'c2', 'c3'].forEach(id => { $(id).style.top = capY + 'px'; });
+  capWin('c0', 0.7, 2.75); capWin('c1', 2.9, 4.85); capWin('c2', 5.3, 7.7); capWin('c3', 8.05, 9.75);
+
+  // the shell descends, listens, breathes
+  const sd = eout(seg(t, 4.8, 6.3));
+  const absorbed = seg(t, 5.7, 8.2);
+  const sink = eio(seg(t, 10.2, 10.95));
+  const breathe = 1 + Math.sin(t * 2.4) * 0.012 + Math.sin(seg(t, 8.2, 9.6) * Math.PI * 3) * 0.03 * seg(t, 8.2, 8.5) * (1 - seg(t, 9.4, 9.6));
+  const sy = lerp(-SH * 0.45, C.y, sd) + sink * SH * 0.22;
+  const sw = SHELL_W * breathe;
+  const sh = sw * 900 / 940;
+  const shell = $('shell');
+  vis(shell, t > 4.8 && t < 11.0);
+  shell.style.width = sw + 'px'; shell.style.height = sh + 'px';
+  shell.style.left = (C.x - sw / 2) + 'px'; shell.style.top = (sy - sh / 2) + 'px';
+  shell.style.transform = `rotate(${(1 - sd) * -14 + Math.sin(t * 1.3) * 2}deg)`;
+  shell.style.opacity = sd * (1 - sink);
+  const glow = $('glow'), gs = sw * (1.9 + absorbed * 0.5 + seg(t, 9.2, 9.7) * 0.6 * (1 - seg(t, 9.9, 10.6)));
+  vis(glow, t > 4.8 && t < 11.0);
+  glow.style.width = glow.style.height = gs + 'px';
+  glow.style.left = (C.x - gs / 2) + 'px'; glow.style.top = (sy - gs / 2 + sh * 0.05) + 'px';
+  glow.style.opacity = sd * (0.45 + 0.45 * absorbed + 0.1 * Math.sin(t * 3)) * (1 - sink);
+
+  // the pearl rises, then waits above the card, then blooms into the cream world
+  const rise = eout(seg(t, 9.75, 10.9));
+  const top = SH * (V ? 0.25 : 0.2);
+  let px = lerp(C.x + 18, SW / 2, rise), py = lerp(C.y + 20, top, rise), pr = lerp(0, V ? 64 : 56, eout(seg(t, 9.75, 10.4)));
+  py += Math.sin(t * 1.6) * 6 * rise;
+  const bloom = eio(seg(t, 14.15, 14.95));
+  if (bloom > 0) { py = lerp(py, SH / 2, bloom); }
+  drawPearl(t, px, py, pr, seg(t, 9.75, 10.2) * 2 * (1 - seg(t, 10.2, 11)));
+  vis(pc, t > 9.7 && t < 15.2);
+
+  // the moment itself
+  const card = $('card');
+  card.style.top = (SH * (V ? 0.36 : 0.33)) + 'px';
+  const cp = eout(seg(t, 11.0, 11.5)) * (1 - seg(t, 13.95, 14.25));
+  card.style.opacity = cp; card.style.transform = `translateY(${(1 - cp) * 30}px) scale(${lerp(0.96, 1, cp)})`;
+  vis(card, cp > 0.001);
+  typeOn($('rep'), REPLY, t, 12.6, 0.03);
+  $('c4').style.top = capY + 'px';
+  const c4 = eout(seg(t, 11.7, 12.2)) * (1 - seg(t, 13.9, 14.2));
+  fade($('c4'), c4, 18, 10); vis($('c4'), c4 > 0.001);
+
+  // bloom: the pearl becomes the brand's cream world
+  const wipe = $('wipe'), R = Math.hypot(SW, SH) * bloom;
+  vis(wipe, bloom > 0);
+  wipe.style.width = wipe.style.height = 2 * R + 'px';
+  wipe.style.left = (px - R) + 'px'; wipe.style.top = (py - R) + 'px';
+
+  // line
+  vis($('s5'), t > 14.9 && t < 16.75);
+  fade($('l1'), eout(seg(t, 15.0, 15.4)) * (1 - seg(t, 16.45, 16.7)), 22);
+  fade($('l2'), eout(seg(t, 15.4, 15.8)) * (1 - seg(t, 16.45, 16.7)), 22);
+
+  endCard(t, 16.75);
+}
+boot(render, DUR);
+</script>
+</body>
+</html>

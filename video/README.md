@@ -90,3 +90,20 @@ python3 soundtrack.py soundtrack2.wav film2
 | 10.0 | The tiles flip one at a time to "Names you", reaching "4 of 6 now name you." with confetti, then "Two to go. She's on it." |
 | 12.55 | Blue panel: "Be found where people ask." |
 | 14.05 | Wordmark, then "Your first reading is free." |
+
+### Film 4: "The Pearl" (19s)
+
+A more cinematic, standalone piece built around the mascot's own shape: a shell turns grit into a pearl, and Chrysa turns noise into the one moment that matters. It drops the interface cards in favour of metaphor, so it works as a brand film or as the top-of-funnel opener for the series.
+
+| Time | Beat |
+| --- | --- |
+| 0.0 | A dark sea of drifting comments, with distant ones out of focus. One golden line hides among them. "Every day, people say thousands of things about you." |
+| 2.9 | The crowd thickens and speeds up. "Most of it is noise." |
+| 4.8 | The shell descends, glowing, and draws every comment in on a slow spiral. "Chrysa listens to all of it." |
+| 8.2 | The last voice, the golden one, goes in. Silence. "And finds the one that matters." |
+| 9.8 | A pearl rises from the shell. |
+| 11.0 | The moment itself: "Quiet brunch spot for a first date?" at 94% intent, with a reply drafted in your voice. "Someone wants exactly what you offer." |
+| 14.15 | The pearl blooms into the cream world of the brand. "In all the noise, she finds the pearl." |
+| 16.75 | Wordmark, then "A marketing mind you can keep." |
+
+The score swaps the series beat for an underwater drone and murmuring chatter that builds, then is drawn into a swell. A beat of silence follows, a bell rings for the pearl, and the series motif blooms in at the end.

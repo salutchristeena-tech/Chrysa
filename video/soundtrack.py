@@ -3,6 +3,7 @@
     python3 soundtrack.py out.wav            # film 1, the launch film
     python3 soundtrack.py out.wav film2      # film 2, "Your morning, already sorted."
     python3 soundtrack.py out.wav film3      # film 3, "Be found where people ask."
+    python3 soundtrack.py out.wav film4      # film 4, "The Pearl"
 
 All three share one motif (an electric-piano arpeggio over a soft pad, 100 BPM) so the
 series sounds like one family: film 2 sits a tone higher for the morning, film 3 starts
@@ -12,7 +13,7 @@ import numpy as np, wave, sys
 
 SR = 48000
 FILM = sys.argv[2] if len(sys.argv) > 2 else 'launch'
-DUR = {'launch': 19.0, 'film2': 16.2, 'film3': 16.1}[FILM]
+DUR = {'launch': 19.0, 'film2': 16.2, 'film3': 16.1, 'film4': 18.9}[FILM]
 N = int(SR * DUR)
 L = np.zeros(N); R = np.zeros(N)
 rng = np.random.default_rng(3)
@@ -55,11 +56,11 @@ F_MAJ = [[53, 57, 60, 64, 67], [57, 60, 64, 67], [50, 57, 60, 64, 65], [46, 53, 
 G_MAJ = [[55, 59, 62, 66, 69], [59, 62, 66, 69], [52, 59, 62, 66, 67], [48, 55, 59, 64]]   # the same, a tone up
 A_MIN = [[57, 60, 64, 67], [53, 57, 60, 64], [48, 55, 60, 64], [55, 59, 62, 67]]           # Am7 Fmaj7 C G
 
-def bed(sections, rhythm_from, music_end):
+def bed(sections, rhythm_from, music_end, start=0.0):
     """Pad, bass pad and eighth-note arpeggio, with kick, hat and bass from rhythm_from."""
     arp_end = music_end - 0.4
     for b in range(int(DUR / (4 * B)) + 1):
-        t0 = b * 4 * B
+        t0 = start + b * 4 * B
         if t0 >= music_end: break
         prog = [p for s, p in sections if s <= t0 + 1e-6][-1]
         ch = prog[b % 4]
@@ -128,6 +129,33 @@ elif FILM == 'film3':
         add(epiano(hz((72, 76, 79, 84)[i] + 12), 1.0), f + 0.15, 0, 0.14)
     add(chime(hz(84)), 11.45, 0, 0.08); sparkle(11.45)
     close(14.05, 14.55)
+
+elif FILM == 'film4':
+    # the deep: a low detuned drone that breathes
+    t = t_(14.6)
+    drone = (np.sin(2 * np.pi * 55 * t) + 0.7 * np.sin(2 * np.pi * 55.4 * t) + 0.5 * np.sin(2 * np.pi * 82.4 * t)) * (0.6 + 0.4 * np.sin(2 * np.pi * 0.18 * t))
+    drone *= np.minimum(1, t / 1.5) * np.minimum(1, (14.6 - t) / 0.6)
+    add(drone, 0, 0, 0.09)
+    # the chatter: soft blips that multiply as the crowd grows, then get pulled away
+    for i in range(420):
+        at = 0.4 + (rng.random() ** 0.6) * 7.4
+        if rng.random() < 0.55 or at > 2.6:
+            add(pop(380 + rng.random() * 1100), at, rng.uniform(-.9, .9), 0.02 + 0.03 * rng.random())
+    # the pull: a long swell and a rising tone into the shell
+    add(whoosh(3.0), 5.3, 0, 0.32)
+    tt = t_(2.8); glide = np.sin(2 * np.pi * np.cumsum(110 * 2 ** (tt / 1.4)) / SR) * np.sin(np.pi * tt / 2.8) ** 2
+    add(glide, 5.4, 0, 0.05)
+    add(pop(520), 5.0, 0, 0.12)                                                     # the shell arrives
+    add(thud(), 8.25, 0, 0.22)                                                      # it closes, then silence
+    for f, d in ((hz(84), 0), (hz(88), 0.11), (hz(91), 0.22), (hz(96), 0.4)):         # the pearl
+        add(chime(f), 9.8 + d, 0, 0.09)
+    sparkle(9.9, n=14, spread=0.8)
+    add(pop(1180), 11.05, 0.2, 0.2)                                                  # the card
+    for i in range(10): add(tick(), 12.6 + i * 0.09, 0.1, 0.3)                       # the reply drafting
+    add(whoosh(0.8), 14.05, 0, 0.22)                                                 # the bloom
+    bed([(0, F_MAJ)], 99, 17.9, start=14.4)                                          # the motif, no drums
+    add(pad(hz(65), 3.5), 14.4, 0, 0.06)
+    close(16.75, 17.25)
 
 def room(x):
     y = x.copy()
