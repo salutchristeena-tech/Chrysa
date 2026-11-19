@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Found Where Asked Film</title>
+<link rel="stylesheet" href="film.css">
+<style>
+  /* 1 the question */
+  #s1cap{margin-bottom:40px}
+  #pill{width:1000px;height:124px;border-radius:62px;background:#FFFDFA;box-shadow:0 2px 0 rgba(35,24,21,.04),0 24px 60px rgba(35,24,21,.10);display:flex;align-items:center;gap:26px;padding:0 44px;text-align:left}
+  html.v #pill{width:760px;height:110px;padding:0 34px}
+  #qtext{font-size:50px;letter-spacing:-0.02em;white-space:nowrap}
+  html.v #qtext{font-size:42px}
+  #caret{width:4px;height:56px;background:var(--blue);border-radius:2px;margin-left:-20px}
+
+  /* 2 the answers */
+  #h1{font-size:68px;letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+  #h2{font-size:46px;margin-top:10px;color:var(--wine)}
+  #grid{display:grid;grid-template-columns:repeat(3,400px);gap:24px;margin-top:56px}
+  html.v #grid{grid-template-columns:repeat(2,360px);gap:22px}
+  .tile{height:150px;background:#FFFDFA;border-radius:30px;box-shadow:0 2px 0 rgba(35,24,21,.04),0 14px 36px rgba(35,24,21,.07);display:flex;align-items:center;gap:18px;padding:0 26px;text-align:left}
+  html.v .tile{height:140px;padding:0 22px}
+  .tile .ic{width:58px;height:58px;border-radius:17px;color:#fff;font-weight:700;font-size:24px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .tile .w{flex:1;min-width:0}
+  .tile .n{font-size:28px;font-weight:600}
+  .tile .st{display:inline-block;margin-top:8px;font-size:20px;font-weight:600;border-radius:11px;padding:6px 12px;color:var(--wine);background:#F4E1DA}
+  .tile .st.y{color:var(--blue);background:#DDE6F2}
+
+  /* 3 dark */
+  #dark{background:var(--dark);color:#F7F1EA}
+  #dk2{color:#8F837A}
+
+  /* 4 the fixes */
+  #fixHead{display:flex;align-items:center;gap:20px;font-size:64px;letter-spacing:-0.02em;margin-bottom:54px}
+  #fixHead img{width:96px;height:92px;object-fit:contain}
+  html.v #fixHead{flex-direction:column;gap:14px;font-size:60px}
+  .row{width:1000px;display:flex;align-items:center;justify-content:space-between;gap:24px;background:#FFFDFA;border-radius:26px;padding:26px 34px;margin:9px 0;box-shadow:0 2px 0 rgba(35,24,21,.04),0 12px 30px rgba(35,24,21,.06);text-align:left}
+  html.v .row{width:760px;padding:22px 26px}
+  .row .lb{font-size:32px;line-height:1.2}
+  html.v .row .lb{font-size:28px}
+  .row .rs{flex:0 0 auto;font-size:24px;font-weight:600;border-radius:14px;padding:9px 16px;color:var(--green);background:#E3EFDF;white-space:nowrap}
+  .dots{display:flex;gap:7px;flex:0 0 auto;padding:0 12px}
+  .dots i{width:11px;height:11px;border-radius:50%;background:#B9ADA3;display:block}
+
+  /* 6 blue */
+  #blue{background:var(--blue);color:#fff}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div id="s1" class="scene">
+    <div id="s1cap" class="mid">Right now, someone is asking:</div>
+    <div id="pill">
+      <svg width="44" height="44" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="#9A8E84" stroke-width="2.2"/><path d="M15.5 15.5L20 20" stroke="#9A8E84" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span id="qtext"></span><span id="caret"></span>
+    </div>
+  </div>
+
+  <div id="s2" class="scene">
+    <div id="h1">6 places answered.</div>
+    <div id="h2">None of them named you.</div>
+    <div id="grid"></div>
+  </div>
+
+  <div id="dark" class="panel"><div class="big" id="dk1">If they don’t name you,</div><div class="big" id="dk2">they can’t choose you.</div></div>
+
+  <div id="s4" class="scene">
+    <div id="fixHead"><img id="fixImg" src="chrysa-cut.png" alt=""><span>Chrysa found out why.</span></div>
+    <div class="row" id="r0"><span class="lb">Your Maps listing had no opening hours</span><span class="dots" id="d0"><i></i><i></i><i></i></span><span class="rs" id="z0">Fixed</span></div>
+    <div class="row" id="r1"><span class="lb">No page answered “café near Marina”</span><span class="dots" id="d1"><i></i><i></i><i></i></span><span class="rs" id="z1">Page drafted</span></div>
+    <div class="row" id="r2"><span class="lb">Three reviews were left unanswered</span><span class="dots" id="d2"><i></i><i></i><i></i></span><span class="rs" id="z2">Replied</span></div>
+  </div>
+
+  <canvas id="conf" class="conf"></canvas>
+
+  <div id="blue" class="panel"><div class="big" id="blueT">Be found where people ask.</div></div>
+
+  <div id="end" class="scene">
+    <div class="logo"><img id="endImg" src="chrysa-cut.png" alt=""><span id="endWord"></span></div>
+    <div class="sub" id="endSub">Your first reading is free.</div>
+    <div class="url" id="endUrl">chrysa.ai</div>
+  </div>
+
+  <div id="grain"></div>
+</div>
+<script src="film.js"></script>
+<script>
+const DUR = 16.1;
+const Q = 'best café near Marina';
+const SOURCES = [['✦', '#231815', 'ChatGPT'], ['G', '#4A78C2', 'Google'], ['P', '#5E8A5F', 'Perplexity'], ['◆', '#7B6CC4', 'Gemini'], ['M', '#3C8D5A', 'Google Maps'], ['C', '#2F7FB5', 'Copilot']];
+const FLIP = { 0: 10.45, 1: 10.75, 4: 11.05, 2: 11.35 };   // the four that come to name you
+$('grid').innerHTML = SOURCES.map(([ic, c, n], i) =>
+  `<div class="tile" id="t${i}"><span class="ic" style="background:${c}">${ic}</span><div class="w"><div class="n">${n}</div><span class="st" id="st${i}">Leaves you out</span></div></div>`).join('');
+const conf = makeConfetti($('conf'), V ? 160 : 180, 33);
+
+function dots(el, t) { [...el.children].forEach((d, i) => { const a = (Math.sin(t * 8 - i * 0.9) + 1) / 2; d.style.opacity = 0.3 + 0.7 * a; d.style.transform = `translateY(${-a * 4}px)`; }); }
+
+function render(t) {
+  // 1 the question (0 - 2.85)
+  vis($('s1'), t < 2.9);
+  fade($('s1cap'), eout(seg(t, 0.15, 0.55)), 20);
+  const pin = eout(seg(t, 0.3, 0.75));
+  const enter = seg(t, 2.3, 2.5);
+  $('pill').style.opacity = pin;
+  $('pill').style.transform = `scale(${lerp(0.94, 1, pin) * (1 - Math.sin(enter * Math.PI) * 0.025)})`;
+  typeOn($('qtext'), Q, t, 0.8, 0.065);
+  $('caret').style.opacity = (Math.floor(t * 2.6) % 2 === 0 || (t > 0.8 && t < 2.2)) ? 1 : 0;
+  const s1o = eio(seg(t, 2.55, 2.85));
+  $('s1').style.opacity = 1 - s1o;
+  $('s1').style.transform = `translateY(${-s1o * 80}px)`;
+
+  // 2 + 5 the answers (2.75 - 5.1, then 10.0 - 12.7)
+  const firstPass = t < 6;
+  vis($('s2'), (t > 2.75 && t < 5.4) || (t > 9.95 && t < 12.75));
+  if (firstPass) {
+    $('h1').textContent = '6 places answered.';
+    $('h2').textContent = 'None of them named you.';
+    $('h2').style.color = '#9A3B2B';
+    fade($('h1'), eout(seg(t, 2.8, 3.15)), 22);
+    fade($('h2'), eout(seg(t, 3.75, 4.1)), 18);
+    $('s2').style.opacity = 1;
+  } else {
+    let k = 0; Object.values(FLIP).forEach(f => { if (t >= f + 0.15) k++; });
+    $('h1').textContent = `${k} of 6 now name you.`;
+    $('h2').textContent = 'Two to go. She’s on it.';
+    $('h2').style.color = '#7E7168';
+    fade($('h1'), 1, 0); fade($('h2'), eout(seg(t, 11.65, 12.0)), 18);
+    $('s2').style.opacity = eout(seg(t, 9.95, 10.3)) * (1 - seg(t, 12.5, 12.7));
+    $('s2').style.transform = `translateY(${(1 - eout(seg(t, 9.95, 10.3))) * 40}px)`;
+  }
+  SOURCES.forEach((s, i) => {
+    const tile = $('t' + i), st = $('st' + i);
+    const p = firstPass ? eout(seg(t, 2.95 + i * 0.09, 3.35 + i * 0.09)) : 1;
+    let rx = 0;
+    const f = FLIP[i];
+    if (!firstPass && f !== undefined) {
+      const fp = seg(t, f, f + 0.3);
+      rx = fp < 0.5 ? fp * 180 : (fp - 1) * 180;   // flip through 90 degrees, swap face at the midpoint
+      const named = t >= f + 0.15;
+      st.textContent = named ? 'Names you' : 'Leaves you out';
+      st.classList.toggle('y', named);
+    } else { st.textContent = 'Leaves you out'; st.classList.remove('y'); }
+    tile.style.opacity = p;
+    tile.style.transform = `perspective(900px) translateY(${(1 - p) * 30}px) scale(${lerp(0.92, 1, p)}) rotateX(${rx}deg)`;
+  });
+  conf(t - 11.45);
+
+  // 3 dark (4.95 - 6.7)
+  panel($('dark'), t, 4.95, 6.35, 'up', 'left');
+  fade($('dk1'), eout(seg(t, 5.2, 5.55)), 22);
+  fade($('dk2'), eout(seg(t, 5.55, 5.9)), 22);
+
+  // 4 the fixes (6.55 - 10.05)
+  vis($('s4'), t > 6.5 && t < 9.92);
+  const hp = seg(t, 6.7, 7.2);
+  $('fixHead').style.opacity = clamp(hp * 2);
+  $('fixImg').style.transform = `scale(${lerp(0.5, 1, back(hp))}) rotate(${(1 - eout(hp)) * -10}deg)`;
+  $('fixHead').style.filter = `blur(${(1 - eout(hp)) * 12}px)`;
+  [7.25, 7.85, 8.45].forEach((a, i) => {
+    fade($('r' + i), eout(seg(t, a, a + 0.35)), 24);
+    const done = t >= a + 0.6;
+    $('d' + i).style.display = done ? 'none' : 'flex';
+    $('z' + i).style.display = done ? 'inline-block' : 'none';
+    const zp = seg(t, a + 0.6, a + 0.85);
+    $('z' + i).style.transform = `scale(${lerp(0.6, 1, back(zp))})`;
+    dots($('d' + i), t);
+  });
+  $('s4').style.opacity = 1 - seg(t, 9.65, 9.9);
+
+  // 6 blue (12.55 - 14.2)
+  panel($('blue'), t, 12.55, 13.85, 'right', 'left');
+  fade($('blueT'), eout(seg(t, 12.8, 13.15)) * (1 - seg(t, 13.7, 13.85)), 20);
+
+  // 7 end
+  endCard(t, 14.05);
+}
+boot(render, DUR);
+</script>
+</body>
+</html>

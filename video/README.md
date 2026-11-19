@@ -47,3 +47,46 @@ The vertical version is laid out at 864 x 1536 and rendered at 1.25x, so its typ
 | 16.65 | The Chrysa wordmark types itself in, with chrysa.ai underneath |
 
 The phone and chat scene from the first cut is still in `launch.html` but switched off (`phVis=false`).
+
+## The series
+
+The launch film opens a three-part series. Each film hands over to the next.
+
+| # | Film | Job | Ends on |
+| --- | --- | --- | --- |
+| 1 | `launch.html`: "Introducing Chrysa for brands." | Introduce her | "always on." and the wordmark |
+| 2 | `film2.html`: "Your morning, already sorted." | Show the daily habit | "Next: are you found where people ask?" |
+| 3 | `film3.html`: "Be found where people ask." | Show the proof, then ask | "Your first reading is free." |
+
+Films 2 and 3 share `film.css` and `film.js`, which hold the colours, timing helpers, panel wipes, confetti and closing card. Their scores come from the same motif, so the three sound like one family.
+
+```bash
+FILM=film2.html node render.js frames2 30 2 0 16.2       # 16:9 in 4K
+FILM=film2.html node render.js vframes2 30 1 0 16.2 v    # 9:16
+python3 soundtrack.py soundtrack2.wav film2
+# film 3: FILM=film3.html, 16.1 seconds, soundtrack.py ... film3
+```
+
+### Film 2: "Your morning, already sorted." (16s)
+
+| Time | Beat |
+| --- | --- |
+| 0.0 | The clock rolls from 6:58 to 7:00. "Before your first coffee," |
+| 2.2 | Dark panel: 47 new comments, 12 reviews, 9 messages, 3 searches you're missing. "Where do you even start?" |
+| 4.4 | The mascot appears: "Good morning, Leila. 5 moments need you." |
+| 5.9 | A deck of five moment cards. Each is approved with one tap and flies away while the counter drops to zero. |
+| 11.1 | "All caught up." with confetti, then "Five moments. Four minutes. Your voice." |
+| 12.6 | Gold panel: "Your morning, already sorted." |
+| 14.15 | Wordmark, then "Next: are you found where people ask?" |
+
+### Film 3: "Be found where people ask." (16s)
+
+| Time | Beat |
+| --- | --- |
+| 0.0 | "Right now, someone is asking:" while "best café near Marina" types into a search bar |
+| 2.75 | "6 places answered. None of them named you." Six tiles show ChatGPT, Google, Perplexity, Gemini, Maps and Copilot, each marked "Leaves you out". |
+| 4.95 | Dark panel: "If they don't name you, they can't choose you." |
+| 6.55 | "Chrysa found out why." Three fixes resolve one by one: Fixed, Page drafted, Replied. |
+| 10.0 | The tiles flip one at a time to "Names you", reaching "4 of 6 now name you." with confetti, then "Two to go. She's on it." |
+| 12.55 | Blue panel: "Be found where people ask." |
+| 14.05 | Wordmark, then "Your first reading is free." |

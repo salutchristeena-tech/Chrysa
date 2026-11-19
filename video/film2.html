@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Morning Brief Film</title>
+<link rel="stylesheet" href="film.css">
+<style>
+  /* 1 clock */
+  #clock{font-size:250px;line-height:1;letter-spacing:-0.05em;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:18px}
+  #clock .am{font-size:64px;color:var(--muted);letter-spacing:-0.01em}
+  #clk{display:inline-block}
+  #s1c{margin-top:40px}
+
+  /* 2 noise */
+  #dark{background:var(--dark);color:#F7F1EA}
+  #noise{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .ln{font-size:60px;line-height:1.18;color:#8F837A}
+  .ln b{font-weight:500;color:#F7F1EA;font-variant-numeric:tabular-nums}
+  #nq{font-size:74px;color:#F7F1EA;margin-top:34px;letter-spacing:-0.02em}
+
+  /* 3 greeting */
+  #m3{width:250px;height:240px;margin-bottom:26px}
+  #g2{margin-top:14px}
+  #g2 b{font-weight:500;color:var(--blue)}
+
+  /* 4 deck */
+  #left{font-size:30px;color:var(--soft);background:#EBE3D9;border-radius:30px;padding:12px 26px;margin-bottom:46px;font-variant-numeric:tabular-nums}
+  #deck{position:relative;width:820px;height:390px}
+  html.v #deck{width:740px;height:420px}
+  .card{position:absolute;inset:0;background:#FFFDFA;border-radius:36px;box-shadow:0 2px 0 rgba(35,24,21,.04),0 24px 60px rgba(35,24,21,.10);padding:38px 44px;text-align:left;display:flex;flex-direction:column;transform-origin:50% 100%}
+  .top{display:flex;align-items:center;gap:16px}
+  .ic{width:56px;height:56px;border-radius:16px;color:#fff;font-weight:700;font-size:22px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .src{font-size:28px;font-weight:600;flex:1}
+  .chip{font-size:22px;font-weight:600;color:var(--green);background:#E3EFDF;border-radius:14px;padding:9px 15px}
+  .chip.r{color:var(--wine);background:#F4E1DA}
+  .q{font-size:46px;line-height:1.16;letter-spacing:-0.02em;margin-top:28px;flex:1}
+  .bot{display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .dr{font-size:24px;color:#9A8E84}
+  .btn{font-size:26px;font-weight:600;color:#FFF8EE;background:var(--ink);border-radius:999px;padding:16px 30px;white-space:nowrap}
+
+  /* 5 done */
+  #m5{width:300px;height:288px;margin-bottom:22px}
+  #d2{margin-top:16px}
+
+  /* 6 gold */
+  #gold{background:var(--gold)}
+  #goldT{color:#FFF8EE}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div id="s1" class="scene">
+    <div id="clock"><span id="clk">6:58</span><span class="am">am</span></div>
+    <div id="s1c" class="mid">Before your first coffee,</div>
+  </div>
+
+  <div id="dark" class="panel"><div id="noise">
+    <div class="ln" id="n0"><b id="c0">0</b> new comments</div>
+    <div class="ln" id="n1"><b id="c1">0</b> reviews</div>
+    <div class="ln" id="n2"><b id="c2">0</b> messages</div>
+    <div class="ln" id="n3"><b id="c3">0</b> searches you’re missing</div>
+    <div class="ln" id="nq">Where do you even start?</div>
+  </div></div>
+
+  <div id="s3" class="scene">
+    <img id="m3" class="mascot" src="chrysa-cut.png" alt="">
+    <div id="g1" class="big">Good morning, Leila.</div>
+    <div id="g2" class="mid"><b>5 moments</b> need you.</div>
+  </div>
+
+  <div id="s4" class="scene">
+    <div id="left">5 moments left</div>
+    <div id="deck">
+      <div class="card" id="k0"><div class="top"><span class="ic" style="background:#E2603A">R</span><span class="src">r/dubai</span><span class="chip">94% intent</span></div>
+        <div class="q">“Quiet brunch spot for a first date?”</div>
+        <div class="bot"><span class="dr">Reply drafted in your voice</span><span class="btn" id="b0">Send reply</span></div></div>
+      <div class="card" id="k1"><div class="top"><span class="ic" style="background:#C98F34">★</span><span class="src">Google review</span><span class="chip r">2 stars</span></div>
+        <div class="q">“Lovely coffee, but lunch felt slow.”</div>
+        <div class="bot"><span class="dr">Apology and fix, in your voice</span><span class="btn" id="b1">Approve</span></div></div>
+      <div class="card" id="k2"><div class="top"><span class="ic" style="background:#4A78C2">G</span><span class="src">412 searches a month</span><span class="chip r">You’re missing</span></div>
+        <div class="q">“oat latte near JLT”</div>
+        <div class="bot"><span class="dr">Listing update ready</span><span class="btn" id="b2">Apply fix</span></div></div>
+      <div class="card" id="k3"><div class="top"><span class="ic" style="background:#B24A7C">IG</span><span class="src">@noor.d</span><span class="chip">88% intent</span></div>
+        <div class="q">“Where do you source your beans?”</div>
+        <div class="bot"><span class="dr">Reply drafted in your voice</span><span class="btn" id="b3">Send reply</span></div></div>
+      <div class="card" id="k4"><div class="top"><span class="ic" style="background:#1B1411">♪</span><span class="src">@layla.eats</span><span class="chip">96% real</span></div>
+        <div class="q">Posted your saffron bun to 214k people.</div>
+        <div class="bot"><span class="dr">Thank-you drafted</span><span class="btn" id="b4">Send</span></div></div>
+    </div>
+  </div>
+
+  <div id="s5" class="scene">
+    <img id="m5" class="mascot" src="chrysa-cut.png" alt="">
+    <div id="d1" class="big">All caught up.</div>
+    <div id="d2" class="mid">Five moments. Four minutes. Your voice.</div>
+  </div>
+  <canvas id="conf" class="conf"></canvas>
+
+  <div id="gold" class="panel"><div id="goldT" class="big">Your morning, already sorted.</div></div>
+
+  <div id="end" class="scene">
+    <div class="logo"><img id="endImg" src="chrysa-cut.png" alt=""><span id="endWord"></span></div>
+    <div class="sub" id="endSub">Next: are you found where people ask?</div>
+    <div class="url" id="endUrl">chrysa.ai</div>
+  </div>
+
+  <div id="grain"></div>
+</div>
+<script src="film.js"></script>
+<script>
+const DUR = 16.2;
+const conf = makeConfetti($('conf'), V ? 200 : 220, 21);
+const FLY = [7.35, 8.8, 10.25, 10.6, 10.95];          // when each card leaves
+const PRESS = [7.0, 8.45, 9.9, 10.45, 10.8];          // when its button is tapped
+const DONE = ['Sent ✓', 'Approved ✓', 'Applied ✓', 'Sent ✓', 'Sent ✓'];
+const counts = [[47, 2.5], [12, 2.75], [9, 3.0], [3, 3.25]];
+
+function render(t) {
+  // 1 clock (0 - 2.4)
+  vis($('s1'), t < 2.6);
+  const tick = t < 0.55 ? 0 : t < 1.1 ? 1 : 2;
+  $('clk').textContent = ['6:58', '6:59', '7:00'][tick];
+  const tc = [0, 0.55, 1.1][tick];
+  const tp = tick ? eout(seg(t, tc, tc + 0.28)) : 1;
+  $('clk').style.transform = `translateY(${(1 - tp) * 40}px)`;
+  $('clk').style.filter = `blur(${(1 - tp) * 8}px)`;
+  $('clk').style.color = tick === 2 ? '#231815' : '#8F837A';
+  fade($('clock'), eout(seg(t, 0.05, 0.45)), 30);
+  fade($('s1c'), eout(seg(t, 1.35, 1.75)), 20);
+
+  // 2 the noise (2.2 - 4.6)
+  panel($('dark'), t, 2.2, 4.3, 'up', 'down');
+  counts.forEach(([n, a], i) => {
+    const p = eout(seg(t, a, a + 0.3));
+    fade($('n' + i), p, 26, 10);
+    $('c' + i).textContent = Math.round(lerp(0, n, eout(seg(t, a, a + 0.45))));
+    $('n' + i).style.opacity = p * (t > 3.6 ? lerp(1, 0.35, seg(t, 3.6, 3.85)) : 1);
+  });
+  fade($('nq'), eout(seg(t, 3.6, 3.95)), 26);
+
+  // 3 greeting (4.35 - 6.0)
+  vis($('s3'), t > 4.3 && t < 6.1);
+  const mp = seg(t, 4.45, 5.05);
+  $('m3').style.opacity = clamp(mp * 2);
+  $('m3').style.transform = `scale(${lerp(0.55, 1, back(mp))}) rotate(${(1 - eout(mp)) * -8 + Math.sin(t * 2.2) * 1.2}deg)`;
+  $('m3').style.filter = `blur(${(1 - eout(mp)) * 14}px)`;
+  fade($('g1'), eout(seg(t, 4.7, 5.05)), 24);
+  fade($('g2'), eout(seg(t, 5.05, 5.4)), 20);
+  $('s3').style.opacity = 1 - seg(t, 5.65, 5.9);
+  $('s3').style.transform = `translateY(${-eio(seg(t, 5.65, 5.9)) * 60}px)`;
+
+  // 4 the deck (5.9 - 11.2)
+  vis($('s4'), t > 5.9 && t < 11.3);
+  const sin = eout(seg(t, 5.9, 6.3));
+  $('s4').style.opacity = sin * (1 - seg(t, 11.0, 11.25));
+  $('s4').style.transform = `translateY(${(1 - sin) * 70}px)`;
+  let flown = 0, c = 0;
+  FLY.forEach(f => { if (t >= f) flown++; c += eio(seg(t, f, f + 0.35)); });
+  $('left').textContent = (5 - flown) + (5 - flown === 1 ? ' moment left' : ' moments left');
+  for (let i = 0; i < 5; i++) {
+    const k = $('k' + i), d = Math.max(0, i - c), fp = eio(seg(t, FLY[i], FLY[i] + 0.42));
+    k.style.zIndex = 10 - i;
+    const y = d * 26, s = 1 - d * 0.05;
+    k.style.transform = `translate(${fp * SW * 0.75}px, ${y - fp * 40}px) rotate(${fp * 12}deg) scale(${s})`;
+    k.style.opacity = (d > 2.6 ? 0 : 1 - Math.max(0, d - 1.6)) * (1 - fp);
+    const b = $('b' + i), pp = seg(t, PRESS[i], PRESS[i] + 0.22);
+    b.style.transform = `scale(${pp > 0 && pp < 1 ? 1 - Math.sin(pp * Math.PI) * 0.08 : 1})`;
+    if (t >= PRESS[i] + 0.08) { b.textContent = DONE[i]; b.style.background = '#3C7A4A'; }
+    else { b.textContent = ['Send reply', 'Approve', 'Apply fix', 'Send reply', 'Send'][i]; b.style.background = '#231815'; }
+  }
+
+  // 5 done (11.1 - 12.8)
+  vis($('s5'), t > 11.05 && t < 12.95);
+  const dp = seg(t, 11.1, 11.7);
+  $('m5').style.opacity = clamp(dp * 2);
+  $('m5').style.transform = `translateY(${-Math.abs(Math.sin(seg(t, 11.5, 12.3) * Math.PI * 2)) * 18}px) scale(${lerp(0.5, 1, back(dp))})`;
+  fade($('d1'), eout(seg(t, 11.3, 11.65)), 24);
+  fade($('d2'), eout(seg(t, 11.6, 11.95)), 18);
+  conf(t - 11.2);
+
+  // 6 gold (12.6 - 14.2)
+  panel($('gold'), t, 12.6, 13.95, 'right', 'left');
+  fade($('goldT'), eout(seg(t, 12.85, 13.2)) * (1 - seg(t, 13.8, 13.95)), 20);
+
+  // 7 end (14.15 -)
+  endCard(t, 14.15);
+}
+boot(render, DUR);
+</script>
+</body>
+</html>
