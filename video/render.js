@@ -1,5 +1,5 @@
 // Renders launch.html frame by frame. Usage:
-//   node render.js <outDir> [fps=30] [scale=2] [start=0] [end=23]
+//   node render.js <outDir> [fps=30] [scale=2] [start=0] [end=19] [v]   (v = 9:16 portrait)
 // Then encode with ffmpeg (see README.md in this folder).
 const { chromium } = require('playwright');
 const path = require('path');
@@ -10,11 +10,12 @@ const fs = require('fs');
   const fps = +(process.argv[3] || 30);
   const scale = +(process.argv[4] || 2);
   const start = +(process.argv[5] || 0);
-  const end = +(process.argv[6] || 23);
+  const end = +(process.argv[6] || 19);
+  const vert = process.argv[7] === 'v';
   fs.mkdirSync(out, { recursive: true });
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: scale });
-  await page.goto('file://' + path.resolve(__dirname, 'launch.html'));
+  const page = await browser.newPage({ viewport: vert ? { width: 864, height: 1536 } : { width: 1920, height: 1080 }, deviceScaleFactor: vert ? scale * 1.25 : scale });
+  await page.goto('file://' + path.resolve(__dirname, 'launch.html') + (vert ? '?v' : ''));
   await page.evaluate(() => window.__ready);
   const n = Math.round((end - start) * fps);
   for (let i = 0; i < n; i++) {

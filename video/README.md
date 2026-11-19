@@ -10,6 +10,7 @@ A 19-second launch film for Chrysa with the mascot. The animation is code, so th
 | `soundtrack.py` | An original synthesised score with sound effects, timed to the cuts. |
 | `chrysa-launch-4k.mp4` | The finished 3840 x 2160 film. |
 | `chrysa-launch-1080p.mp4` | A lighter 1080p copy for social and messaging. |
+| `chrysa-launch-9x16.mp4` | The 1080 x 1920 vertical cut for Reels, TikTok and Shorts. |
 
 ## Rebuild
 
@@ -19,7 +20,15 @@ python3 soundtrack.py soundtrack.wav
 ffmpeg -framerate 30 -i frames/f%04d.png -i soundtrack.wav \
   -c:v libx264 -crf 16 -preset slow -pix_fmt yuv420p -c:a aac -b:a 192k \
   -shortest -movflags +faststart chrysa-launch-4k.mp4
+
+# 9:16 vertical (open launch.html?v for a live preview)
+node render.js vframes 30 1 0 19.0 v         # 1080x1920
+ffmpeg -framerate 30 -i vframes/f%04d.png -i soundtrack.wav \
+  -c:v libx264 -crf 17 -pix_fmt yuv420p -c:a aac -b:a 192k \
+  -shortest -movflags +faststart chrysa-launch-9x16.mp4
 ```
+
+The vertical version is laid out at 864 x 1536 and rendered at 1.25x, so its type is a quarter larger relative to the frame and reads well on a phone. Every scene keeps to the centre of the frame, clear of the areas that Reels and TikTok cover with their own buttons and captions.
 
 ## Running order
 

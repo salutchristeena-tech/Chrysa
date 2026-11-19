@@ -125,6 +125,15 @@
   #logo{position:absolute;left:0;right:0;top:460px;display:flex;justify-content:center;align-items:center;gap:18px;font-size:92px;letter-spacing:-0.03em}
   #logo img{width:104px;height:100px;object-fit:contain}
   #url{position:absolute;left:0;right:0;top:588px;text-align:center;font-size:32px;color:#9A8E84}
+  /* 9:16 portrait mode, launch.html?v */
+  html.v,body.v{width:864px;height:1536px}
+  body.v .panel,body.v #marq,body.v #marqVeil{width:864px;height:1536px}
+  body.v #stack,body.v #cyc,body.v #end,body.v #steps2,body.v #stat{height:1536px}
+  body.v #intro{font-size:48px}
+  body.v #marqVeil{background:radial-gradient(ellipse 420px 380px at 50% 50%,rgba(244,239,232,.98) 35%,rgba(244,239,232,.8) 62%,rgba(244,239,232,0) 100%)}
+  body.v #d2t{flex-direction:column;gap:22px}
+  body.v #askL,body.v #askWin,body.v #always{left:0;width:864px;text-align:center}
+  body.v #askList{left:0;right:0;text-align:center}
   #grain{position:absolute;inset:0;pointer-events:none;opacity:.035;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 </style>
 </head>
@@ -201,6 +210,12 @@
 
 <script>
 const $=id=>document.getElementById(id);
+const V=new URLSearchParams(location.search).has('v');
+const SW=V?864:1920, SH=V?1536:1080, DY=V?228:0;   // portrait is laid out at 864x1536 and rendered at 1.25x, so type reads larger on phones
+if(V){document.documentElement.classList.add('v');document.body.classList.add('v');
+  const c=$('conf2');c.width=SW;c.height=SH;
+  ['intro','cycHead','tail','goldT','statN','statC','logo','url'].forEach(id=>{const e=$(id);e.style.top=(parseFloat(getComputedStyle(e).top)+DY)+'px';});
+  const dt=document.querySelector('#dark1 .t');dt.style.top=(parseFloat(getComputedStyle(dt).top)+DY)+'px';}
 const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const seg=(t,a,b)=>clamp((t-a)/(b-a));
 const lerp=(a,b,p)=>a+(b-a)*p;
@@ -239,7 +254,7 @@ function rowHTML(off){let h='';for(let i=0;i<14;i++){const c=cards[(i+off)%cards
   const chipCol=(c[4]==='Missing')?'style="color:#9A3B2B;background:#F4E1DA"':'';
   h+=`<div class="card"><div class="ic" style="background:${c[1]}">${c[0]}</div><div class="tx"><div class="h">${c[2]}</div><div class="s">${c[3]}</div></div><div class="chip" ${chipCol}>${c[4]}</div></div>`;}
   return h;}
-for(let r=0;r<5;r++){const d=document.createElement('div');d.className='row';d.id='row'+r;d.style.top=(206+r*140)+'px';d.innerHTML=rowHTML(r*3);$('marq').appendChild(d);}
+const NROWS=V?10:5;for(let r=0;r<NROWS;r++){const d=document.createElement('div');d.className='row';d.id='row'+r;d.style.top=((V?125:206)+r*140)+'px';d.innerHTML=rowHTML(r*3);$('marq').appendChild(d);}
 
 /* chat script: [time, kind, html] */
 const chat=[
@@ -272,8 +287,8 @@ const stepT=[9.9,11.6,12.7,13.7,14.7];
 steps.forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;d.id='st'+i;$('steps').appendChild(d);});
 steps.forEach((s,i)=>{const d=document.createElement('div');d.textContent=s;d.id='sb'+i;$('steps2').appendChild(d);});
 const stepB=[7.85,8.3,8.75,9.2,9.65];
-const conf2=[];{let s=11;const R=()=>{s=(s*16807)%2147483647;return s/2147483647};const cols=['#C98F34','#41628F','#7A3B2B','#93A18E','#E8C77E','#A5BCD6','#E2603A'];for(let i=0;i<220;i++)conf2.push({x:R()*1920,y:-30-R()*500,vx:(R()-.5)*260,vy:380+R()*480,r:R()*6.28,vr:(R()-.5)*10,w:10+R()*10,h:16+R()*14,c:cols[i%cols.length]});}
-function drawConf2(t){const c=$('conf2'),g=c.getContext('2d');g.clearRect(0,0,1920,1080);const dt=t-10.8;if(dt<0||dt>1.6)return;const fade=1-seg(dt,1.1,1.6);conf2.forEach(p=>{const x=p.x+p.vx*dt,y=p.y+p.vy*dt+140*dt*dt;g.save();g.globalAlpha=fade;g.translate(x,y);g.rotate(p.r+p.vr*dt);g.fillStyle=p.c;g.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.r+dt*6)));g.restore();});}
+const conf2=[];{let s=11;const R=()=>{s=(s*16807)%2147483647;return s/2147483647};const cols=['#C98F34','#41628F','#7A3B2B','#93A18E','#E8C77E','#A5BCD6','#E2603A'];for(let i=0;i<(V?260:220);i++)conf2.push({x:R()*SW,y:-30-R()*500,vx:(R()-.5)*260,vy:380+R()*480,r:R()*6.28,vr:(R()-.5)*10,w:10+R()*10,h:16+R()*14,c:cols[i%cols.length]});}
+function drawConf2(t){const c=$('conf2'),g=c.getContext('2d');g.clearRect(0,0,SW,SH);const dt=t-10.8;if(dt<0||dt>1.6)return;const fade=1-seg(dt,1.1,1.6);conf2.forEach(p=>{const x=p.x+p.vx*dt,y=p.y+p.vy*dt+140*dt*dt;g.save();g.globalAlpha=fade;g.translate(x,y);g.rotate(p.r+p.vr*dt);g.fillStyle=p.c;g.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.r+dt*6)));g.restore();});}
 
 /* confetti */
 const conf=[];{let s=7;const R=()=>{s=(s*16807)%2147483647;return s/2147483647};
@@ -304,32 +319,32 @@ function render(t){
   head.textContent='Chrysa finds the';
   $('cycList').style.transform=`translateY(${-pos*70}px)`;
   [...$('cycList').children].forEach((d,i)=>{const dist=Math.abs(i-pos);d.style.color=dist<0.5?'#231815':'#BDB1A6';d.style.opacity=clamp(1.2-dist*0.35);});
-  $('cycWin').style.top=(540)+'px';
+  $('cycWin').style.top=(540+DY)+'px';
   // tail line
   const tIn=eout(seg(t,3.15,3.6)), tOut=seg(t,3.95,4.15);
   fadeBlur($('tail'),tIn*(1-tOut*0),22,t<4.3);
 
   // ---- 3 dark panel rises (3.95 - 4.75)
   const dIn=eio(seg(t,3.9,4.25)), dOut=eio(seg(t,4.75,5.1));
-  css($('dark1'),{transform:`translateY(${(1-dIn)*1080}px) translateX(${-dOut*1920}px)`,visibility:(t>3.9&&t<5.1)?'visible':'hidden'});
+  css($('dark1'),{transform:`translateY(${(1-dIn)*SH}px) translateX(${-dOut*SW}px)`,visibility:(t>3.9&&t<5.1)?'visible':'hidden'});
   $('yv').style.color=t>4.35?'#F7F1EA':'#8F837A';
   $('yv').style.transition='none';
   const yvp=seg(t,4.2,4.5);$('yv').style.color=`rgb(${lerp(143,247,yvp)},${lerp(131,241,yvp)},${lerp(122,234,yvp)})`;
 
   // ---- 4 marquee (4.75 - 6.75)
   const mVis=t>4.7&&t<7.0;
-  [0,1,2,3,4].forEach(r=>{const dir=r%2?1:-1;const x=(dir<0? -60 - (t-4.7)*120 : -900 + (t-4.7)*120);$('row'+r).style.transform=`translateX(${x}px)`;});
+  [...Array(NROWS).keys()].forEach(r=>{const dir=r%2?1:-1;const x=(dir<0? -60 - (t-4.7)*120 : -900 + (t-4.7)*120);$('row'+r).style.transform=`translateX(${x}px)`;});
   show($('marq'),mVis);show($('marqVeil'),mVis);show($('stack'),mVis);
   const sp=[seg(t,5.0,5.35),seg(t,5.55,5.9),seg(t,6.1,6.45)];
   const nShown=sp.filter(x=>x>0).length;
   const lift=lerp(0,52,eio(seg(t,5.55,5.9)))+lerp(0,52,eio(seg(t,6.1,6.45)));
   ['s0','s1','s2'].forEach((id,i)=>{const p=eout(sp[i]);const el=$(id);
-    el.style.top=(488+i*104-lift)+'px';el.style.opacity=p;el.style.filter=`blur(${(1-p)*12}px)`;
+    el.style.top=(488+DY+i*104-lift)+'px';el.style.opacity=p;el.style.filter=`blur(${(1-p)*12}px)`;
     el.style.transform=`translateY(${(1-p)*30}px)`;});
 
   // ---- 5 gold panel (6.6 - 8.2) then morph to phone
   const gIn=eio(seg(t,6.6,6.95));
-  const gx=(1-gIn)*1920 - eio(seg(t,7.55,7.9))*1920;
+  const gx=(1-gIn)*SW - eio(seg(t,7.55,7.9))*SW;
   const goldVis=t>6.6&&t<7.95;
   css($('gold'),{transform:`translateX(${gx}px)`,visibility:goldVis?'visible':'hidden'});
   const gtp=seg(t,6.85,7.15);fadeBlur($('goldT'),eout(gtp)*(1-seg(t,7.45,7.6)),20);
@@ -345,7 +360,7 @@ function render(t){
   let shiftB=0;for(let i=1;i<5;i++)shiftB+=eio(seg(t,stepB[i],stepB[i]+0.35))*59;
   const sOut=eio(seg(t,10.05,10.4));
   steps.forEach((s,i)=>{const el=$('sb'+i);const p=eout(seg(t,stepB[i],stepB[i]+0.35));
-    el.style.top=(481+i*118-shiftB-sOut*80)+'px';el.style.opacity=p*(1-sOut);
+    el.style.top=(481+DY+i*118-shiftB-sOut*80)+'px';el.style.opacity=p*(1-sOut);
     el.style.filter=`blur(${(1-p)*12+sOut*14}px)`;el.style.transform=`translateY(${(1-p)*30}px)`;
     el.style.color=(i===sbi)?'#231815':'#CFC5BB';});
   show($('steps2'),t>7.8&&t<10.45);
@@ -392,7 +407,7 @@ function render(t){
 
   // ---- 7 blue (16.1 - 18.6)
   const bIn=eio(seg(t,16.05,16.45)), bOut=t>18.45;
-  css($('blue'),{transform:`translateX(${(1-bIn)*1920}px)`,visibility:(t>16.05&&t<19.0)?'visible':'hidden'});
+  css($('blue'),{transform:`translateX(${(1-bIn)*SW}px)`,visibility:(t>16.05&&t<19.0)?'visible':'hidden'});
   const askP=lerp(0,4,eio(seg(t,16.7,17.9)));
   const askIn=eout(seg(t,16.35,16.75));
   $('askL').style.opacity=askIn;$('askWin').style.opacity=askIn;
@@ -402,25 +417,27 @@ function render(t){
   const wCur=meas[clamp(cur,0,4)].getBoundingClientRect().width||400;
   const wL=$('askL').getBoundingClientRect().width;
   const total=wL+24+wCur;
-  const lx=(1920-total)/2;
-  $('askL').style.left=lx+'px';$('askWin').style.left=(lx+wL+24)+'px';
+  if(V){$('askL').style.top=(SH/2-200)+'px';$('askWin').style.top=(SH/2-117)+'px';}
+  else{const lx=(1920-total)/2;
+  $('askL').style.left=lx+'px';$('askWin').style.left=(lx+wL+24)+'px';}
   $('askList').style.transform=`translateY(${87 - askP*86}px)`;
   [...meas].forEach((d,i)=>{const dist=Math.abs(i-askP);d.style.opacity=clamp(1-dist*0.62);});
 
   // ---- 8 dark 2 (18.4 - 20.6)
   const d2In=eio(seg(t,18.4,18.8));
   const shrink=eio(seg(t,19.5,20.05));
-  const W=lerp(1920,560,shrink),Hh=lerp(1080,170,shrink);
+  const W=V?lerp(SW,560,shrink):lerp(1920,560,shrink),Hh=V?lerp(SH,380,shrink):lerp(1080,170,shrink);
   const slide=eio(seg(t,20.15,20.55));
-  const cx=lerp(960,960-200,shrink)-slide*0;
-  css($('dark2'),{left:(cx-W/2)+'px',top:(540-Hh/2)+'px',width:W+'px',height:Hh+'px',borderRadius:lerp(0,28,shrink)+'px',
-     transform:`translateX(${(1-d2In)*-1920}px)`,visibility:(t>18.4&&t<20.75)?'visible':'hidden',opacity:1-seg(t,20.45,20.7)});
-  const ts=lerp(1,0.255,shrink);
+  const cx=V?SW/2:lerp(960,960-200,shrink);
+  const cy=V?lerp(SH/2,SH/2-130,shrink):540;
+  css($('dark2'),{left:(cx-W/2)+'px',top:(cy-Hh/2)+'px',width:W+'px',height:Hh+'px',borderRadius:lerp(0,28,shrink)+'px',
+     transform:`translateX(${(1-d2In)*-SW}px)`,visibility:(t>18.4&&t<20.75)?'visible':'hidden',opacity:1-seg(t,20.45,20.7)});
+  const ts=lerp(1,V?0.5:0.255,shrink);
   css($('d2t'),{transform:`scale(${ts})`,opacity:eout(seg(t,18.65,19.0))});
-  $('d2url').style.top=(Hh/2+78*ts)+'px';$('d2url').style.opacity=eout(seg(t,19.0,19.3))*(1-shrink);
+  $('d2url').style.top=(Hh/2+(V?190:78)*ts)+'px';$('d2url').style.opacity=eout(seg(t,19.0,19.3))*(1-shrink);
   $('d2url').style.transform=`scale(${ts})`;
   const ap=eout(seg(t,20.05,20.4));
-  css($('always'),{left:(960+120)+'px',top:'494px',opacity:ap*(1-seg(t,20.45,20.7)),filter:`blur(${(1-ap)*12}px)`,transform:`translateX(${(1-ap)*30}px)`,visibility:(t>19.9&&t<20.75)?'visible':'hidden'});
+  css($('always'),{left:V?'0px':(960+120)+'px',top:V?(SH/2+90)+'px':'494px',opacity:ap*(1-seg(t,20.45,20.7)),filter:`blur(${(1-ap)*12}px)`,transform:V?`translateY(${(1-ap)*30}px)`:`translateX(${(1-ap)*30}px)`,visibility:(t>19.9&&t<20.75)?'visible':'hidden'});
 
   // ---- 9 end (20.7 - 23)
   const name='Chrysa';
