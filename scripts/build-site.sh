@@ -7,7 +7,7 @@ set -eu
 cd "$(dirname "$0")/.."
 rm -rf site-dist
 mkdir -p site-dist
-for f in index.html checkout.html auth.js auth.css site.css \
+for f in index.html checkout.html chrysa.css home.js auth.js auth.css site.css \
          privacy.html terms.html data-deletion.html netlify.toml _redirects; do
   cp "$f" site-dist/
 done

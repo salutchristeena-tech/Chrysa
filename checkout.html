@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/png" href="brand/chrysa-120.png">
-  <title>Chrysa — Checkout</title>
+  <title>chrysa — Checkout</title>
   <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..400,0..100,0..1;1,9..144,100..400,0..100,0..1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root{
       --ivory:#F6F0E9; --ink:#231815; --ink-soft:#5A4740; --ink-faint:#7D6B63;
@@ -93,6 +93,23 @@
     .summary h2,.field label,.secure{letter-spacing:0.02em;text-transform:none;font-size:13px}
     .paybtn{background:#4D0E12;color:#FFFFFF}.paybtn:hover{background:#6A1A1F}
     .setup{background:#F8F2D9;border-color:#EDE3BE}
+    /* chrysa design system (Nov 2026): ivory, cerulean, oxblood accent, Fraunces + Inter */
+    :root{--ivory:#F8F5F1;--serif:"Fraunces",Georgia,serif}
+    body{background-color:#F8F5F1;background-image:radial-gradient(700px 500px at 85% -10%, rgba(165,188,214,0.32), transparent 60%),radial-gradient(600px 460px at -8% 90%, rgba(245,239,198,0.45), transparent 55%)}
+    .brand b,h1,.plan .pp,.srow.total b{font-family:var(--serif);font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 0;font-weight:100}
+    .brand b{font-size:30px;color:#231815}
+    h1{color:#231815;letter-spacing:-0.02em}h1 em{color:#4D0E12}
+    .plan .pp{font-weight:200}
+    .plan,.summary{background:#FDFBF8;border-color:#ECE5DC}
+    .plan:hover{border-color:#E0D6CA}
+    .plan.sel{border-color:#4D0E12;background:#FFFFFF}
+    .paybtn{transition:background .3s,transform .3s cubic-bezier(.22,1,.36,1)}
+    .field input{background:#F8F5F1;border:1px solid #E0D6CA;border-radius:14px}
+    .field input:focus{border-color:#3E5776;background:#fff;box-shadow:0 0 0 4px #E4EBF3}
+    :focus-visible{outline:2px solid #3E5776;outline-offset:3px}
+    .back a,.paynote a{color:#231815;text-underline-offset:4px}
+    [hidden]{display:none!important}
+    .srow.total b{font-weight:300}
   </style>
 </head>
 <body>
@@ -126,19 +143,19 @@
         <span class="rad"></span>
         <span class="pn">Starter</span>
         <span class="pp" data-pp>$99<small> /mo</small></span>
-        <span class="pd">One brand · Ask Chrysa · AI answers, SEO &amp; Reddit listening</span>
+        <span class="pd">One brand · weekly AI search re-checks · Approvals · Ask Chrysa</span>
       </button>
       <button class="plan sel" type="button" data-plan="growth" data-price="249" data-year="2,739" data-year-mo="228.25">
         <span class="rad"></span>
-        <span class="pn">Pro — most popular</span>
+        <span class="pn">Pro</span>
         <span class="pp" data-pp>$249<small> /mo</small></span>
-        <span class="pd">Creators · competitor &amp; paid search · campaign reporting · 10 seats</span>
+        <span class="pd">Everything in Starter · priority support · first in line for channel connections</span>
       </button>
       <button class="plan" type="button" data-plan="enterprise" data-price="">
         <span class="rad"></span>
         <span class="pn">Enterprise</span>
         <span class="pp">Custom</span>
-        <span class="pd">Unlimited workspaces &amp; seats · custom integrations · dedicated partner</span>
+        <span class="pd">Agencies and multi-brand houses · we’ll shape a plan with you</span>
       </button>
     </div>
 
@@ -163,7 +180,7 @@
         Payments are briefly unavailable. Email <a href="mailto:hello@chrysa.ai">hello@chrysa.ai</a> and we'll set you up.
       </div>
       <p class="paynote">Pay by card, <b>Apple Pay</b> or <b>Google Pay</b>. Payments are encrypted, and your card details never touch Chrysa's servers. Cancel anytime.</p>
-      <p class="paynote">Not ready yet? <a href="index.html#reading">Get your first reading free</a>.</p>
+      <p class="paynote">Not ready yet? <a href="index.html#reading">Get your free AI visibility check</a>.</p>
     </aside>
 
     <p class="back"><a href="index.html#pricing">← Back to pricing</a></p>
@@ -248,7 +265,7 @@
       var q = new URLSearchParams(location.search).get("plan");
       var saved = null;
       try { saved = localStorage.getItem("chrysa-plan"); } catch (e) {}
-      select(q || saved || "growth");
+      select(q || saved || "solo");
       var qb = new URLSearchParams(location.search).get("bill");
       var savedBill = null;
       try { savedBill = localStorage.getItem("chrysa-bill"); } catch (e) {}
