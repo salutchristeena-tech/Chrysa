@@ -113,7 +113,7 @@ section{padding:clamp(80px,11vw,140px) 0}
 .hero-art{position:relative;display:flex;flex-direction:column;align-items:center;gap:28px}
 .halo{position:absolute;left:50%;top:44%;width:min(460px,110%);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(165,188,214,.55),rgba(165,188,214,.18) 60%,rgba(165,188,214,0) 100%);pointer-events:none}
 .hero-mascot{position:relative;width:min(300px,70%);will-change:transform}
-.hero-mascot img{width:100%;animation:float 7s var(--ease-io) infinite}
+.hero-mascot img,.hero-mascot picture{display:block;width:100%;animation:float 7s var(--ease-io) infinite}
 .hero-mascot::after{content:"";position:absolute;left:18%;right:18%;bottom:-14px;height:18px;border-radius:50%;background:radial-gradient(closest-side,rgba(74,46,39,.18),rgba(74,46,39,0));animation:shadow 7s var(--ease-io) infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 @keyframes shadow{0%,100%{transform:scaleX(1);opacity:1}50%{transform:scaleX(.9);opacity:.7}}
@@ -162,7 +162,7 @@ section{padding:clamp(80px,11vw,140px) 0}
 .mini{padding:16px 18px;border-radius:var(--r-sm);background:var(--ivory);border:1px solid var(--line)}
 .mini b{display:block;font:200 28px/1.1 var(--serif);font-variation-settings:"opsz" 144;margin-top:4px}
 .fix{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:var(--r-sm);background:var(--butter-50);border:1px solid #EEE6C4}
-.fix img{width:34px;flex:none;margin-top:2px}
+.fix .av{width:40px;flex:none;margin-top:-2px}
 .fix p{margin:0}
 .chart{width:100%;height:auto;display:block}
 .chart .grid line{stroke:var(--line);stroke-width:1}
@@ -175,7 +175,7 @@ section{padding:clamp(80px,11vw,140px) 0}
 .ask{display:flex;flex-direction:column;gap:14px}
 .bub-u{align-self:flex-end;max-width:78%;background:var(--java);color:#fff;border-radius:20px 20px 6px 20px;padding:12px 16px;font:400 14.5px/1.5 var(--sans)}
 .bub-c{display:flex;gap:10px;align-items:flex-end;max-width:88%}
-.bub-c img{width:30px;flex:none}
+.bub-c .av{width:34px;flex:none}
 .bub-c p{margin:0;background:#fff;border:1px solid var(--line);border-radius:20px 20px 20px 6px;padding:13px 16px;font:400 14.5px/1.6 var(--sans)}
 .decide{display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:var(--r-md);background:#fff;border:1px solid var(--line)}
 .decide .acts{display:flex;gap:8px}
@@ -243,7 +243,7 @@ section{padding:clamp(80px,11vw,140px) 0}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .done{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:clamp(28px,3vw,40px);border-radius:var(--r-lg);background:#fff;border:1px solid var(--line)}
 .done[hidden]{display:none}
-.done img{width:110px;animation:float 6s var(--ease-io) infinite}
+.done .av{width:120px;animation:float 6s var(--ease-io) infinite}
 .spin{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (max-width:900px){.check{grid-template-columns:1fr}}
@@ -283,7 +283,7 @@ section{padding:clamp(80px,11vw,140px) 0}
 /* ---------- closing + footer ---------- */
 .closing{text-align:center;padding-top:0}
 .closing .wrap{display:flex;flex-direction:column;align-items:center;gap:26px}
-.closing img{width:120px;animation:float 7s var(--ease-io) infinite}
+.av-close{width:132px;animation:float 7s var(--ease-io) infinite}
 footer{border-top:1px solid var(--line);padding:56px 0 40px;background:var(--paper)}
 .foot{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:32px}
 .foot h2{font:500 12.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:6px 0 16px}
@@ -313,6 +313,12 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px;background:var(--pap
 .intro-mascot{position:relative;width:clamp(150px,22vw,220px);opacity:0;animation:settle 1.6s var(--ease) .3s forwards;will-change:transform,opacity,filter}
 .intro-nod{position:relative;transform-origin:50% 90%;animation:nod 1.3s var(--ease-io) 1.85s both}
 .intro-nod img{width:100%}
+.intro-face{position:relative;display:block;line-height:0}
+.intro-face svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+/* Chrysa opens her eyes, blinks, then smiles as she nods: the opening ends on the original face. */
+.intro-face .i-open{animation:iOut .22s ease 1.98s forwards}
+.intro-face .i-happy{opacity:0;animation:fadeIn .3s ease 2s forwards}
+@keyframes iOut{to{opacity:0}}
 .intro-glint{position:absolute;inset:0;-webkit-mask:url(brand/chrysa-480.png) center/contain no-repeat;mask:url(brand/chrysa-480.png) center/contain no-repeat;background:linear-gradient(105deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.75) 50%,rgba(255,255,255,0) 62%) 120% 0/300% 100% no-repeat;opacity:.9;animation:glint 1.5s var(--ease-io) 1.7s both;pointer-events:none}
 .intro-shadow{width:58%;height:14px;margin:4px auto 0;border-radius:50%;background:radial-gradient(closest-side,rgba(74,46,39,.2),rgba(74,46,39,0));opacity:0;transform:scaleX(.6);animation:shadowIn 1.6s var(--ease) .6s forwards}
 .intro-word{margin:18px 0 0;font:100 clamp(52px,8vw,84px)/1 var(--serif);font-variation-settings:"opsz" 144,"SOFT" 0,"WONK" 0;color:var(--java);opacity:0;animation:word 1.4s var(--ease) 2.05s forwards}
@@ -329,6 +335,29 @@ footer{border-top:1px solid var(--line);padding:56px 0 40px;background:var(--pap
 @keyframes rise{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
 
 /* ---------- reduced motion ---------- */
+
+/* ---------- Chrysa's faces: the same mascot, new expressions drawn over a faceless render ---------- */
+.av{position:relative;display:inline-block;flex:none;line-height:0;width:64px;aspect-ratio:940/900}
+.av img{width:100%;height:auto;display:block}
+.av svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.av.swap svg{animation:faceIn .42s var(--ease) both}
+@keyframes faceIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.cf-blink{transform-box:fill-box;transform-origin:50% 50%;animation:cfBlink 5.6s infinite;animation-delay:var(--bd,0s)}
+@keyframes cfBlink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.1)}}
+.cf-look{transform:translate(var(--lx,0px),var(--ly,0px));transition:transform .5s var(--ease)}
+.cf-sp{animation:twinkle 3.4s var(--ease-io) infinite}
+.cf-sp2{animation-delay:-1.7s}
+@keyframes twinkle{0%,100%{opacity:.35}50%{opacity:1}}
+.av-peek{position:absolute;top:-46px;right:clamp(18px,5vw,64px);width:88px;z-index:2;filter:drop-shadow(0 10px 14px rgba(35,24,21,.12));transition:transform .6s var(--ease)}
+.stage:hover .av-peek{transform:translateY(-4px) rotate(-2deg)}
+.step-top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.step-top .av{width:72px;margin-bottom:-4px;transition:transform .6s var(--ease)}
+.step:hover .step-top .av{transform:translateY(-4px) rotate(-3deg)}
+.form-wrap{position:relative}
+.av-perch{position:absolute;top:-52px;right:22px;width:84px;z-index:2;filter:drop-shadow(0 10px 14px rgba(35,24,21,.12))}
+.av-faq{width:64px;margin-bottom:-4px}
+@media (max-width:520px){.av-peek{width:70px;top:-38px}.av-perch{width:70px;top:-44px;right:14px}.step-top .av{width:60px}}
+@media (prefers-reduced-motion:reduce){.cf-blink,.cf-sp{animation:none!important}.cf-sp{opacity:1}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}

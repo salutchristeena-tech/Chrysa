@@ -23,26 +23,75 @@
   /* ---------- opening ---------- */
   (function intro() {
     var veil = $("#intro");
-    if (!veil || !html.classList.contains("intro")) { startReveals(); return; }
-    var done = false, timer;
-    function finish(fast) {
-      if (done) return; done = true; clearTimeout(timer);
-      try { localStorage.setItem("chrysa-intro", String(Date.now())); } catch (e) {}
-      veil.classList.add("leaving"); if (fast) veil.classList.add("fast");
-      // Let the page breathe in as the veil lifts.
-      setTimeout(function () { html.classList.remove("intro"); startReveals(); }, fast ? 120 : 380);
-      setTimeout(function () { veil.parentNode && veil.parentNode.removeChild(veil); }, fast ? 600 : 1100);
-      removeEventListener("keydown", onKey); removeEventListener("wheel", onSkip); removeEventListener("touchmove", onSkip);
+    if (!veil) { startReveals(); return; }
+    // A tab opened in the background waits, then plays the first time it is looked at
+    // (unless the visitor has already scrolled into the page).
+    if (html.getAttribute("data-intro") === "pending") {
+      startReveals();
+      var onVis = function () {
+        if (document.visibilityState !== "visible") return;
+        document.removeEventListener("visibilitychange", onVis);
+        html.removeAttribute("data-intro");
+        if (scrollY > 40) return;
+        html.classList.add("intro");
+        play();
+      };
+      document.addEventListener("visibilitychange", onVis);
+      return;
     }
-    function onKey(e) { if (e.key === "Escape" || e.key === "Enter" || e.key === " " || e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); finish(true); } }
-    function onSkip() { finish(true); }
-    $("#intro-skip").addEventListener("click", function () { finish(true); });
-    addEventListener("keydown", onKey);
-    addEventListener("wheel", onSkip, { passive: true });
-    addEventListener("touchmove", onSkip, { passive: true });
-    // If the tab opens in the background, skip the show rather than play it unseen.
-    if (document.hidden) { finish(true); return; }
-    timer = setTimeout(function () { finish(false); }, 4000);
+    if (!html.classList.contains("intro")) { startReveals(); return; }
+    play();
+
+    function play() {
+      var done = false, timer;
+      function finish(fast) {
+        if (done) return; done = true; clearTimeout(timer);
+        try { localStorage.setItem("chrysa-intro", String(Date.now())); } catch (e) {}
+        veil.classList.add("leaving"); if (fast) veil.classList.add("fast");
+        // Let the page breathe in as the veil lifts.
+        setTimeout(function () { html.classList.remove("intro"); startReveals(); }, fast ? 120 : 380);
+        setTimeout(function () { if (veil.parentNode) veil.parentNode.removeChild(veil); }, fast ? 600 : 1100);
+        removeEventListener("keydown", onKey); removeEventListener("wheel", onSkip); removeEventListener("touchmove", onSkip);
+      }
+      function onKey(e) { if (e.key === "Escape" || e.key === "Enter" || e.key === " " || e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); finish(true); } }
+      function onSkip() { finish(true); }
+      $("#intro-skip").addEventListener("click", function () { finish(true); });
+      addEventListener("keydown", onKey);
+      addEventListener("wheel", onSkip, { passive: true });
+      addEventListener("touchmove", onSkip, { passive: true });
+      timer = setTimeout(function () { finish(false); }, 4200);
+    }
+  })();
+
+  /* ---------- Chrysa's faces ---------- */
+  var Face = (function () {
+    var avs = $$(".av");
+    // Each Chrysa blinks on its own rhythm.
+    avs.forEach(function (a) { a.style.setProperty("--bd", (-Math.random() * 5.6).toFixed(2) + "s"); });
+    function set(a, face) {
+      if (!a || a.dataset.face === face) return;
+      a.dataset.face = face;
+      var u = a.querySelector("use"); if (u) u.setAttribute("href", "#face-" + face);
+      if (!reduced) { a.classList.remove("swap"); void a.offsetWidth; a.classList.add("swap"); }
+    }
+    // Curious faces follow the pointer with their eyes (fine pointers only).
+    var lookers = $$(".av[data-look]");
+    if (lookers.length && !reduced && window.matchMedia && matchMedia("(pointer:fine)").matches) {
+      var px = 0, py = 0, raf = 0;
+      var update = function () {
+        raf = 0;
+        lookers.forEach(function (a) {
+          var r = a.getBoundingClientRect();
+          if (r.bottom < -50 || r.top > innerHeight + 50) return;
+          var dx = px - (r.left + r.width * 0.65), dy = py - (r.top + r.height * 0.45);
+          var d = Math.sqrt(dx * dx + dy * dy) || 1, k = Math.min(1, d / 260);
+          a.style.setProperty("--lx", (dx / d * 13 * k).toFixed(1) + "px");
+          a.style.setProperty("--ly", (dy / d * 9 * k).toFixed(1) + "px");
+        });
+      };
+      addEventListener("pointermove", function (e) { px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    }
+    return { set: set };
   })();
 
   /* ---------- nav ---------- */
@@ -106,6 +155,7 @@
         else { p.hidden = true; p.classList.remove("enter"); }
       });
       var key = t.id.replace(/^t-/, "");
+      Face.set($("#peek"), { check: "curious", presence: "delighted", approvals: "wink", ask: "thinking" }[key] || "curious");
       side.forEach(function (s) { s.classList.toggle("on", s.dataset.side === key); });
       if (focus) t.focus();
     }
@@ -140,6 +190,9 @@
       var arr = btn.querySelector(".arr, .spin");
       if (arr) arr.className = on ? "spin" : "arr", arr.textContent = on ? "" : "→";
     }
+    var perch = $("#perch");
+    form.addEventListener("focusin", function () { if (!btn.disabled) Face.set(perch, "reading"); });
+    form.addEventListener("focusout", function () { setTimeout(function () { if (!btn.disabled && !form.contains(document.activeElement)) Face.set(perch, "curious"); }, 0); });
     // Clear a field's error as soon as it is corrected.
     ["rf-site", "rf-name", "rf-email"].forEach(function (id) {
       var i = document.getElementById(id);
@@ -160,7 +213,7 @@
       var data = { at: new Date().toISOString(), name: name, email: email, company: url, role: "", teamSize: "", regions: "",
         challenge: "Free AI visibility check" + (rival ? " | loses to: " + rival : ""), method: "free_reading" };
       try { if (window.MarcAuth && window.MarcAuth.save) window.MarcAuth.save(data); } catch (x) {}
-      busy(true);
+      busy(true); Face.set(perch, "thinking");
       function saved() { // the check service could not be reached: the request is still in the sign-up list
         form.hidden = true;
         var done = $("#reading-done"); done.hidden = false;
@@ -175,7 +228,7 @@
             setTimeout(function () { location.href = res.body.link; }, reduced ? 0 : 700);
             return;
           }
-          busy(false);
+          busy(false); Face.set(perch, "reading");
           if (res.status >= 500) { saved(); return; }
           alertBox.textContent = (res.body && res.body.message) || "Something went wrong. Please try again.";
           alertBox.hidden = false;

@@ -37,28 +37,50 @@
   </script>
   <script>
   /* Decide before first paint whether to play the opening, so nothing flashes.
-     It plays once per visitor (30 days), never with reduced motion, never on a deep link. */
+     It plays once a day per visitor, never with reduced motion, never on a deep link (#section).
+     A tab opened in the background waits and plays when it is first looked at. ?intro always plays it. */
   (function(d){var h=d.documentElement;h.classList.add('js');
     try{var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var force=/[?&]intro\b/.test(location.search);
       var seen=+localStorage.getItem('chrysa-intro')||0;
-      if(!rm&&!location.hash&&Date.now()-seen>2592e6)h.classList.add('intro');}catch(e){}
+      if(!rm&&(force||(!location.hash&&Date.now()-seen>864e5))){
+        if(d.visibilityState==='hidden')h.setAttribute('data-intro','pending');else h.classList.add('intro');}}catch(e){}
     /* Safety net: if the page script never runs, show everything. */
     setTimeout(function(){if(!window.__chrysaHome){h.classList.remove('intro');h.classList.remove('js');}},6000);})(document);
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..400,0..100,0..1;1,9..144,100..400,0..100,0..1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="brand/chrysa-480.png">
+  <link rel="preload" as="image" href="brand/chrysa-blank-480.webp" type="image/webp">
+  <link rel="preload" as="image" href="brand/chrysa-480.webp" type="image/webp">
   <link rel="stylesheet" href="chrysa.css">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+ <linearGradient id="cf-eye" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#74251a"/><stop offset=".55" stop-color="#4f120b"/><stop offset="1" stop-color="#330805"/></linearGradient>
+ <radialGradient id="cf-blush"><stop offset="0" stop-color="#E59A93" stop-opacity=".62"/><stop offset=".6" stop-color="#E59A93" stop-opacity=".22"/><stop offset="1" stop-color="#E59A93" stop-opacity="0"/></radialGradient>
+ <linearGradient id="cf-star" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF6C9"/><stop offset="1" stop-color="#E4C766"/></linearGradient>
+ <g id="cf-arcL"><path d="M458 457 C470 410 540 386 583 430" fill="none" stroke="url(#cf-eye)" stroke-width="19" stroke-linecap="round"/></g>
+ <g id="cf-arcR"><path d="M646 414 C660 376 722 356 752 398" fill="none" stroke="url(#cf-eye)" stroke-width="18" stroke-linecap="round"/></g>
+ <g id="cf-openL"><ellipse cx="522" cy="428" rx="23" ry="34" transform="rotate(-11 522 428)" fill="url(#cf-eye)"/><ellipse cx="529" cy="412" rx="8" ry="9" fill="#fff" opacity=".92"/><ellipse cx="515" cy="447" rx="5" ry="3.5" fill="#fff" opacity=".28"/></g>
+ <g id="cf-openR"><ellipse cx="700" cy="392" rx="21" ry="32" transform="rotate(-11 700 392)" fill="url(#cf-eye)"/><ellipse cx="707" cy="377" rx="7.5" ry="8.5" fill="#fff" opacity=".92"/><ellipse cx="693" cy="410" rx="4.5" ry="3" fill="#fff" opacity=".28"/></g>
+ <g id="cf-blushes"><ellipse cx="470" cy="474" rx="46" ry="22" fill="url(#cf-blush)"/><ellipse cx="760" cy="430" rx="38" ry="19" fill="url(#cf-blush)"/></g>
+ <path id="cf-spark" d="M0 -30 C4 -8 8 -4 30 0 C8 4 4 8 0 30 C-4 8 -8 4 -30 0 C-8 -4 -4 -8 0 -30Z" fill="url(#cf-star)"/>
+ <symbol id="face-happy" viewBox="0 0 940 900"><use href="#cf-arcL"/><use href="#cf-arcR"/></symbol>
+ <symbol id="face-curious" viewBox="0 0 940 900"><g class="cf-look"><g class="cf-blink"><use href="#cf-openL"/><use href="#cf-openR"/></g></g></symbol>
+ <symbol id="face-reading" viewBox="0 0 940 900"><g transform="translate(-8 12)"><g class="cf-blink"><use href="#cf-openL"/><use href="#cf-openR"/></g></g></symbol>
+ <symbol id="face-wink" viewBox="0 0 940 900"><g class="cf-blink"><use href="#cf-openL"/></g><use href="#cf-arcR"/></symbol>
+ <symbol id="face-thinking" viewBox="0 0 940 900"><g transform="translate(10 -12)"><g class="cf-blink"><use href="#cf-openL"/><use href="#cf-openR"/></g></g><g class="cf-sp"><use href="#cf-spark" transform="translate(805 235) scale(1.5)"/></g><g class="cf-sp cf-sp2"><use href="#cf-spark" transform="translate(868 312) scale(.8)"/></g></symbol>
+ <symbol id="face-delighted" viewBox="0 0 940 900"><use href="#cf-blushes"/><use href="#cf-arcL"/><use href="#cf-arcR"/><g class="cf-sp"><use href="#cf-spark" transform="translate(150 215) scale(1.4)"/></g><g class="cf-sp cf-sp2"><use href="#cf-spark" transform="translate(850 190) scale(.9)"/></g></symbol>
+</defs></svg>
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div class="intro-veil" id="intro">
   <div class="intro-halo" aria-hidden="true"></div>
   <div class="intro-stage" aria-hidden="true">
     <div class="intro-mascot">
-      <div class="intro-nod"><img src="brand/chrysa-480.png" width="480" height="459" alt=""><span class="intro-glint"></span></div>
+      <div class="intro-nod"><span class="intro-face" style="--bd:-4.1s"><img src="brand/chrysa-blank-480.webp" width="480" height="459" alt=""><svg viewBox="0 0 940 900" focusable="false"><use class="i-open" href="#face-curious"/><use class="i-happy" href="#face-happy"/></svg></span><span class="intro-glint"></span></div>
       <div class="intro-shadow"></div>
     </div>
     <p class="intro-word">chrysa</p>
@@ -88,7 +110,7 @@
       </div>
       <div class="hero-art rv" style="--d:.2s">
         <span class="halo" aria-hidden="true"></span>
-        <div class="hero-mascot" id="hero-mascot"><img src="brand/chrysa-480.png" width="480" height="459" alt="Chrysa, a small glass character with a cerulean hood and closed, smiling eyes"></div>
+        <div class="hero-mascot" id="hero-mascot"><picture><source srcset="brand/chrysa-480.webp" type="image/webp"><img src="brand/chrysa-480.png" width="480" height="459" alt="Chrysa, a small glass character with a cerulean hood and closed, smiling eyes"></picture></div>
         <div class="note" aria-hidden="true"><span class="dot"></span><span class="note-lines" id="note-lines"><span class="on">Asking AI search what your customers ask</span><span>Seeing who it recommends instead</span><span>Finding the pages AI search trusts</span><span>Writing your first fix</span></span></div>
       </div>
     </div>
@@ -112,6 +134,7 @@
         </div>
 
         <div class="stage">
+          <span class="av av-peek" data-face="curious" id="peek" data-look aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-curious"/></svg></span>
           <div class="screen">
             <div class="screen-side" aria-hidden="true">
               <div class="wm"><img src="brand/chrysa-120.png" width="120" height="115" alt=""><span>chrysa</span></div>
@@ -138,7 +161,7 @@
                   <div class="mini"><p class="small">Pages AI search learns from</p><b>You’re on 2 of 7</b></div>
                   <div class="mini"><p class="small">Named instead, most often</p><b>Merrow</b></div>
                 </div>
-                <div class="fix"><img src="brand/chrysa-120.png" width="120" height="115" alt=""><div><p class="small">Your first fix, already written</p><p class="body" style="color:var(--java)">Say plainly on your product page that every Halden formula is fragrance-free and made for sensitive skin. That is the claim AI search looks for, and it can’t find it yet.</p></div></div>
+                <div class="fix"><span class="av" data-face="wink" aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-wink"/></svg></span><div><p class="small">Your first fix, already written</p><p class="body" style="color:var(--java)">Say plainly on your product page that every Halden formula is fragrance-free and made for sensitive skin. That is the claim AI search looks for, and it can’t find it yet.</p></div></div>
               </div>
 
               <div class="panel" role="tabpanel" id="p-presence" aria-labelledby="t-presence" tabindex="0" hidden>
@@ -183,7 +206,7 @@
                 </div>
                 <div class="ask">
                   <p class="bub-u">Why does Merrow keep coming up instead of us?</p>
-                  <div class="bub-c"><img src="brand/chrysa-120.png" width="120" height="115" alt=""><p>In two of your three questions, AI search leaned on a guide to sensitive skincare that names Merrow and leaves you out. Your own pages never say “fragrance-free” plainly. The fix waiting in Approvals does exactly that.</p></div>
+                  <div class="bub-c"><span class="av" data-face="thinking" aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-thinking"/></svg></span><p>In two of your three questions, AI search leaned on a guide to sensitive skincare that names Merrow and leaves you out. Your own pages never say “fragrance-free” plainly. The fix waiting in Approvals does exactly that.</p></div>
                   <p class="small" style="padding-left:40px">From your check on 18 Nov. Evidence first, opinion labelled.</p>
                 </div>
               </div>
@@ -204,9 +227,9 @@
         <h2 class="h2" id="how-h">Three steps. The first is <em>free</em>.</h2>
       </div>
       <div class="steps">
-        <div class="step rv"><span class="n">i.</span><h3 class="h3">Give Chrysa your website</h3><p class="body">Add a competitor if you like. No card, no setup, nothing to connect.</p></div>
-        <div class="step rv" style="--d:.1s"><span class="n">ii.</span><h3 class="h3">Chrysa asks AI search</h3><p class="body">The questions your customers ask, without saying who you are. You see who gets named, who doesn’t, and which pages AI search trusts.</p></div>
-        <div class="step rv" style="--d:.2s"><span class="n">iii.</span><h3 class="h3">You get the fix, written</h3><p class="body">Your first fix arrives ready to use. Subscribe and Chrysa re-checks every week and drafts every next move for your approval.</p></div>
+        <div class="step rv"><div class="step-top"><span class="n">i.</span><span class="av" data-face="curious" data-look aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-curious"/></svg></span></div><h3 class="h3">Give Chrysa your website</h3><p class="body">Add a competitor if you like. No card, no setup, nothing to connect.</p></div>
+        <div class="step rv" style="--d:.1s"><div class="step-top"><span class="n">ii.</span><span class="av" data-face="reading" aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-reading"/></svg></span></div><h3 class="h3">Chrysa asks AI search</h3><p class="body">The questions your customers ask, without saying who you are. You see who gets named, who doesn’t, and which pages AI search trusts.</p></div>
+        <div class="step rv" style="--d:.2s"><div class="step-top"><span class="n">iii.</span><span class="av" data-face="delighted" aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-delighted"/></svg></span></div><h3 class="h3">You get the fix, written</h3><p class="body">Your first fix arrives ready to use. Subscribe and Chrysa re-checks every week and drafts every next move for your approval.</p></div>
       </div>
     </div>
   </section>
@@ -270,6 +293,7 @@
           <p class="small">Free, no card. One check per brand.</p>
         </div>
         <div>
+          <div class="form-wrap"><span class="av av-perch" data-face="curious" id="perch" data-look aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-curious"/></svg></span>
           <form class="form" id="reading-form" novalidate aria-describedby="rf-fine">
             <div class="field"><label for="rf-site">Your website</label><input id="rf-site" name="site" type="text" inputmode="url" placeholder="yourbrand.com" autocomplete="url" autocapitalize="off" spellcheck="false" required aria-describedby="rf-site-err"><p class="err" id="rf-site-err" aria-live="polite"></p></div>
             <div class="field"><label for="rf-name">Your name</label><input id="rf-name" name="name" type="text" autocomplete="name" required aria-describedby="rf-name-err"><p class="err" id="rf-name-err" aria-live="polite"></p></div>
@@ -280,8 +304,9 @@
             <button class="btn btn-main" type="submit" id="rf-submit"><span class="lbl">Check my visibility</span> <span class="arr" aria-hidden="true">→</span></button>
             <p class="fine" id="rf-fine">We use these details only to prepare your check. <a class="link" href="privacy.html">Privacy</a></p>
           </form>
+          </div>
           <div class="done" id="reading-done" role="status" hidden>
-            <img src="brand/chrysa-480.png" width="480" height="459" alt="">
+            <span class="av" data-face="delighted" aria-hidden="true"><img src="brand/chrysa-blank-480.webp" width="480" height="459" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-delighted"/></svg></span>
             <p class="h3">Chrysa is on it.</p>
             <p class="body" id="rf-done-text">Taking you to your private report…</p>
             <a class="btn btn-quiet btn-sm" href="#pricing">See plans</a>
@@ -310,15 +335,15 @@
             <p class="price"><b data-m="$99" data-y="$1,089">$99</b><span class="per" data-m="/ month" data-y="/ year">/ month</span></p>
             <p class="note2" data-m="Billed monthly" data-y="$90.75 a month, billed yearly">Billed monthly</p>
             <p class="body">Chrysa keeps watching, and drafts for you.</p>
-            <ul><li>One brand</li><li>AI search re-checked every week, changes flagged</li><li>Approvals: every fix drafted, waiting for your word</li><li>Ask Chrysa, 5 questions a day</li><li>Campaign plans, drafted from your checks</li><li>Presence over time, with an honest outlook</li></ul>
+            <ul><li>One brand</li><li>AI search re-checked every week, changes flagged</li><li>Approvals: every fix drafted, waiting for your word</li><li>Ask Chrysa, 5 questions a day</li><li>Campaign plans, drafted from your checks</li><li>Up to 5 hours in Chrysa a day</li><li class="soon">Connect your accounts and study your campaigns, as each platform opens</li></ul>
             <a class="btn btn-main" href="checkout.html?plan=solo" data-plan-link>Choose Starter</a>
           </div>
           <div class="card tier rv" style="--d:.16s">
             <p class="name">Pro</p>
             <p class="price"><b data-m="$249" data-y="$2,739">$249</b><span class="per" data-m="/ month" data-y="/ year">/ month</span></p>
             <p class="note2" data-m="Billed monthly" data-y="$228.25 a month, billed yearly">Billed monthly</p>
-            <p class="body">For teams ready for every channel.</p>
-            <ul><li>Everything in Starter</li><li>Priority support from the founding team</li><li class="soon">Channel connections, first in line (in platform review)</li><li class="soon">Cross-channel campaign reports, as connections open</li></ul>
+            <p class="body">Everything, without limits.</p>
+            <ul><li>Everything in Starter</li><li>Unlimited use, no daily cap</li><li>Ask Chrysa as often as you like</li><li>Priority support from the founding team</li><li class="soon">Cross-channel campaign reports, as each platform opens</li></ul>
             <a class="btn btn-quiet" href="checkout.html?plan=growth" data-plan-link>Choose Pro</a>
           </div>
         </div>
@@ -330,7 +355,7 @@
   <!-- FAQ -->
   <section id="faq" aria-labelledby="faq-h" style="padding-top:0">
     <div class="wrap">
-      <div class="sec-head center rv"><p class="kicker">Questions</p><h2 class="h2" id="faq-h">Asked, and <em>answered</em>.</h2></div>
+      <div class="sec-head center rv"><span class="av av-faq" data-face="thinking" aria-hidden="true"><img src="brand/chrysa-blank-240.webp" width="240" height="230" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-thinking"/></svg></span><p class="kicker">Questions</p><h2 class="h2" id="faq-h">Asked, and <em>answered</em>.</h2></div>
       <div class="faq rv">
         <details><summary>What is in the free AI visibility check?</summary><p>Chrysa asks AI search three questions real customers ask in your category, without saying who you are. It shows whether you are named, who is named instead, which pages AI search trusts and whether they mention you, and writes your first fix. It is free, needs no card, and is limited to one check per brand.</p></details>
         <details><summary>What does Chrysa actually check?</summary><p>Chrysa asks an AI model that searches the live web the questions your customers ask, the way AI assistants answer shoppers today. Every result on your page comes from what that search actually said when Chrysa checked. No guesses.</p></details>
@@ -344,7 +369,7 @@
 
   <section class="closing" aria-labelledby="close-h">
     <div class="wrap">
-      <img class="rv" src="brand/chrysa-480.png" width="480" height="459" alt="">
+      <div class="rv"><span class="av av-close" data-face="wink" data-look aria-hidden="true"><img src="brand/chrysa-blank-480.webp" width="480" height="459" alt="" decoding="async"><svg viewBox="0 0 940 900" focusable="false"><use href="#face-wink"/></svg></span></div>
       <h2 class="h2 rv" id="close-h">Keep a marketing mind <em>on your side</em>.</h2>
       <a class="btn btn-main rv" href="#reading" data-to-check>Get your free AI visibility check <span class="arr" aria-hidden="true">→</span></a>
     </div>

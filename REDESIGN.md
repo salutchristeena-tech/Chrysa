@@ -109,3 +109,20 @@ The mascot artwork is used exactly as approved. Only position, opacity, a slight
 - **Not tested on real devices:** Safari on iPhone, and slow 3G. The intro uses CSS masks and filters, which Safari supports, but they are untested there.
 - **The app at app.chrysa.ai still uses Cormorant Garamond.** Bringing it onto Fraunces and this design system is a separate, small change in the chrysa-app repository.
 - **Image weight.** The 480px mascot PNG is 280 KB. A WebP version would be about 60 KB, but no WebP encoder was available on this machine.
+
+## Update — Chrysa's faces (21 Nov)
+
+- **One mascot, several expressions.** `brand/chrysa-blank-*.webp` is the original render with only the eyes
+  painted out (the shell, light and shadow are untouched). Faces are drawn over it as SVG (`#face-*` in the
+  sprite at the top of `index.html`): happy (the original), curious, reading, wink, thinking, delighted.
+- **Where she appears:** the opening (opens her eyes, blinks, then smiles: it ends on the original face);
+  peeking over the product preview, her face following the tab; one per "How it works" step; perched on the
+  free check form (reads along while you type, thinks while it starts, delighted when it's done); the FAQ;
+  the closing call to action. Curious faces follow the pointer with their eyes. All of it stops under
+  reduced motion.
+- **Opening fix:** it used to be skipped, and marked as seen for 30 days, whenever the page opened in a
+  background tab. It now waits until the tab is first looked at, plays once a day, and `chrysa.ai/?intro`
+  always plays it (for demos).
+- **Lighter images:** WebP mascot 35 KB instead of the 280 KB PNG (PNG kept as fallback).
+- **Pricing:** Starter states its limits (one brand, 5 Ask questions and up to 5 hours a day); Pro is
+  "everything, without limits". Unlimited Ask for Pro needs migration 0012 before that line can lose its "soon".
